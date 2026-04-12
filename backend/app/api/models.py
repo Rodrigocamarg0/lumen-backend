@@ -46,6 +46,9 @@ class GenerationStats(BaseModel):
     tokens_per_second: float
     kv_cache_tokens: int
     kv_cache_mb: float
+    kv_cache_compression_ratio: float | None = None
+    kv_cache_layers_initialized: int | None = None
+    kv_cache_max_seq_length: int | None = None
     rag_latency_ms: int
     generation_latency_ms: int
 

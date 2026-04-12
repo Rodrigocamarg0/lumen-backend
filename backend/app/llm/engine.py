@@ -17,6 +17,11 @@ import logging
 import threading
 
 import torch
+from transformers import TextIteratorStreamer  # type: ignore[import]
+
+from app.cache import TurboQuantCache
+from app.cache.kv_cache import patch_model_for_quantized_attention
+from app.config import settings
 
 logger = logging.getLogger("engine")
 
@@ -43,6 +48,14 @@ logger.info(f"LLM backend: {BACKEND}")
 _tokenizer = None
 _model = None
 _model_name: str = ""
+_last_kv_cache_metrics: dict[str, object] = {
+    "enabled": False,
+    "baseline_mb": 0.0,
+    "compressed_mb": 0.0,
+    "compression_ratio": 1.0,
+    "layers_initialized": 0,
+    "max_seq_length": 0,
+}
 
 
 # ---------------------------------------------------------------------------
@@ -70,6 +83,10 @@ def load(model_name: str = "google/gemma-4-E4B-it") -> None:
 
 def is_loaded() -> bool:
     return _model is not None
+
+
+def kv_cache_metrics() -> dict[str, object]:
+    return dict(_last_kv_cache_metrics)
 
 
 def generate(
@@ -196,19 +213,26 @@ def _load_cuda(model_name: str) -> None:
         logger.info(f"Loading tokenizer: {model_name}")
         _tokenizer = AutoTokenizer.from_pretrained(model_name)
 
+        # GTX 1650 / Turing (CC 7.5) has poor BF16 throughput — use FP16.
+        # Ampere+ (CC 8.0+) can switch back to bfloat16 for better stability.
+        compute_dtype = (
+            torch.bfloat16 if torch.cuda.get_device_capability(0)[0] >= 8 else torch.float16
+        )
         bnb_config = BitsAndBytesConfig(
             load_in_4bit=True,
             bnb_4bit_use_double_quant=True,
             bnb_4bit_quant_type="nf4",
-            bnb_4bit_compute_dtype=torch.bfloat16,
+            bnb_4bit_compute_dtype=compute_dtype,
         )
-        logger.info(f"Loading model {model_name} in 4-bit …")
+        logger.info(f"Loading model {model_name} in 4-bit (compute_dtype={compute_dtype}) …")
         _model = AutoModelForCausalLM.from_pretrained(
             model_name,
             quantization_config=bnb_config,
             device_map="auto",
-            dtype=torch.bfloat16,
+            dtype=compute_dtype,
         )
+        if settings.USE_TURBOQUANT_CACHE:
+            patch_model_for_quantized_attention(_model)
         _model.eval()
         logger.info("CUDA model ready")
     except Exception as exc:
@@ -225,10 +249,10 @@ def _stream_hf(
 ) -> Iterator[str]:
     assert _model is not None and _tokenizer is not None
     model, tokenizer = _model, _tokenizer
-    from transformers import TextIteratorStreamer  # type: ignore[import]
 
     input_ids = _build_input_ids_hf(system_prompt, history, user_message)
     streamer = TextIteratorStreamer(tokenizer, skip_prompt=True, skip_special_tokens=True)
+    cache = None
     gen_kwargs = {
         "input_ids": input_ids,
         "max_new_tokens": max_new_tokens,
@@ -237,10 +261,37 @@ def _stream_hf(
         "pad_token_id": tokenizer.eos_token_id,
         "streamer": streamer,
     }
-    threading.Thread(target=model.generate, kwargs=gen_kwargs, daemon=True).start()
+    if settings.USE_TURBOQUANT_CACHE:
+        cache = TurboQuantCache(
+            bits=settings.KV_CACHE_BITS,
+            outlier_threshold=settings.KV_CACHE_OUTLIER_THRESHOLD,
+            num_hidden_layers=getattr(model.config, "num_hidden_layers", None),
+        )
+        gen_kwargs["past_key_values"] = cache
+
+    def _run_generation() -> None:
+        global _last_kv_cache_metrics
+        try:
+            model.generate(**gen_kwargs)
+        finally:
+            if cache is not None:
+                _last_kv_cache_metrics = {"enabled": True, **cache.memory_stats()}
+            else:
+                _last_kv_cache_metrics = {
+                    "enabled": False,
+                    "baseline_mb": 0.0,
+                    "compressed_mb": 0.0,
+                    "compression_ratio": 1.0,
+                    "layers_initialized": 0,
+                    "max_seq_length": 0,
+                }
+
+    worker = threading.Thread(target=_run_generation, daemon=True)
+    worker.start()
     for token in streamer:
         if token:
             yield token
+    worker.join()
 
 
 # ---------------------------------------------------------------------------
@@ -256,6 +307,8 @@ def _load_cpu(model_name: str) -> None:
         logger.warning("No GPU detected — loading model on CPU (slow)")
         _tokenizer = AutoTokenizer.from_pretrained(model_name)
         _model = AutoModelForCausalLM.from_pretrained(model_name, dtype=torch.float32)
+        if settings.USE_TURBOQUANT_CACHE:
+            patch_model_for_quantized_attention(_model)
         _model.eval()
         logger.info("CPU model ready")
     except Exception as exc:

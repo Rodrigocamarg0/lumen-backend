@@ -47,6 +47,26 @@ _LDE_STANDALONE_PARTE = re.compile(
     r"^Parte\s+(Primeira|Segunda|Terceira|Quarta)\s*$", re.IGNORECASE
 )
 _LDE_DECORATOR = re.compile(r"^M\s*$")  # drop-cap marker pdfminer emits before chapter titles
+_LDE_END_MATTER = re.compile(
+    r"^(A EDITORA|NOTA EXPLICATIVA|ÍNDICE GERAL\d*|INDICE GERAL\d*|CONSELHO EDITORIAL:|"
+    r"PRODUÇÃO EDITORIAL:|REVISÃO:|CAPA:|PROJETO GRÁFICO:|DIAGRAMAÇÃO:|"
+    r"NORMALIZAÇÃO TÉCNICA:)\s*$",
+    re.IGNORECASE,
+)
+_LDE_END_MATTER_INLINE = re.compile(
+    r"\n\s*(A EDITORA|NOTA EXPLICATIVA|ÍNDICE GERAL\d*|INDICE GERAL\d*|CONSELHO EDITORIAL:|"
+    r"PRODUÇÃO EDITORIAL:|REVISÃO:|CAPA:|PROJETO GRÁFICO:|DIAGRAMAÇÃO:|"
+    r"NORMALIZAÇÃO TÉCNICA:)\b.*$",
+    re.IGNORECASE | re.DOTALL,
+)
+_LDE_Q1019_CUTOFF_MARKERS = (
+    "\nconclusão\n",
+    "\nconclusao\n",
+    "n.e.: ver nota explicativa",
+    "\nnota explicativa\n",
+    "\níndice geral",
+    "\nindice geral",
+)
 
 _LDE_PARTE_NAMES: dict[str, str] = {
     "PRIMEIRA": "Parte Primeira — Das Causas Primárias",
@@ -264,6 +284,11 @@ def extract_lde_chunks(text: str) -> list[dict]:
             continue
         if _LDE_DECORATOR.match(s):
             continue
+        if q_num == 1019 and _LDE_END_MATTER.match(s):
+            flush()
+            q_num = None
+            q_buf = []
+            break
 
         # ── Running page header: update parte + chapter numeral ─────────────
         # (titles are NOT resolved here to avoid cross-part collisions —
@@ -321,6 +346,14 @@ def extract_lde_chunks(text: str) -> list[dict]:
 
 
 def _build_lde(q_num: int, lines: list[str], parte: str | None, capitulo: str | None) -> dict:
+    text = "\n".join(lines)
+    if q_num == 1019:
+        text = re.sub(_LDE_END_MATTER_INLINE, "", text)
+        lowered = text.lower()
+        cutoffs = [lowered.find(marker) for marker in _LDE_Q1019_CUTOFF_MARKERS]
+        cutoffs = [idx for idx in cutoffs if idx >= 0]
+        if cutoffs:
+            text = text[: min(cutoffs)].rstrip()
     return {
         "id": f"lde-q{q_num:04d}",
         "autor": "Allan Kardec",
@@ -329,7 +362,7 @@ def _build_lde(q_num: int, lines: list[str], parte: str | None, capitulo: str | 
         "parte": parte,
         "capitulo": capitulo,
         "questao": q_num,
-        "texto": clean_text("\n".join(lines)),
+        "texto": clean_text(text),
         "edicao_referencia": "FEB, 2013 (Tradução Guillon Ribeiro)",
     }
 

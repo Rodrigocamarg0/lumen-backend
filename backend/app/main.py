@@ -20,7 +20,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app import state
-from app.api.routes import chat, health, search
+from app.api.routes import chat, config, health, search
 from app.config import settings
 
 logger = logging.getLogger("main")
@@ -31,6 +31,24 @@ logger = logging.getLogger("main")
 
 INDEX_DIR = Path("data/kardec/index")
 INDEX_NAME = "kardec"
+
+
+def _resolve_embedding_model_for_index(idx, configured_model: str) -> str:
+    from app.corpus.embedder import Embedder
+
+    if idx.embedding_model:
+        return idx.embedding_model
+
+    configured_embedder = Embedder(model_name=configured_model, cache_dir=None)
+    configured_dim = configured_embedder.dim
+    if idx.dim == configured_dim:
+        return configured_model
+
+    raise RuntimeError(
+        f"Loaded index dimension ({idx.dim}) does not match configured embedding model "
+        f"'{configured_model}' (dim={configured_dim}). The on-disk index appears stale or was "
+        "built with a different embedding model. Re-run ./ingest.sh to rebuild it."
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -55,7 +73,12 @@ async def lifespan(app: FastAPI):
             None,
             lambda: KardecIndex.load(INDEX_DIR, name=INDEX_NAME),
         )
-        embedder = Embedder(model_name=settings.EMBEDDING_MODEL)
+        embedding_model = _resolve_embedding_model_for_index(idx, settings.EMBEDDING_MODEL)
+        logger.info(
+            f"RAG query embedder model: {embedding_model} "
+            f"(index dim={idx.dim}, storage={idx.storage_format})"
+        )
+        embedder = Embedder(model_name=embedding_model, cache_dir=None)
 
         from app.persona.rag import RAGOrchestrator
 
@@ -68,6 +91,7 @@ async def lifespan(app: FastAPI):
             "The server starts in degraded mode."
         )
     except Exception as exc:
+        state.rag = None
         logger.error(f"Failed to load index: {exc}")
 
     # Load LLM (CPU/GPU bound — done in executor to avoid blocking startup)
@@ -106,6 +130,7 @@ app.add_middleware(
 app.include_router(health.router, prefix="/api", tags=["Health"])
 app.include_router(chat.router, prefix="/api", tags=["Chat"])
 app.include_router(search.router, prefix="/api", tags=["Search"])
+app.include_router(config.router, prefix="/api", tags=["Config"])
 
 # ---------------------------------------------------------------------------
 # Dev server

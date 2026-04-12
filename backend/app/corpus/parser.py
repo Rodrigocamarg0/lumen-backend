@@ -150,7 +150,7 @@ def _write_stats(
         "min_chars": min(lengths),
         "max_chars": max(lengths),
         "partes": list(partes),
-        "extraction_date": datetime.datetime.utcnow().isoformat() + "Z",
+        "extraction_date": datetime.datetime.now(datetime.UTC).isoformat(),
     }
     out = output_dir / f"{book_id}_stats.json"
     with open(out, "w", encoding="utf-8") as f:

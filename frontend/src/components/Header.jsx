@@ -1,4 +1,4 @@
-import FlameIcon from "./FlameIcon.jsx";
+import LogoFlame from "./LogoFlame.jsx";
 
 function SunIcon() {
   return (
@@ -66,7 +66,7 @@ export default function Header({ onMenuToggle, theme, onThemeToggle }) {
         </button>
 
         <div className="flex items-center gap-2">
-          <FlameIcon className="w-5 h-5 text-orange-400 flame" />
+          <LogoFlame className="w-6 h-6" />
           <span className="font-semibold">Lumen</span>
         </div>
       </div>

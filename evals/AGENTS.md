@@ -1,98 +1,68 @@
 # AGENTS.md — Evals
 
-> Scope: everything under `evals/`.
-> Also read the root [`../AGENTS.md`](../AGENTS.md) for project-wide rules.
+> Scope: `evals/`.
+> Also read: [`../AGENTS.md`](../AGENTS.md)
 
 ---
 
 ## Purpose
 
-The evaluation suite validates that changes to the core pipeline (quantizer, KV cache,
-RAG, corpus) do not degrade correctness, memory efficiency, or persona fidelity.
+Validate that changes to the quantizer, KV cache, RAG pipeline, or corpus do not degrade
+correctness, memory efficiency, or persona fidelity. Any PR touching those areas must
+include a metrics diff from the relevant script.
 
-**Rule:** Any PR that modifies the quantizer, rotation matrix logic, RAG embedding schema,
-or corpus chunking **must** include a metrics diff from the relevant eval scripts.
-Merges are blocked if thresholds degrade.
+Pass thresholds and measurement methodology: [`README.md`](./README.md)
 
 ---
 
 ## Scripts
 
-| Script | Phase | What it measures |
+| Script | Phase | Measures |
 |---|---|---|
-| `turboquant_eval.py` | 2 | Algorithm correctness against paper bounds (30 checks) |
-| `kv_cache_eval.py` | 2 | KV memory compression, PPL degradation, needle-in-haystack |
 | `persona_eval.py` | 1+ | RAG Recall@10, citation precision, style drift |
+| `turboquant_eval.py` | 2 | Algorithm correctness (30 checks vs paper bounds) |
+| `kv_cache_eval.py` | 2 | KV compression ratio, PPL degradation, needle-in-haystack |
 
 ---
 
-## Running evals
+## Run
 
 ```bash
-cd /path/to/lumen
-source backend/venv/bin/activate
+source backend/venv/bin/activate   # from repo root
 
-# Phase 1 (available now)
-PYTHONPATH=backend python -m evals.persona_eval
-
-# Phase 2+ (requires TurboQuant implementation)
-PYTHONPATH=backend python -m evals.turboquant_eval
-PYTHONPATH=backend python -m evals.kv_cache_eval
+PYTHONPATH=backend python -m evals.persona_eval      # Phase 1+
+PYTHONPATH=backend python -m evals.turboquant_eval   # Phase 2+
+PYTHONPATH=backend python -m evals.kv_cache_eval     # Phase 2+
 ```
-
----
-
-## Pass thresholds
-
-### `turboquant_eval.py`
-| Check | Threshold |
-|---|---|
-| All 30 algorithm checks | 30/30 pass |
-| MSE at 3-bit, d=256 | ≤ 0.035 |
-| MSE at 4-bit, d=256 | ≤ 0.011 |
-
-### `kv_cache_eval.py`
-| Check | Threshold |
-|---|---|
-| KV cache compression vs FP16 | ≥ 5× |
-| PPL degradation at 3.5-bit | < 1% |
-| Needle-in-haystack recall at 4K/16K/64K/128K | > 95% each |
-
-### `persona_eval.py`
-| Check | Threshold |
-|---|---|
-| RAG Recall@10 on Kardec corpus | > 0.90 |
-| Citation precision (50 known LdE questions) | > 90% |
-| Style drift over 50-turn session | < 5% n-gram deviation |
 
 ---
 
 ## Writing new eval scripts
 
-- Scripts must be runnable as `python -m evals.<script_name>` with `PYTHONPATH=backend`.
-- Output a machine-readable summary (JSON or structured text) in addition to human output.
-- Exit code `0` = all thresholds met. Exit code `1` = one or more thresholds failed.
-- No side effects on the production index or model files.
-- Keep eval scripts independent — they should not import each other.
+- Runnable as `python -m evals.<name>` with `PYTHONPATH=backend`
+- Exit code `0` = all thresholds met; exit code `1` = one or more failed
+- Print a machine-readable summary (JSON or structured text) in addition to human output
+- No side effects on the production index or model files
+- Scripts must be independent — do not import each other
 
 ---
 
-## Hygiene rules for evals
+## Hygiene
 
-- Eval scripts are allowed to use `print()` (ruff `T201` suppressed for `evals/`).
-- Delete eval scripts that test code paths which no longer exist.
-- Do not add new eval scripts for Phase 2+ features until the feature exists.
-- Keep `README.md` in sync — if a threshold changes, update both the script and the docs.
+- `print()` is allowed in eval scripts (ruff `T201` suppressed for `evals/`)
+- Delete scripts that test removed code paths
+- Do not add Phase 2+ scripts before the feature exists
+- Keep `README.md` thresholds in sync with what the scripts actually check
 
 ---
 
 ## Regression workflow
 
-When a metric degrades:
-1. Check if the change was intentional (e.g., a known trade-off).
-2. If intentional: update the threshold in the script and document why in the commit message.
-3. If unintentional: revert the change and investigate the root cause before re-submitting.
+1. Run the relevant eval script before and after your change
+2. If a metric degrades: check whether it was intentional (known trade-off)
+   - Intentional → update the threshold in the script + document in commit message
+   - Unintentional → revert and investigate before resubmitting
 
 ---
 
-> Also read: [`../AGENTS.md`](../AGENTS.md) · [`../backend/AGENTS.md`](../backend/AGENTS.md)
+> See also: [`../AGENTS.md`](../AGENTS.md) · [`README.md`](./README.md) · [`../specs/architecture/architecture.md`](../specs/architecture/architecture.md)

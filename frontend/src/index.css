@@ -105,3 +105,96 @@ body {
   outline: 2px solid rgba(251, 146, 60, 0.6);
   outline-offset: 2px;
 }
+
+/* ─── Candle flame animations ───────────────────────────── */
+
+/* Outer body: slow, lazy sway from the base */
+.lf-outer {
+  animation: lf-sway 3.2s ease-in-out infinite;
+}
+
+/* Mid layer: slightly quicker, opposing phase */
+.lf-mid {
+  animation:
+    lf-sway 2.4s ease-in-out infinite reverse,
+    lf-pulse 1.9s ease-in-out infinite;
+}
+
+/* Bright core: fast micro-flicker */
+.lf-core {
+  animation: lf-core-flicker 1.3s ease-in-out infinite;
+}
+
+/* Ambient halo breathes slowly */
+.lf-halo {
+  animation: lf-halo-breathe 2.8s ease-in-out infinite;
+}
+
+@keyframes lf-sway {
+  0% {
+    transform: rotate(-2.5deg) scaleX(1);
+  }
+  20% {
+    transform: rotate(1.5deg) scaleX(0.96);
+  }
+  45% {
+    transform: rotate(-1deg) scaleX(1.03);
+  }
+  65% {
+    transform: rotate(2.5deg) scaleX(0.95);
+  }
+  85% {
+    transform: rotate(-0.5deg) scaleX(1.01);
+  }
+  100% {
+    transform: rotate(-2.5deg) scaleX(1);
+  }
+}
+
+@keyframes lf-pulse {
+  0%,
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  40% {
+    transform: scaleY(1.06);
+    opacity: 0.92;
+  }
+  70% {
+    transform: scaleY(0.96);
+    opacity: 0.88;
+  }
+}
+
+@keyframes lf-core-flicker {
+  0%,
+  100% {
+    opacity: 0.82;
+    transform: scaleY(1) scaleX(1);
+  }
+  25% {
+    opacity: 1;
+    transform: scaleY(1.08) scaleX(0.93);
+  }
+  55% {
+    opacity: 0.7;
+    transform: scaleY(0.94) scaleX(1.05);
+  }
+  80% {
+    opacity: 0.95;
+    transform: scaleY(1.04) scaleX(0.97);
+  }
+}
+
+@keyframes lf-halo-breathe {
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.18);
+  }
+}

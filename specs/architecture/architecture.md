@@ -746,3 +746,25 @@ python -m evals.persona_eval --citation-test --dataset lde-50-questions
 | llama.cpp TurboQuant | [Discussion #20969](https://github.com/ggml-org/llama.cpp/discussions/20969) |
 | Gemma 4 Documentation | [Google AI](https://ai.google.dev/gemma/docs/core) |
 | HuggingFace Gemma 4 Blog | [HuggingFace](https://huggingface.co/blog/gemma4) |
+
+---
+
+## 11. Quick Reference — Key Numbers
+
+| Metric | Target | Source |
+|---|---|---|
+| MSE at 3-bit, d=256 | ≤ 0.035 | TurboQuant paper Table 1 (1.2× tolerance for d=256 vs d=1536) |
+| MSE at 4-bit, d=256 | ≤ 0.011 | TurboQuant paper Table 1 (1.2× tolerance) |
+| KV cache compression ratio | ≥ 5× vs FP16 | Requirements spec, confirmed on Gemma 4 |
+| Real attention speedup | ~1.85× | OmarHory/turboquant benchmarks (not the paper's 8×) |
+| PPL degradation at 3.5-bit | < 1% | Requirements spec |
+| RAG Recall@10 | > 0.90 | Requirements spec |
+| Citation precision | > 90% | Requirements spec (50 known LdE questions) |
+| NIHS recall | > 95% at 4K/16K/64K/128K | Requirements spec |
+| Style drift over 50 turns | < 5% n-gram deviation | Requirements spec |
+| Gemma 4 E4B context window | 128K tokens | Google Gemma 4 docs |
+| Gemma 4 E4B head_dim | 256 | Model config (not 128 like Llama/Mistral) |
+| Gemma 4 E4B local:global attention ratio | 5:1 | Model architecture |
+| LdE questions | 1,019 | Corpus analysis |
+| LdM articles | 334 | Corpus analysis |
+| Memory per 3-bit vector (d=128) | 52 bytes (4B norm + 48B packed) | OmarHory implementation |

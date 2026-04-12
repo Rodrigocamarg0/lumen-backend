@@ -1,0 +1,452 @@
+{
+  "timestamp": "20260412_183844",
+  "url": "http://localhost:8000",
+  "questions_used": 5,
+  "sweep": [
+    {
+      "config": {
+        "enabled": true,
+        "bits": 2.0,
+        "outlier_threshold": 10.0
+      },
+      "effective_config": {
+        "enabled": true,
+        "bits": 2.0,
+        "outlier_threshold": 10.0
+      },
+      "aggregate": {
+        "n": 5,
+        "error_rate": 0.0,
+        "tokens_per_second_mean": 25.44,
+        "rag_latency_ms_mean": 573.8,
+        "generation_latency_ms_mean": 20155.0,
+        "tokens_generated_mean": 512.0,
+        "kv_cache_compression_ratio_mean": 0.0,
+        "kv_cache_mb_mean": 0.0
+      },
+      "rows": [
+        {
+          "error": null,
+          "session_id": "2e1683f5-c35d-4126-bcc7-1d36164661fd",
+          "tokens_generated": 512,
+          "tokens_per_second": 24.8,
+          "kv_cache_tokens": 512,
+          "kv_cache_mb": 0.0,
+          "rag_latency_ms": 705,
+          "generation_latency_ms": 20682,
+          "query": "O que \u00e9 Deus?",
+          "wall_ms": 21390,
+          "q_index": 0
+        },
+        {
+          "error": null,
+          "session_id": "27a22cd8-80f3-4396-95df-b4b5aa466cd4",
+          "tokens_generated": 512,
+          "tokens_per_second": 25.3,
+          "kv_cache_tokens": 512,
+          "kv_cache_mb": 0.0,
+          "rag_latency_ms": 577,
+          "generation_latency_ms": 20245,
+          "query": "Deus tem uma forma?",
+          "wall_ms": 20827,
+          "q_index": 1
+        },
+        {
+          "error": null,
+          "session_id": "64646fe9-d7b8-4673-b604-035352aafc67",
+          "tokens_generated": 512,
+          "tokens_per_second": 26.2,
+          "kv_cache_tokens": 512,
+          "kv_cache_mb": 0.0,
+          "rag_latency_ms": 376,
+          "generation_latency_ms": 19514,
+          "query": "O que \u00e9 o esp\u00edrito?",
+          "wall_ms": 19893,
+          "q_index": 2
+        },
+        {
+          "error": null,
+          "session_id": "81506a60-a044-4adc-9801-caac6b93acd2",
+          "tokens_generated": 512,
+          "tokens_per_second": 24.3,
+          "kv_cache_tokens": 512,
+          "kv_cache_mb": 0.0,
+          "rag_latency_ms": 845,
+          "generation_latency_ms": 21065,
+          "query": "Os esp\u00edritos t\u00eam um come\u00e7o?",
+          "wall_ms": 21913,
+          "q_index": 3
+        },
+        {
+          "error": null,
+          "session_id": "306d4c54-3ddb-4b7c-8f5b-01585cd05512",
+          "tokens_generated": 512,
+          "tokens_per_second": 26.6,
+          "kv_cache_tokens": 512,
+          "kv_cache_mb": 0.0,
+          "rag_latency_ms": 366,
+          "generation_latency_ms": 19269,
+          "query": "O que \u00e9 a alma?",
+          "wall_ms": 19641,
+          "q_index": 4
+        }
+      ]
+    },
+    {
+      "config": {
+        "enabled": true,
+        "bits": 2.0,
+        "outlier_threshold": 15.0
+      },
+      "effective_config": {
+        "enabled": true,
+        "bits": 2.0,
+        "outlier_threshold": 15.0
+      },
+      "aggregate": {
+        "n": 5,
+        "error_rate": 0.0,
+        "tokens_per_second_mean": 25.88,
+        "rag_latency_ms_mean": 473.8,
+        "generation_latency_ms_mean": 19806.6,
+        "tokens_generated_mean": 512.0,
+        "kv_cache_compression_ratio_mean": 0.0,
+        "kv_cache_mb_mean": 0.0
+      },
+      "rows": [
+        {
+          "error": null,
+          "session_id": "7b061755-4064-4c86-ac96-b5a095008e7d",
+          "tokens_generated": 512,
+          "tokens_per_second": 27.1,
+          "kv_cache_tokens": 512,
+          "kv_cache_mb": 0.0,
+          "rag_latency_ms": 345,
+          "generation_latency_ms": 18908,
+          "query": "O que \u00e9 Deus?",
+          "wall_ms": 19255,
+          "q_index": 0
+        },
+        {
+          "error": null,
+          "session_id": "a3a92b4c-19fc-4803-b191-dcdd3b9b8107",
+          "tokens_generated": 512,
+          "tokens_per_second": 25.1,
+          "kv_cache_tokens": 512,
+          "kv_cache_mb": 0.0,
+          "rag_latency_ms": 539,
+          "generation_latency_ms": 20360,
+          "query": "Deus tem uma forma?",
+          "wall_ms": 20904,
+          "q_index": 1
+        },
+        {
+          "error": null,
+          "session_id": "412c9d2c-f588-4266-8c13-74708705144e",
+          "tokens_generated": 512,
+          "tokens_per_second": 26.2,
+          "kv_cache_tokens": 512,
+          "kv_cache_mb": 0.0,
+          "rag_latency_ms": 408,
+          "generation_latency_ms": 19562,
+          "query": "O que \u00e9 o esp\u00edrito?",
+          "wall_ms": 19974,
+          "q_index": 2
+        },
+        {
+          "error": null,
+          "session_id": "4d666a07-abaa-484a-926a-e98d2b74717c",
+          "tokens_generated": 512,
+          "tokens_per_second": 24.4,
+          "kv_cache_tokens": 512,
+          "kv_cache_mb": 0.0,
+          "rag_latency_ms": 576,
+          "generation_latency_ms": 20991,
+          "query": "Os esp\u00edritos t\u00eam um come\u00e7o?",
+          "wall_ms": 21571,
+          "q_index": 3
+        },
+        {
+          "error": null,
+          "session_id": "7eddbaaf-bb48-44e2-b33d-79a1ceff7acd",
+          "tokens_generated": 512,
+          "tokens_per_second": 26.6,
+          "kv_cache_tokens": 512,
+          "kv_cache_mb": 0.0,
+          "rag_latency_ms": 501,
+          "generation_latency_ms": 19212,
+          "query": "O que \u00e9 a alma?",
+          "wall_ms": 19716,
+          "q_index": 4
+        }
+      ]
+    },
+    {
+      "config": {
+        "enabled": true,
+        "bits": 3.5,
+        "outlier_threshold": 10.0
+      },
+      "effective_config": {
+        "enabled": true,
+        "bits": 3.5,
+        "outlier_threshold": 10.0
+      },
+      "aggregate": {
+        "n": 5,
+        "error_rate": 0.0,
+        "tokens_per_second_mean": 25.88,
+        "rag_latency_ms_mean": 392.0,
+        "generation_latency_ms_mean": 19818.8,
+        "tokens_generated_mean": 512.0,
+        "kv_cache_compression_ratio_mean": 0.0,
+        "kv_cache_mb_mean": 0.0
+      },
+      "rows": [
+        {
+          "error": null,
+          "session_id": "9897d029-58ce-4d4e-85b5-d8d467566721",
+          "tokens_generated": 512,
+          "tokens_per_second": 27.1,
+          "kv_cache_tokens": 512,
+          "kv_cache_mb": 0.0,
+          "rag_latency_ms": 338,
+          "generation_latency_ms": 18886,
+          "query": "O que \u00e9 Deus?",
+          "wall_ms": 19227,
+          "q_index": 0
+        },
+        {
+          "error": null,
+          "session_id": "5b357adb-270e-4838-9f34-79859b75fff7",
+          "tokens_generated": 512,
+          "tokens_per_second": 25.2,
+          "kv_cache_tokens": 512,
+          "kv_cache_mb": 0.0,
+          "rag_latency_ms": 388,
+          "generation_latency_ms": 20278,
+          "query": "Deus tem uma forma?",
+          "wall_ms": 20670,
+          "q_index": 1
+        },
+        {
+          "error": null,
+          "session_id": "9880b2e2-d16a-4e39-a7a6-e48ffc25930a",
+          "tokens_generated": 512,
+          "tokens_per_second": 26.2,
+          "kv_cache_tokens": 512,
+          "kv_cache_mb": 0.0,
+          "rag_latency_ms": 397,
+          "generation_latency_ms": 19554,
+          "query": "O que \u00e9 o esp\u00edrito?",
+          "wall_ms": 19955,
+          "q_index": 2
+        },
+        {
+          "error": null,
+          "session_id": "8aaaadb8-686d-4b39-bc0f-a66dddd1ca85",
+          "tokens_generated": 512,
+          "tokens_per_second": 24.3,
+          "kv_cache_tokens": 512,
+          "kv_cache_mb": 0.0,
+          "rag_latency_ms": 392,
+          "generation_latency_ms": 21107,
+          "query": "Os esp\u00edritos t\u00eam um come\u00e7o?",
+          "wall_ms": 21503,
+          "q_index": 3
+        },
+        {
+          "error": null,
+          "session_id": "d54ad575-0ec2-49c5-b800-26fcbb25af31",
+          "tokens_generated": 512,
+          "tokens_per_second": 26.6,
+          "kv_cache_tokens": 512,
+          "kv_cache_mb": 0.0,
+          "rag_latency_ms": 445,
+          "generation_latency_ms": 19269,
+          "query": "O que \u00e9 a alma?",
+          "wall_ms": 19721,
+          "q_index": 4
+        }
+      ]
+    },
+    {
+      "config": {
+        "enabled": true,
+        "bits": 3.5,
+        "outlier_threshold": 15.0
+      },
+      "effective_config": {
+        "enabled": true,
+        "bits": 3.5,
+        "outlier_threshold": 15.0
+      },
+      "aggregate": {
+        "n": 5,
+        "error_rate": 0.0,
+        "tokens_per_second_mean": 25.86,
+        "rag_latency_ms_mean": 937.0,
+        "generation_latency_ms_mean": 19838.8,
+        "tokens_generated_mean": 512.0,
+        "kv_cache_compression_ratio_mean": 0.0,
+        "kv_cache_mb_mean": 0.0
+      },
+      "rows": [
+        {
+          "error": null,
+          "session_id": "dd3a7c66-1839-43b6-a75c-47454ac42b44",
+          "tokens_generated": 512,
+          "tokens_per_second": 27.0,
+          "kv_cache_tokens": 512,
+          "kv_cache_mb": 0.0,
+          "rag_latency_ms": 2595,
+          "generation_latency_ms": 18983,
+          "query": "O que \u00e9 Deus?",
+          "wall_ms": 21580,
+          "q_index": 0
+        },
+        {
+          "error": null,
+          "session_id": "1c596ac2-7884-48d1-9ece-2da609690a09",
+          "tokens_generated": 512,
+          "tokens_per_second": 25.3,
+          "kv_cache_tokens": 512,
+          "kv_cache_mb": 0.0,
+          "rag_latency_ms": 540,
+          "generation_latency_ms": 20233,
+          "query": "Deus tem uma forma?",
+          "wall_ms": 20776,
+          "q_index": 1
+        },
+        {
+          "error": null,
+          "session_id": "a09da21c-be3e-45ea-9333-f4742da6b403",
+          "tokens_generated": 512,
+          "tokens_per_second": 26.3,
+          "kv_cache_tokens": 512,
+          "kv_cache_mb": 0.0,
+          "rag_latency_ms": 389,
+          "generation_latency_ms": 19490,
+          "query": "O que \u00e9 o esp\u00edrito?",
+          "wall_ms": 19883,
+          "q_index": 2
+        },
+        {
+          "error": null,
+          "session_id": "1247e268-c624-4840-8d2e-49c3679ad6bf",
+          "tokens_generated": 512,
+          "tokens_per_second": 24.2,
+          "kv_cache_tokens": 512,
+          "kv_cache_mb": 0.0,
+          "rag_latency_ms": 373,
+          "generation_latency_ms": 21182,
+          "query": "Os esp\u00edritos t\u00eam um come\u00e7o?",
+          "wall_ms": 21558,
+          "q_index": 3
+        },
+        {
+          "error": null,
+          "session_id": "6f7c9b47-4239-4a70-a428-8075be0664f3",
+          "tokens_generated": 512,
+          "tokens_per_second": 26.5,
+          "kv_cache_tokens": 512,
+          "kv_cache_mb": 0.0,
+          "rag_latency_ms": 788,
+          "generation_latency_ms": 19306,
+          "query": "O que \u00e9 a alma?",
+          "wall_ms": 20097,
+          "q_index": 4
+        }
+      ]
+    },
+    {
+      "config": {
+        "enabled": true,
+        "bits": 4.0,
+        "outlier_threshold": 10.0
+      },
+      "effective_config": {
+        "enabled": true,
+        "bits": 4.0,
+        "outlier_threshold": 10.0
+      },
+      "aggregate": {
+        "n": 5,
+        "error_rate": 0.0,
+        "tokens_per_second_mean": 25.76,
+        "rag_latency_ms_mean": 709.8,
+        "generation_latency_ms_mean": 19903.8,
+        "tokens_generated_mean": 512.0,
+        "kv_cache_compression_ratio_mean": 0.0,
+        "kv_cache_mb_mean": 0.0
+      },
+      "rows": [
+        {
+          "error": null,
+          "session_id": "d7afabd3-206d-4d2b-a44d-b2473b130aaf",
+          "tokens_generated": 512,
+          "tokens_per_second": 26.6,
+          "kv_cache_tokens": 512,
+          "kv_cache_mb": 0.0,
+          "rag_latency_ms": 703,
+          "generation_latency_ms": 19221,
+          "query": "O que \u00e9 Deus?",
+          "wall_ms": 19927,
+          "q_index": 0
+        },
+        {
+          "error": null,
+          "session_id": "493b76f8-9dae-4113-af7b-529bfd1a3c5c",
+          "tokens_generated": 512,
+          "tokens_per_second": 25.2,
+          "kv_cache_tokens": 512,
+          "kv_cache_mb": 0.0,
+          "rag_latency_ms": 623,
+          "generation_latency_ms": 20342,
+          "query": "Deus tem uma forma?",
+          "wall_ms": 20972,
+          "q_index": 1
+        },
+        {
+          "error": null,
+          "session_id": "209d4df3-2b4c-4801-8f19-6e5a01b90727",
+          "tokens_generated": 512,
+          "tokens_per_second": 26.1,
+          "kv_cache_tokens": 512,
+          "kv_cache_mb": 0.0,
+          "rag_latency_ms": 711,
+          "generation_latency_ms": 19593,
+          "query": "O que \u00e9 o esp\u00edrito?",
+          "wall_ms": 20312,
+          "q_index": 2
+        },
+        {
+          "error": null,
+          "session_id": "b1a30c41-dad7-40ae-a0f3-b9afc437a0f2",
+          "tokens_generated": 512,
+          "tokens_per_second": 24.4,
+          "kv_cache_tokens": 512,
+          "kv_cache_mb": 0.0,
+          "rag_latency_ms": 370,
+          "generation_latency_ms": 21024,
+          "query": "Os esp\u00edritos t\u00eam um come\u00e7o?",
+          "wall_ms": 21398,
+          "q_index": 3
+        },
+        {
+          "error": null,
+          "session_id": "f19b2d97-2d2a-440c-bb1f-0ff7a8a7b167",
+          "tokens_generated": 512,
+          "tokens_per_second": 26.5,
+          "kv_cache_tokens": 512,
+          "kv_cache_mb": 0.0,
+          "rag_latency_ms": 1142,
+          "generation_latency_ms": 19339,
+          "query": "O que \u00e9 a alma?",
+          "wall_ms": 20484,
+          "q_index": 4
+        }
+      ]
+    }
+  ]
+}

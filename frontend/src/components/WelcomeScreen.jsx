@@ -1,4 +1,4 @@
-import FlameIcon from "./FlameIcon.jsx";
+import LogoFlame from "./LogoFlame.jsx";
 import { PERSONAS } from "../lib/api.js";
 
 export default function WelcomeScreen({
@@ -9,7 +9,7 @@ export default function WelcomeScreen({
   return (
     <div className="flex flex-col items-center justify-center h-full px-4 max-w-3xl mx-auto">
       <div className="mb-8">
-        <FlameIcon className="w-16 h-16 text-orange-400 flame mx-auto mb-4" />
+        <LogoFlame className="w-16 h-16 mx-auto mb-4" />
         <h1 className="text-3xl font-semibold text-center mb-2">Lumen</h1>
         <p className="text-gray-600 dark:text-gray-400 text-center">
           Iluminando o estudo da Doutrina Espírita

@@ -4,7 +4,8 @@ pydantic
 pydantic-settings
 faiss-cpu
 pdfminer.six
-sentence-transformers
+openai
+tiktoken
 transformers
 bitsandbytes
 accelerate

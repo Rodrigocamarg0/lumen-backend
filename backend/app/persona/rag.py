@@ -4,7 +4,7 @@ System Prompt → LLM Generation (streaming).
 
 The orchestrator holds references to:
   - a KardecIndex (FAISS wrapper)
-  - an Embedder (sentence-transformers)
+  - an Embedder (OpenAI text-embedding-3-small)
   - the LLM engine module (app.llm.engine)
 """
 
@@ -114,9 +114,15 @@ class RAGOrchestrator:
         """
         t0 = time.perf_counter()
         q_vec = self.embedder.encode_query(query)
+        t_embed = time.perf_counter()
         chunks = self.index.search(q_vec, top_k=top_k, min_score=min_score)
-        latency_ms = int((time.perf_counter() - t0) * 1000)
-        logger.debug(f"RAG retrieved {len(chunks)} chunks in {latency_ms}ms")
+        t_search = time.perf_counter()
+        embed_ms = int((t_embed - t0) * 1000)
+        search_ms = int((t_search - t_embed) * 1000)
+        latency_ms = int((t_search - t0) * 1000)
+        logger.debug(
+            f"RAG embed={embed_ms}ms  search={search_ms}ms  total={latency_ms}ms  chunks={len(chunks)}"
+        )
         return chunks, latency_ms
 
     # ------------------------------------------------------------------
@@ -197,9 +203,8 @@ class RAGOrchestrator:
         # 6. Stats
         session["kv_tokens"] += tokens_generated
         kv_tokens = session["kv_tokens"]
-        # KV cache rough estimate: 2 bytes/token/layer * 28 layers * 2 (K+V) ≈ negligible
-        # Use simple heuristic
-        kv_mb = round(kv_tokens * 0.012, 1)  # ~12 bytes/token rough estimate
+        kv_metrics = engine.kv_cache_metrics()
+        kv_mb = float(kv_metrics.get("compressed_mb", 0.0))
 
         stats = {
             "session_id": sid,
@@ -210,5 +215,9 @@ class RAGOrchestrator:
             "rag_latency_ms": rag_latency_ms,
             "generation_latency_ms": gen_latency_ms,
         }
+        if kv_metrics.get("enabled"):
+            stats["kv_cache_compression_ratio"] = kv_metrics.get("compression_ratio", 1.0)
+            stats["kv_cache_layers_initialized"] = kv_metrics.get("layers_initialized", 0)
+            stats["kv_cache_max_seq_length"] = kv_metrics.get("max_seq_length", 0)
         yield ("stats", stats)
         yield ("done", None)

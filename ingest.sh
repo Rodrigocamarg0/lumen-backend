@@ -73,6 +73,10 @@ ok "books: $BOOKS_DIR"
 
 mkdir -p "$CHUNKS_DIR" "$INDEX_DIR"
 
+[[ -n "${OPENAI_API_KEY:-}" ]] || fail "OPENAI_API_KEY is not set in $ENV_FILE"
+EMBEDDING_MODEL="${EMBEDDING_MODEL:-text-embedding-3-small}"
+ok "embedding model: $EMBEDDING_MODEL"
+
 # ── Resolve which books to process ───────────────────────────────────────────
 
 if [[ $# -gt 0 ]]; then
@@ -115,6 +119,7 @@ echo ""
 if PYTHONPATH="$BACKEND_DIR" "$PYTHON" -m app.corpus.indexer \
     --chunks "$CHUNKS_DIR" \
     --output "$INDEX_DIR" \
+    --model "$EMBEDDING_MODEL" \
     2>&1 | sed 's/^/    /'; then
     ok "Index built → $INDEX_DIR"
 else
@@ -141,7 +146,7 @@ done
 
 INFO_FILE="$INDEX_DIR/kardec_info.json"
 if [[ -f "$INFO_FILE" ]]; then
-    TOTAL_VECTORS=$(python3 -c "import json; d=json.load(open('$INFO_FILE')); print(d.get('total_vectors','?'))" 2>/dev/null || echo "?")
+    TOTAL_VECTORS=$("$PYTHON" -c "import json; d=json.load(open('$INFO_FILE')); print(d.get('total_vectors','?'))" 2>/dev/null || echo "?")
     echo ""
     echo "  FAISS index: $TOTAL_VECTORS vectors"
 fi
