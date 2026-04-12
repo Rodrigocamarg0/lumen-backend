@@ -1,0 +1,252 @@
+[
+  {
+    "query": "O que é Deus?",
+    "expected_chunk_id": "lde-q0001",
+    "notes": "Primeira questão do LdE — resposta direta e canônica sobre a natureza de Deus"
+  },
+  {
+    "query": "Deus tem uma forma?",
+    "expected_chunk_id": "lde-q0010",
+    "notes": "Pergunta sobre a forma ou representação física de Deus"
+  },
+  {
+    "query": "O que é o espírito?",
+    "expected_chunk_id": "lde-q0023",
+    "notes": "Definição fundamental de espírito — princípio inteligente"
+  },
+  {
+    "query": "Os espíritos têm um começo?",
+    "expected_chunk_id": "lde-q0078",
+    "notes": "Questão sobre a origem e anterioridade dos espíritos"
+  },
+  {
+    "query": "O que é a alma?",
+    "expected_chunk_id": "lde-q0134",
+    "notes": "Distinção entre espírito encarnado (alma) e espírito em si"
+  },
+  {
+    "query": "O espírito conserva sua individualidade após a morte?",
+    "expected_chunk_id": "lde-q0152",
+    "notes": "Conservação da individualidade e da personalidade após a desencarnação"
+  },
+  {
+    "query": "O que é o perispírito?",
+    "expected_chunk_id": "lde-q0093",
+    "notes": "Definição do envoltório semi-material que reveste o espírito"
+  },
+  {
+    "query": "Os animais têm alma?",
+    "expected_chunk_id": "lde-q0597",
+    "notes": "Questão sobre o princípio inteligente nos animais e sua diferença da alma humana"
+  },
+  {
+    "query": "O que acontece com a alma após a morte?",
+    "expected_chunk_id": "lde-q0148",
+    "notes": "Separação da alma do corpo físico e estado imediato pós-morte"
+  },
+  {
+    "query": "A separação da alma do corpo é instantânea?",
+    "expected_chunk_id": "lde-q0155",
+    "notes": "Duração do processo de desencarnação"
+  },
+  {
+    "query": "O espírito tem consciência de si mesmo após a morte?",
+    "expected_chunk_id": "lde-q0150",
+    "notes": "Questão sobre a conservação da consciência individual após a morte"
+  },
+  {
+    "query": "O que é a reencarnação?",
+    "expected_chunk_id": "lde-q0166",
+    "notes": "Definição e finalidade das reencarnações sucessivas"
+  },
+  {
+    "query": "Por que reencarnamos?",
+    "expected_chunk_id": "lde-q0167",
+    "notes": "Finalidade da reencarnação — expiação e progresso"
+  },
+  {
+    "query": "Podemos escolher a família em que nascemos?",
+    "expected_chunk_id": "lde-q0258",
+    "notes": "Escolha da família e das condições de encarnação"
+  },
+  {
+    "query": "O que é o mundo dos espíritos?",
+    "expected_chunk_id": "lde-q0084",
+    "notes": "Descrição do mundo espiritual como estado natural dos espíritos"
+  },
+  {
+    "query": "Existem espíritos maus?",
+    "expected_chunk_id": "lde-q0100",
+    "notes": "Existência de espíritos imperfeitos e sua influência"
+  },
+  {
+    "query": "Como os espíritos se comunicam entre si?",
+    "expected_chunk_id": "lde-q0223",
+    "notes": "Forma de comunicação do mundo espiritual — transmissão do pensamento"
+  },
+  {
+    "query": "Os espíritos podem ver tudo?",
+    "expected_chunk_id": "lde-q0237",
+    "notes": "Faculdades dos espíritos — visão e percepção no estado espiritual"
+  },
+  {
+    "query": "O que são os espíritos superiores?",
+    "expected_chunk_id": "lde-q0108",
+    "notes": "Classificação dos espíritos puros ou superiores"
+  },
+  {
+    "query": "Qual a diferença entre espíritos bons e maus?",
+    "expected_chunk_id": "lde-q0106",
+    "notes": "Critério moral na hierarquia espiritual"
+  },
+  {
+    "query": "O que é o inferno na doutrina espírita?",
+    "expected_chunk_id": "lde-q1008",
+    "notes": "Negação do inferno eterno e sua reinterpretação como estado temporário"
+  },
+  {
+    "query": "Existe o purgatório?",
+    "expected_chunk_id": "lde-q1012",
+    "notes": "Equivalente espírita do purgatório — erraticidade e expiação"
+  },
+  {
+    "query": "O que é o paraíso?",
+    "expected_chunk_id": "lde-q1016",
+    "notes": "Descrição do estado de perfeição e bem-aventurança espiritual"
+  },
+  {
+    "query": "A criança que morre em tenra idade sofre?",
+    "expected_chunk_id": "lde-q0197",
+    "notes": "Condição das almas das crianças que faleceram jovens"
+  },
+  {
+    "query": "O suicídio é condenado pelo Espiritismo?",
+    "expected_chunk_id": "lde-q0952",
+    "notes": "Posição da doutrina sobre o suicídio e suas consequências para o espírito"
+  },
+  {
+    "query": "O que é a lei de causa e efeito?",
+    "expected_chunk_id": "lde-q0399",
+    "notes": "Lei da causalidade moral — as consequências de nossos atos no mundo espiritual"
+  },
+  {
+    "query": "O que é a caridade na visão espírita?",
+    "expected_chunk_id": "lde-q0886",
+    "notes": "A caridade como lei suprema e caminho para o progresso espiritual"
+  },
+  {
+    "query": "Existe o livre-arbítrio?",
+    "expected_chunk_id": "lde-q0843",
+    "notes": "Existência e extensão do livre-arbítrio humano"
+  },
+  {
+    "query": "O homem tem responsabilidade por seus atos?",
+    "expected_chunk_id": "lde-q0872",
+    "notes": "Responsabilidade moral derivada do livre-arbítrio"
+  },
+  {
+    "query": "O que são os espíritos guardiões?",
+    "expected_chunk_id": "lde-q0495",
+    "notes": "Existência e papel dos espíritos protetores ou anjos da guarda"
+  },
+  {
+    "query": "Os espíritos podem influenciar nossos pensamentos?",
+    "expected_chunk_id": "lde-q0459",
+    "notes": "Influência dos espíritos sobre o pensamento e as ações humanas"
+  },
+  {
+    "query": "O que é a mediunidade?",
+    "expected_chunk_id": "lde-q0184",
+    "notes": "Faculdade mediúnica — capacidade de perceber e transmitir comunicações espirituais"
+  },
+  {
+    "query": "Como reconhecer um bom espírito?",
+    "expected_chunk_id": "lde-q0594",
+    "notes": "Critérios para distinguir comunicações de espíritos bons e maus"
+  },
+  {
+    "query": "O que é a erraticidade?",
+    "expected_chunk_id": "lde-q0224",
+    "notes": "Estado dos espíritos que não se encontram encarnados nem no mundo espiritual superior"
+  },
+  {
+    "query": "O corpo ressuscita após a morte?",
+    "expected_chunk_id": "lde-q1010",
+    "notes": "Posição espírita sobre a ressurreição física — negação e reinterpretação"
+  },
+  {
+    "query": "Qual o destino das raças primitivas?",
+    "expected_chunk_id": "lde-q0188",
+    "notes": "O progresso espiritual das raças consideradas inferiores pelo pensamento oitocentista"
+  },
+  {
+    "query": "O que é o fluido vital?",
+    "expected_chunk_id": "lde-q0066",
+    "notes": "Definição do fluido vital e sua relação com a matéria e o espírito"
+  },
+  {
+    "query": "O universo foi criado do nada?",
+    "expected_chunk_id": "lde-q0037",
+    "notes": "A questão da criação ex nihilo e a eternidade da matéria"
+  },
+  {
+    "query": "Existem outros mundos habitados?",
+    "expected_chunk_id": "lde-q0055",
+    "notes": "Pluralidade dos mundos habitados e seus diferentes graus de evolução"
+  },
+  {
+    "query": "O espírito pode se manifestar aos vivos?",
+    "expected_chunk_id": "lde-q0319",
+    "notes": "Possibilidade de aparições e manifestações dos espíritos desencarnados"
+  },
+  {
+    "query": "Por que o mal existe no mundo?",
+    "expected_chunk_id": "lde-q0765",
+    "notes": "O problema do mal e sua relação com o livre-arbítrio e a imperfeição dos espíritos"
+  },
+  {
+    "query": "O que é a lei do progresso?",
+    "expected_chunk_id": "lde-q0780",
+    "notes": "O progresso como lei universal — inevitabilidade do aperfeiçoamento espiritual"
+  },
+  {
+    "query": "A riqueza é um obstáculo ao progresso espiritual?",
+    "expected_chunk_id": "lde-q0810",
+    "notes": "A riqueza e sua relação com as provas espirituais"
+  },
+  {
+    "query": "O que é o estado de espírito errante?",
+    "expected_chunk_id": "lde-q0226",
+    "notes": "Descrição da existência errante entre duas encarnações"
+  },
+  {
+    "query": "Os espíritos recordam suas vidas passadas?",
+    "expected_chunk_id": "lde-q0392",
+    "notes": "Memória das existências anteriores e por que ela é geralmente apagada"
+  },
+  {
+    "query": "O que é a expiação espiritual?",
+    "expected_chunk_id": "lde-q0983",
+    "notes": "Natureza e finalidade das provas e sofrimentos como forma de expiação"
+  },
+  {
+    "query": "Existem anjos e demônios?",
+    "expected_chunk_id": "lde-q0128",
+    "notes": "Reinterpretação espírita de anjos e demônios como espíritos em diferentes graus"
+  },
+  {
+    "query": "O que é a consciência moral?",
+    "expected_chunk_id": "lde-q0621",
+    "notes": "A consciência como voz do espírito interior — guia moral interno"
+  },
+  {
+    "query": "O pensamento pode agir à distância?",
+    "expected_chunk_id": "lde-q0454",
+    "notes": "Influência do pensamento sobre os espíritos e sobre outras pessoas à distância"
+  },
+  {
+    "query": "O que distingue o ser humano dos animais?",
+    "expected_chunk_id": "lde-q0605",
+    "notes": "A diferença fundamental entre o espírito humano e o princípio inteligente dos animais"
+  }
+]

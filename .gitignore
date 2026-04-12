@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+backend/venv/
+venv/
+.venv/
+env/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Generated data (large, not committed)
+backend/data/kardec/chunks/
+backend/data/kardec/embeddings/
+backend/data/kardec/index/
+books/
+
+# Frontend build output and deps
+frontend/node_modules/
+frontend/dist/
+
+# Misc
+.DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/
+*.log
+
+# Model cache
+*.bin
+*.safetensors
+*.gguf

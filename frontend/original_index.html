@@ -1,0 +1,467 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumen - IA Espírita</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        lumen: {
+                            50: '#f8f7f4',
+                            100: '#efece5',
+                            500: '#d4a574',
+                            600: '#b8935f',
+                            900: '#2c241b',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+        .message-enter {
+            animation: slideIn 0.3s ease-out forwards;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .typing-dot {
+            animation: typing 1.4s infinite ease-in-out both;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        .flame {
+            filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
+        }
+
+        /* Scrollbar estilizada */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300 h-screen overflow-hidden font-sans antialiased">
+
+    <div id="app" class="flex h-full">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="w-64 bg-gray-50 dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col transform -translate-x-full md:translate-x-0 transition-transform duration-300 absolute md:relative z-20 h-full">
+            <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <svg class="w-6 h-6 text-orange-400 flame" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C10 6 8 8 8 11C8 13 9 15 10 16C9 16 8 15 7 14C6 18 8 21 12 22C16 21 18 18 17 14C16 15 15 16 14 16C15 15 16 13 16 11C16 8 14 6 12 2Z"/>
+                    </svg>
+                    <span class="font-semibold text-lg">Lumen</span>
+                </div>
+                <button onclick="toggleSidebar()" class="md:hidden text-gray-500">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+
+            <div class="p-3">
+                <button onclick="newChat()" class="w-full flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition text-sm font-medium">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    Nova conversa
+                </button>
+            </div>
+
+            <div class="flex-1 overflow-y-auto px-3 py-2 space-y-1" id="history-list">
+                <!-- Histório será populado aqui -->
+                <div class="text-xs text-gray-500 dark:text-gray-400 px-2 py-1">Hoje</div>
+                <button class="w-full text-left px-2 py-1.5 rounded text-sm hover:bg-gray-200 dark:hover:bg-gray-700 truncate text-gray-700 dark:text-gray-300">
+                    O que é mediunidade?
+                </button>
+                <button class="w-full text-left px-2 py-1.5 rounded text-sm hover:bg-gray-200 dark:hover:bg-gray-700 truncate text-gray-700 dark:text-gray-300">
+                    Reencarnação e progresso
+                </button>
+            </div>
+
+            <div class="p-4 border-t border-gray-200 dark:border-gray-700 text-xs text-gray-500 dark:text-gray-400">
+                <div class="flex items-center gap-2 mb-2">
+                    <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                    Sistema online
+                </div>
+                Base: Obras de referência espírita
+            </div>
+        </aside>
+
+        <!-- Overlay mobile -->
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-10 hidden md:hidden" onclick="toggleSidebar()"></div>
+
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col relative">
+            <!-- Header -->
+            <header class="h-14 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-4 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm z-10">
+                <div class="flex items-center gap-3">
+                    <button onclick="toggleSidebar()" class="md:hidden text-gray-600 dark:text-gray-300">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                    <div class="flex items-center gap-2">
+                        <svg class="w-5 h-5 text-orange-400 flame" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C10 6 8 8 8 11C8 13 9 15 10 16C9 16 8 15 7 14C6 18 8 21 12 22C16 21 18 18 17 14C16 15 15 16 14 16C15 15 16 13 16 11C16 8 14 6 12 2Z"/>
+                        </svg>
+                        <span class="font-semibold">Lumen</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <button onclick="toggleTheme()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition text-gray-600 dark:text-gray-300" title="Alternar tema">
+                        <svg id="sun-icon" class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        <svg id="moon-icon" class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Chat Area -->
+            <div id="chat-container" class="flex-1 overflow-y-auto scroll-smooth">
+                <div id="welcome-screen" class="flex flex-col items-center justify-center h-full px-4 max-w-3xl mx-auto">
+                    <div class="mb-8">
+                        <svg class="w-16 h-16 text-orange-400 flame mx-auto mb-4" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C10 6 8 8 8 11C8 13 9 15 10 16C9 16 8 15 7 14C6 18 8 21 12 22C16 21 18 18 17 14C16 15 15 16 14 16C15 15 16 13 16 11C16 8 14 6 12 2Z"/>
+                        </svg>
+                        <h1 class="text-3xl font-semibold text-center mb-2">Lumen</h1>
+                        <p class="text-gray-600 dark:text-gray-400 text-center">Iluminando o estudo da Doutrina Espírita</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 w-full max-w-lg">
+                        <button onclick="startQuickChat('kardec')" class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition text-left group">
+                            <div class="font-medium mb-1 group-hover:text-orange-500 transition">Allan Kardec</div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400">Codificador do Espiritismo</div>
+                        </button>
+                        <button onclick="startQuickChat('andreluiz')" class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition text-left group">
+                            <div class="font-medium mb-1 group-hover:text-orange-500 transition">André Luiz</div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400">Autor de Nosso Lar</div>
+                        </button>
+                        <button onclick="startQuickChat('emmanuel')" class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition text-left group">
+                            <div class="font-medium mb-1 group-hover:text-orange-500 transition">Emmanuel</div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400">Orientação e sabedoria</div>
+                        </button>
+                        <button onclick="startQuickChat('joana')" class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition text-left group">
+                            <div class="font-medium mb-1 group-hover:text-orange-500 transition">Joana de Angelis</div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400">Psicologia e espiritualidade</div>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="messages-area" class="hidden pb-32 pt-4 px-4 max-w-3xl mx-auto space-y-6">
+                    <!-- Mensagens aparecem aqui -->
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4">
+                <div class="max-w-3xl mx-auto">
+                    <div class="relative flex items-end gap-2 bg-gray-100 dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm focus-within:ring-2 focus-within:ring-orange-400/50 focus-within:border-orange-400/50 transition-all">
+
+                        <!-- Selector de Agente -->
+                        <div class="relative">
+                            <select id="agent-select" class="appearance-none bg-transparent pl-4 pr-8 py-3.5 text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer focus:outline-none border-r border-gray-300 dark:border-gray-600 rounded-l-2xl hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+                                <option value="kardec">Allan Kardec</option>
+                                <option value="andreluiz">André Luiz</option>
+                                <option value="emmanuel">Emmanuel</option>
+                                <option value="joana">Joana de Angelis</option>
+                            </select>
+                            <div class="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
+                        </div>
+
+                        <!-- Textarea -->
+                        <textarea
+                            id="message-input"
+                            rows="1"
+                            class="flex-1 bg-transparent py-3.5 px-2 text-gray-900 dark:text-gray-100 placeholder-gray-500 resize-none focus:outline-none max-h-32"
+                            placeholder="Pergunte sobre a doutrina..."
+                            onkeydown="handleKeyDown(event)"
+                            oninput="autoResize(this)"
+                        ></textarea>
+
+                        <!-- Botão Enviar -->
+                        <button onclick="sendMessage()" id="send-btn" class="p-2 m-1.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white transition disabled:opacity-50 disabled:cursor-not-allowed">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                        </button>
+                    </div>
+                    <div class="text-center mt-2 text-xs text-gray-500 dark:text-gray-500">
+                        Lumen é uma ferramenta de pesquisa. Sempre consulte as obras originais para estudo aprofundado.
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Estado
+        let currentAgent = 'kardec';
+        let isTyping = false;
+        let messages = [];
+
+        // Dados mockados para demonstração
+        const agentData = {
+            kardec: {
+                name: 'Allan Kardec',
+                style: 'didático e metódico',
+                responses: {
+                    'mediunidade': 'A mediunidade é a faculdade de comunicação entre os Espíritos e os homens. Conforme O Livro dos Médiuns, é um fenômeno natural que obedece a leis definidas. Todos somos médiuns em maior ou menor grau, pois todos temos a faculdade de comunicação com os Espíritos, ainda que em estado rudimentar na maioria das pessoas.',
+                    'reencarnação': 'A reencarnação é lei de Natureza, meio de regeneração e progresso para todos os seres. O Espírito, ao desencarnar, entra em um período de vida espiritual, mas necessita retornar à vida corporal para continuar sua evolução. Conforme O Livro dos Espíritos, questão 132: "A reencarnação é o remédio para todas as imperfeições humanas."',
+                    'default': 'Em minhas obras, busquei sempre o método científico e a observação rigorosa dos fatos. A Doutrina Espírita baseia-se na codificação de três grandes verdades: a existência de Deus, a imortalidade da alma e a comunicação dos Espíritos. Como posso auxiliar seu estudo específico sobre estes temas?'
+                }
+            },
+            andreluiz: {
+                name: 'André Luiz',
+                style: 'experiencial e compassivo',
+                responses: {
+                    'mediunidade': 'A mediunidade é um dom precioso que requer muita responsabilidade. Em nossas observações no plano espiritual, vemos que o médium é um instrumento da espiritualidade para o conforto e o esclarecimento dos irmãos encarnados. É preciso educação, disciplina e muito amor para exercê-la com dignidade.',
+                    'reencarnação': 'A reencarnação é como um novo amanhecer para o Espírito. Ao retornarmos à esfera física, trazemos connosco as lições aprendidas e as dívidas a saldar. É uma oportunidade valiosa de renovação e de serviço ao próximo. O processo do renascimento é conduzido com muito amor pelos amigos espirituais.',
+                    'default': 'A vida no plano espiritual é muito diferente do que imaginamos. Existe organização, trabalho, estudo e muito amor entre os que já desencarnaram. Posso compartilhar sobre a vida nos colônias espirituais, o processo do desencarne ou a assistência aos que sofrem.'
+                }
+            },
+            emmanuel: {
+                name: 'Emmanuel',
+                style: 'sábio e erudito',
+                responses: {
+                    'mediunidade': 'A mediunidade é a ponte entre dois mundos que se complementam. O Evangelho nos ensina que deveis provar os espíritos para discernir suas intenções. A mediunidade verdadeira edifica, consola e esclarece, nunca confunde ou gera medo.',
+                    'reencarnação': 'Assim como o trigo morre para renascer, o Espírito renova-se através dos vários corpos que veste. Jesus nos ensinou que é necessário nascer de novo para ver o Reino de Deus. Cada existência física é uma oportunidade de aproximação do Pai.',
+                    'default': 'A sabedoria divina se manifesta através dos tempos. Os Evangelhos contêm a essência da lei de amor que regula o universo. Como posso auxiliar-vos a compreender melhor os ensinamentos do Mestre Jesus em relação às questões da alma?'
+                }
+            },
+            joana: {
+                name: 'Joana de Angelis',
+                style: 'terapêutico e profundo',
+                responses: {
+                    'mediunidade': 'A mediunidade é uma expressão da sensibilidade humana ampliada. Do ponto de vista psicológico, o médium necessita de equilímrio emocional para ser canal saudável das energias espirituais. A própria mediunidade é um instrumento de transformação interior quando bem compreendida.',
+                    'reencarnação': 'A reencarnação pode ser compreendida como um processo de reciclagem emocional e espiritual. Tragamos connosco padrões psicológicos a serem transformados. Cada retorno à vida física é uma oportunidade de ressignificar nossa história pessoal.',
+                    'default': 'A psicologia profunda e a espiritualidade caminham juntas no autoconhecimento. Somos seres em construção permanente. Posso auxiliar sobre questões emocionais, relacionamentos ou o processo de transformação pessoal através da ótica espírita.'
+                }
+            }
+        };
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTheme();
+            document.getElementById('message-input').focus();
+        });
+
+        // Funções de tema
+        function toggleTheme() {
+            const html = document.documentElement;
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        function loadTheme() {
+            const saved = localStorage.getItem('theme');
+            if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            }
+        }
+
+        // Sidebar
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            const isOpen = !sidebar.classList.contains('-translate-x-full');
+
+            if (isOpen) {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            } else {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            }
+        }
+
+        // Chat functions
+        function startQuickChat(agent) {
+            document.getElementById('agent-select').value = agent;
+            currentAgent = agent;
+            newChat();
+            document.getElementById('message-input').focus();
+        }
+
+        function newChat() {
+            document.getElementById('welcome-screen').classList.remove('hidden');
+            document.getElementById('messages-area').classList.add('hidden');
+            document.getElementById('messages-area').innerHTML = '';
+            messages = [];
+            if (window.innerWidth < 768) toggleSidebar();
+        }
+
+        function handleKeyDown(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        }
+
+        function autoResize(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = Math.min(textarea.scrollHeight, 128) + 'px';
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('message-input');
+            const text = input.value.trim();
+            if (!text || isTyping) return;
+
+            // Esconde welcome screen
+            document.getElementById('welcome-screen').classList.add('hidden');
+            document.getElementById('messages-area').classList.remove('hidden');
+
+            // Adiciona mensagem do usuário
+            addMessage('user', text);
+            input.value = '';
+            input.style.height = 'auto';
+
+            // Simula resposta da IA
+            isTyping = true;
+            showTyping();
+
+            setTimeout(() => {
+                removeTyping();
+                const response = generateResponse(text);
+                addMessage('agent', response);
+                isTyping = false;
+            }, 1500 + Math.random() * 1000);
+        }
+
+        function addMessage(role, content) {
+            const container = document.getElementById('messages-area');
+            const div = document.createElement('div');
+            div.className = 'message-enter flex gap-4 ' + (role === 'user' ? 'flex-row-reverse' : '');
+
+            const agent = agentData[currentAgent];
+            const avatar = role === 'user'
+                ? `<div class="w-8 h-8 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center text-sm font-medium">Você</div>`
+                : `<div class="w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center">
+                     <svg class="w-4 h-4 text-orange-500" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C10 6 8 8 8 11C8 13 9 15 10 16C9 16 8 15 7 14C6 18 8 21 12 22C16 21 18 18 17 14C16 15 15 16 14 16C15 15 16 13 16 11C16 8 14 6 12 2Z"/>
+                     </svg>
+                   </div>`;
+
+            const bubbleClass = role === 'user'
+                ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100'
+                : 'bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100';
+
+            const citations = role === 'agent' ? generateCitations() : '';
+
+            div.innerHTML = `
+                ${avatar}
+                <div class="flex-1 ${role === 'user' ? 'text-right' : ''}">
+                    <div class="inline-block max-w-[85%] ${bubbleClass} rounded-2xl px-4 py-2.5 text-sm leading-relaxed shadow-sm border border-gray-100 dark:border-gray-800">
+                        ${content}
+                        ${citations}
+                    </div>
+                </div>
+            `;
+
+            container.appendChild(div);
+            scrollToBottom();
+        }
+
+        function generateCitations() {
+            const books = ['L.E. Q.56', 'L.M. §12', 'ESE cap. XII', 'Nosso Lar', 'Caminho...'];
+            const random = books[Math.floor(Math.random() * books.length)];
+            return `<div class="mt-2 pt-2 border-t border-gray-200 dark:border-gray-700 flex gap-2">
+                <button class="text-xs text-orange-500 hover:underline">${random}</button>
+            </div>`;
+        }
+
+        function showTyping() {
+            const container = document.getElementById('messages-area');
+            const div = document.createElement('div');
+            div.id = 'typing-indicator';
+            div.className = 'message-enter flex gap-4';
+            div.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center">
+                    <svg class="w-4 h-4 text-orange-500" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C10 6 8 8 8 11C8 13 9 15 10 16C9 16 8 15 7 14C6 18 8 21 12 22C16 21 18 18 17 14C16 15 15 16 14 16C15 15 16 13 16 11C16 8 14 6 12 2Z"/>
+                    </svg>
+                </div>
+                <div class="flex items-center gap-1 px-4 py-4 bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800">
+                    <div class="w-2 h-2 bg-gray-400 rounded-full typing-dot"></div>
+                    <div class="w-2 h-2 bg-gray-400 rounded-full typing-dot"></div>
+                    <div class="w-2 h-2 bg-gray-400 rounded-full typing-dot"></div>
+                </div>
+            `;
+            container.appendChild(div);
+            scrollToBottom();
+        }
+
+        function removeTyping() {
+            const el = document.getElementById('typing-indicator');
+            if (el) el.remove();
+        }
+
+        function generateResponse(text) {
+            const lower = text.toLowerCase();
+            const agent = agentData[currentAgent];
+
+            if (lower.includes('mediunidade')) return agent.responses.mediunidade;
+            if (lower.includes('reencarnação') || lower.includes('vida')) return agent.responses.reencarnação;
+            return agent.responses.default;
+        }
+
+        function scrollToBottom() {
+            const container = document.getElementById('chat-container');
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // Mudança de agente
+        document.getElementById('agent-select').addEventListener('change', (e) => {
+            currentAgent = e.target.value;
+            if (messages.length > 0) {
+                // Adiciona notificação sutil de troca de agente
+                const container = document.getElementById('messages-area');
+                const div = document.createElement('div');
+                div.className = 'flex justify-center my-4';
+                div.innerHTML = `<span class="text-xs text-gray-500 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full">Agora conversando com ${agentData[currentAgent].name}</span>`;
+                container.appendChild(div);
+                scrollToBottom();
+            }
+        });
+    </script>
+</body>
+</html>

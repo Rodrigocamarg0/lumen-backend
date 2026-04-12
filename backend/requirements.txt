@@ -1,0 +1,15 @@
+fastapi
+uvicorn[standard]
+pydantic
+pydantic-settings
+faiss-cpu
+pdfminer.six
+sentence-transformers
+transformers
+bitsandbytes
+accelerate
+torch
+mlx-lm
+# dev / tooling
+pre-commit
+ruff
