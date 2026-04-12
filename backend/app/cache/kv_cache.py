@@ -577,13 +577,49 @@ class TurboQuantCache(DynamicCache):
         return None if max_shape < 0 else max_shape
 
 
+def _resolve_gemma_helpers(module):
+    """
+    Return (apply_rotary_pos_emb, eager_attention_forward) for any Gemma variant.
+    Tries the model's own module first, then falls back across known paths.
+    """
+    cls_name = module.__class__.__name__  # e.g. Gemma3Attention, Gemma4Attention
+    # Derive the snake-case module name: Gemma3Attention → gemma3, Gemma4Attention → gemma4
+    import re
+
+    prefix_match = re.match(r"(Gemma\d+)", cls_name)
+    candidate_modules = []
+    if prefix_match:
+        snake = prefix_match.group(1).lower()  # e.g. "gemma3", "gemma4"
+        candidate_modules.append(f"transformers.models.{snake}.modeling_{snake}")
+    # Always include gemma3 as fallback since Gemma 4 reuses parts of its API
+    candidate_modules += [
+        "transformers.models.gemma3.modeling_gemma3",
+        "transformers.models.gemma4.modeling_gemma4",
+        "transformers.models.gemma2.modeling_gemma2",
+        "transformers.models.gemma.modeling_gemma",
+    ]
+    for mod_path in candidate_modules:
+        try:
+            import importlib
+
+            mod = importlib.import_module(mod_path)
+            rope = getattr(mod, "apply_rotary_pos_emb", None)
+            eager = getattr(mod, "eager_attention_forward", None)
+            if rope is not None and eager is not None:
+                return rope, eager
+        except ModuleNotFoundError:
+            continue
+    raise RuntimeError(
+        f"Could not find apply_rotary_pos_emb / eager_attention_forward "
+        f"for {cls_name}. Tried: {candidate_modules}"
+    )
+
+
 def _patch_gemma_attention_forward(module) -> None:
     from transformers.cache_utils import Cache as HFCache
     from transformers.modeling_attention_utils import ALL_ATTENTION_FUNCTIONS
-    from transformers.models.gemma3.modeling_gemma3 import (
-        apply_rotary_pos_emb,
-        eager_attention_forward,
-    )
+
+    apply_rotary_pos_emb, eager_attention_forward = _resolve_gemma_helpers(module)
 
     original_forward = module.forward
 
@@ -662,10 +698,28 @@ def _patch_gemma_attention_forward(module) -> None:
 
 
 def patch_model_for_quantized_attention(model) -> None:
+    import logging
+
+    logger = logging.getLogger("kv_cache")
     patched = 0
+    skipped: list[str] = []
     for module in model.modules():
-        if module.__class__.__name__ == "Gemma3Attention":
+        cls = module.__class__.__name__
+        if not (cls.startswith("Gemma") and cls.endswith("Attention")):
+            continue
+        try:
             _patch_gemma_attention_forward(module)
             patched += 1
+        except Exception as exc:
+            skipped.append(f"{cls}: {exc}")
+
     if patched == 0:
-        raise RuntimeError("No Gemma3Attention modules found to patch for QuantizedAttention")
+        all_attn = sorted(
+            {m.__class__.__name__ for m in model.modules() if "ttention" in m.__class__.__name__}
+        )
+        raise RuntimeError(
+            f"No patchable Gemma attention modules found. "
+            f"Attention classes in model: {all_attn}. "
+            f"Errors: {skipped}"
+        )
+    logger.info(f"TurboQuant: patched {patched} attention modules")
