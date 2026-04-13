@@ -199,7 +199,7 @@ async def _astream_openai(
     )
     if settings.OPENAI_REASONING_EFFORT:
         # Thinking mode: temperature must be 1 (API requirement)
-        kwargs["reasoning"] = {"effort": settings.OPENAI_REASONING_EFFORT}
+        kwargs["reasoning_effort"] = settings.OPENAI_REASONING_EFFORT
         kwargs["temperature"] = 1
     else:
         kwargs["temperature"] = temperature
