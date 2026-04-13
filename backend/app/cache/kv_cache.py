@@ -616,21 +616,32 @@ def _resolve_gemma_helpers(module):
 
 
 def _patch_gemma_attention_forward(module) -> None:
-    from transformers.cache_utils import Cache as HFCache
-    from transformers.modeling_attention_utils import ALL_ATTENTION_FUNCTIONS
-
-    apply_rotary_pos_emb, eager_attention_forward = _resolve_gemma_helpers(module)
-
+    apply_rotary_pos_emb, _ = _resolve_gemma_helpers(module)
     original_forward = module.forward
 
     def _forward(
         self,
         hidden_states: torch.Tensor,
-        position_embeddings: torch.Tensor = None,
-        attention_mask: torch.Tensor | None = None,
-        past_key_values: HFCache | None = None,
+        position_embeddings=None,
+        attention_mask=None,
+        shared_kv_states=None,
+        past_key_values=None,
         **kwargs,
     ):
+        # Global attention layers (shared_kv_states is set) and non-TurboQuant
+        # caches go through the original unmodified forward — safe regardless of
+        # transformers version or future API changes.
+        if not isinstance(past_key_values, TurboQuantCache) or shared_kv_states is not None:
+            return original_forward(
+                hidden_states,
+                position_embeddings=position_embeddings,
+                attention_mask=attention_mask,
+                shared_kv_states=shared_kv_states,
+                past_key_values=past_key_values,
+                **kwargs,
+            )
+
+        # TurboQuant compressed path — local attention layers only.
         input_shape = hidden_states.shape[:-1]
         hidden_shape = (*input_shape, -1, self.head_dim)
 
@@ -644,48 +655,18 @@ def _patch_gemma_attention_forward(module) -> None:
         cos, sin = position_embeddings
         query_states, key_states = apply_rotary_pos_emb(query_states, key_states, cos, sin)
 
-        if isinstance(past_key_values, TurboQuantCache):
-            past_key_values.update(
-                key_states,
-                value_states,
-                self.layer_idx,
-                return_full_states=False,
-            )
-            cache_layer = past_key_values.layers[self.layer_idx]
-            attn_output, attn_weights = past_key_values.quantized_attention.forward(
-                self,
-                query_states,
-                cache_layer.k_state,
-                cache_layer.v_state,
-                cache_layer,
-                attention_mask,
-                scaling=self.scaling,
-                dropout=self.attention_dropout if self.training else 0.0,
-            )
-            attn_output = attn_output.reshape(*input_shape, -1).contiguous()
-            attn_output = self.o_proj(attn_output)
-            return attn_output, attn_weights
-
-        if past_key_values is not None:
-            key_states, value_states = past_key_values.update(
-                key_states, value_states, self.layer_idx
-            )
-
-        attention_interface = ALL_ATTENTION_FUNCTIONS.get_interface(
-            self.config._attn_implementation, eager_attention_forward
-        )
-        attn_output, attn_weights = attention_interface(
+        past_key_values.update(key_states, value_states, self.layer_idx, return_full_states=False)
+        cache_layer = past_key_values.layers[self.layer_idx]
+        attn_output, attn_weights = past_key_values.quantized_attention.forward(
             self,
             query_states,
-            key_states,
-            value_states,
+            cache_layer.k_state,
+            cache_layer.v_state,
+            cache_layer,
             attention_mask,
-            dropout=self.attention_dropout if self.training else 0.0,
             scaling=self.scaling,
-            sliding_window=self.sliding_window,
-            **kwargs,
+            dropout=self.attention_dropout if self.training else 0.0,
         )
-
         attn_output = attn_output.reshape(*input_shape, -1).contiguous()
         attn_output = self.o_proj(attn_output)
         return attn_output, attn_weights
@@ -705,7 +686,7 @@ def patch_model_for_quantized_attention(model) -> None:
     skipped: list[str] = []
     for module in model.modules():
         cls = module.__class__.__name__
-        if not (cls.startswith("Gemma") and cls.endswith("Attention")):
+        if not (cls.startswith("Gemma") and "Attention" in cls):
             continue
         try:
             _patch_gemma_attention_forward(module)
