@@ -16,10 +16,14 @@ from __future__ import annotations
 import asyncio
 from collections.abc import AsyncIterator, Iterator
 import logging
+import os
 import threading
 
 import torch
 from transformers import TextIteratorStreamer  # type: ignore[import]
+
+# Reduce CUDA memory fragmentation — must be set before any CUDA allocation.
+os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
 
 from app.cache import TurboQuantCache
 from app.cache.kv_cache import patch_model_for_quantized_attention
