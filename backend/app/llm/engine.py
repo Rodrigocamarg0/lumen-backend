@@ -191,13 +191,19 @@ async def _astream_openai(
     messages.extend(history)
     messages.append({"role": "user", "content": user_message})
 
-    stream = await client.chat.completions.create(
+    kwargs: dict = dict(
         model=settings.OPENAI_MODEL,
         messages=messages,
         max_completion_tokens=max_new_tokens,
-        temperature=temperature,
         stream=True,
     )
+    if settings.OPENAI_REASONING_EFFORT:
+        # Thinking mode: temperature must be 1 (API requirement)
+        kwargs["reasoning"] = {"effort": settings.OPENAI_REASONING_EFFORT}
+        kwargs["temperature"] = 1
+    else:
+        kwargs["temperature"] = temperature
+    stream = await client.chat.completions.create(**kwargs)
     async for chunk in stream:
         token = chunk.choices[0].delta.content
         if token:

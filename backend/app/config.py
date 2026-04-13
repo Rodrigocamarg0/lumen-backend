@@ -7,6 +7,9 @@ class Settings(BaseSettings):
     # LLM provider: "local" (Gemma via HF/MLX) or "openai"
     LLM_PROVIDER: str = "local"
     OPENAI_MODEL: str = "gpt-4.1-nano"
+    # Reasoning effort for OpenAI thinking models: low | medium | high | xhigh
+    # Leave empty to disable thinking mode.
+    OPENAI_REASONING_EFFORT: str = ""
 
     MODEL_ID: str = "google/gemma-4-E4B-it"
     QUANTIZATION_BITS: float = 3.5
