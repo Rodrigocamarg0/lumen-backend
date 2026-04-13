@@ -20,7 +20,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app import state
-from app.api.routes import chat, config, health, search
+from app.api.routes import chat, config, health, search, sessions
 from app.config import settings
 
 logger = logging.getLogger("main")
@@ -84,6 +84,11 @@ async def lifespan(app: FastAPI):
 
         state.rag = RAGOrchestrator(index=idx, embedder=embedder)
         logger.info("RAG orchestrator ready")
+
+        from app.agents.registry import build_registry
+
+        build_registry()
+        logger.info("[agents] registry built")
     except FileNotFoundError:
         logger.warning(
             "FAISS index not found — run `python -m app.corpus.parser` and "
@@ -131,6 +136,7 @@ app.include_router(health.router, prefix="/api", tags=["Health"])
 app.include_router(chat.router, prefix="/api", tags=["Chat"])
 app.include_router(search.router, prefix="/api", tags=["Search"])
 app.include_router(config.router, prefix="/api", tags=["Config"])
+app.include_router(sessions.router, prefix="/api", tags=["Sessions"])
 
 # ---------------------------------------------------------------------------
 # Dev server

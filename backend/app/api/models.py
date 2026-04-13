@@ -88,3 +88,41 @@ class HealthResponse(BaseModel):
     vram_used_mb: int | None
     vram_total_mb: int | None
     version: str
+
+
+# ---------------------------------------------------------------------------
+# Session models (Phase 2 — Agno persistent history)
+# ---------------------------------------------------------------------------
+
+
+class SessionSummary(BaseModel):
+    session_id: str
+    persona_id: str
+    created_at: int
+    updated_at: int
+    turn_count: int
+    preview: str
+
+    @classmethod
+    def from_agno(cls, session: object, persona_id: str) -> SessionSummary:
+        turn_count = 0
+        last_user = ""
+        for run in getattr(session, "runs", None) or []:
+            for msg in getattr(run, "messages", None) or []:
+                if getattr(msg, "role", None) == "user":
+                    last_user = (getattr(msg, "content", "") or "")[:120]
+                    turn_count += 1
+        return cls(
+            session_id=getattr(session, "session_id", ""),
+            persona_id=persona_id,
+            created_at=getattr(session, "created_at", 0) or 0,
+            updated_at=getattr(session, "updated_at", 0) or 0,
+            turn_count=turn_count,
+            preview=last_user,
+        )
+
+
+class SessionDetail(BaseModel):
+    session_id: str
+    persona_id: str
+    turns: list[Message]

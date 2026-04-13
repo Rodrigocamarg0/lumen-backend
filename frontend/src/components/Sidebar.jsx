@@ -2,6 +2,17 @@ import { useEffect, useState } from "react";
 import FlameIcon from "./FlameIcon.jsx";
 import { fetchHealth, PERSONAS } from "../lib/api.js";
 
+function formatDate(unixTs) {
+  if (!unixTs) return "";
+  const d = new Date(unixTs * 1000);
+  const now = new Date();
+  const diffDays = Math.floor((now - d) / 86_400_000);
+  if (diffDays === 0) return "Hoje";
+  if (diffDays === 1) return "Ontem";
+  if (diffDays < 7) return `${diffDays} dias atrás`;
+  return d.toLocaleDateString("pt-BR", { day: "2-digit", month: "short" });
+}
+
 function HealthDot() {
   const [status, setStatus] = useState("checking");
 
@@ -51,10 +62,11 @@ export default function Sidebar({
   onClose,
   currentPersona,
   onPersonaChange,
-  conversations,
+  sessions,
   onNewChat,
-  onSelectConversation,
-  activeConversationId,
+  onSelectSession,
+  onDeleteSession,
+  activeSessionId,
 }) {
   return (
     <>
@@ -128,31 +140,75 @@ export default function Sidebar({
           </button>
         </div>
 
-        {/* Conversation history */}
+        {/* Session history */}
         <div
           className="flex-1 overflow-y-auto px-3 py-2 space-y-1"
           id="history-list"
         >
-          {conversations.length > 0 && (
+          {sessions.length > 0 && (
             <div className="text-xs text-gray-500 dark:text-gray-400 px-2 py-1">
-              Hoje
+              Conversas
             </div>
           )}
-          {conversations.map((conv) => (
-            <button
-              key={conv.id}
-              onClick={() => onSelectConversation(conv.id)}
+          {sessions.map((session) => (
+            <div
+              key={session.session_id}
               className={[
-                "w-full text-left px-2 py-1.5 rounded text-sm truncate transition",
-                conv.id === activeConversationId
-                  ? "bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700",
+                "group flex items-center gap-1 rounded transition",
+                session.session_id === activeSessionId
+                  ? "bg-gray-200 dark:bg-gray-700"
+                  : "hover:bg-gray-100 dark:hover:bg-gray-700/60",
               ].join(" ")}
-              title={conv.title}
             >
-              {conv.title}
-            </button>
+              <button
+                onClick={() => onSelectSession(session)}
+                className="flex-1 text-left px-2 py-1.5 text-sm truncate min-w-0"
+                title={session.preview || session.session_id}
+              >
+                <span
+                  className={
+                    session.session_id === activeSessionId
+                      ? "text-gray-900 dark:text-gray-100"
+                      : "text-gray-700 dark:text-gray-300"
+                  }
+                >
+                  {session.preview || "Conversa sem título"}
+                </span>
+                <span className="block text-xs text-gray-400 dark:text-gray-500 mt-0.5">
+                  {formatDate(session.updated_at)}
+                </span>
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onDeleteSession(session.session_id);
+                }}
+                className="shrink-0 mr-1 p-1 rounded opacity-0 group-hover:opacity-100
+                           text-gray-400 hover:text-red-500 transition"
+                aria-label="Apagar conversa"
+                title="Apagar"
+              >
+                <svg
+                  className="w-3.5 h-3.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
+              </button>
+            </div>
           ))}
+          {sessions.length === 0 && (
+            <p className="text-xs text-gray-400 dark:text-gray-500 px-2 py-2">
+              Nenhuma conversa ainda.
+            </p>
+          )}
         </div>
 
         {/* Footer */}

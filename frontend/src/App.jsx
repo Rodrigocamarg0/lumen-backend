@@ -1,11 +1,16 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Sidebar from "./components/Sidebar.jsx";
 import Header from "./components/Header.jsx";
 import WelcomeScreen from "./components/WelcomeScreen.jsx";
 import ChatArea from "./components/ChatArea.jsx";
 import InputArea from "./components/InputArea.jsx";
 import { useChat } from "./hooks/useChat.js";
-import { getPersona } from "./lib/api.js";
+import {
+  deleteSession,
+  fetchSessionDetail,
+  fetchSessions,
+  getPersona,
+} from "./lib/api.js";
 
 function loadTheme() {
   const saved = localStorage.getItem("lumen-theme");
@@ -31,28 +36,45 @@ export default function App() {
   const [showWelcome, setShowWelcome] = useState(true);
   const [systemNotes, setSystemNotes] = useState([]);
 
-  const [conversations, setConversations] = useState([]);
-  const [activeConvId, setActiveConvId] = useState(null);
-  const convFirstMessageRef = useRef(null);
+  const [sessions, setSessions] = useState([]);
 
-  const { messages, isStreaming, sessionId, sendMessage, clearMessages } =
-    useChat();
+  const {
+    messages,
+    isStreaming,
+    sessionId,
+    sendMessage,
+    clearMessages,
+    loadSession,
+    onTurnCompleteRef,
+  } = useChat();
 
+  // Restore welcome state: if we have a session from localStorage, hide welcome
   useEffect(() => {
-    if (
-      messages.length === 1 &&
-      messages[0].role === "user" &&
-      !convFirstMessageRef.current
-    ) {
-      const id = crypto.randomUUID();
-      convFirstMessageRef.current = id;
-      setActiveConvId(id);
-      setConversations((prev) => [
-        { id, title: messages[0].content.slice(0, 48) },
-        ...prev,
-      ]);
+    if (sessionId && messages.length === 0) {
+      // Fetch the last session to pre-populate (optional; just hide welcome)
+      setShowWelcome(false);
     }
-  }, [messages]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const refreshSessions = useCallback(async () => {
+    try {
+      const data = await fetchSessions(currentPersona);
+      setSessions(data);
+    } catch {
+      // silently ignore — sessions are non-critical
+    }
+  }, [currentPersona]);
+
+  // Load sessions on mount and when persona changes
+  useEffect(() => {
+    refreshSessions();
+  }, [refreshSessions]);
+
+  // Wire up the post-turn callback so the list refreshes after each message
+  useEffect(() => {
+    onTurnCompleteRef.current = refreshSessions;
+  }, [refreshSessions, onTurnCompleteRef]);
 
   function handleThemeToggle() {
     setTheme((prev) => {
@@ -78,9 +100,30 @@ export default function App() {
     clearMessages();
     setShowWelcome(true);
     setSystemNotes([]);
-    convFirstMessageRef.current = null;
-    setActiveConvId(null);
     setSidebarOpen(false);
+  }
+
+  async function handleSelectSession(session) {
+    try {
+      const detail = await fetchSessionDetail(session.session_id);
+      loadSession(session.session_id, detail.turns);
+      if (session.persona_id && session.persona_id !== currentPersona) {
+        setCurrentPersona(session.persona_id);
+      }
+      setShowWelcome(false);
+      setSidebarOpen(false);
+    } catch (err) {
+      console.error("Failed to load session:", err);
+    }
+  }
+
+  async function handleDeleteSession(sessionId) {
+    try {
+      await deleteSession(sessionId);
+      setSessions((prev) => prev.filter((s) => s.session_id !== sessionId));
+    } catch (err) {
+      console.error("Failed to delete session:", err);
+    }
   }
 
   async function handleSend(text) {
@@ -104,13 +147,11 @@ export default function App() {
         onClose={() => setSidebarOpen(false)}
         currentPersona={currentPersona}
         onPersonaChange={handlePersonaChange}
-        conversations={conversations}
+        sessions={sessions}
         onNewChat={handleNewChat}
-        onSelectConversation={(id) => {
-          setActiveConvId(id);
-          setSidebarOpen(false);
-        }}
-        activeConversationId={activeConvId}
+        onSelectSession={handleSelectSession}
+        onDeleteSession={handleDeleteSession}
+        activeSessionId={sessionId}
       />
 
       <div className="flex flex-col flex-1 min-w-0 relative">

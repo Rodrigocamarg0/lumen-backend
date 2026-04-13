@@ -24,6 +24,7 @@ class Settings(BaseSettings):
     MIN_VRAM_MB_FOR_GPU_ONLY: int = 1800
     OPENAI_API_KEY: str = ""
     HF_TOKEN: str = ""
+    DATABASE_URL: str = "postgresql+psycopg://ai:ai@localhost:5532/ai"
 
     class Config:
         env_file = ".env"

@@ -11,6 +11,9 @@ bitsandbytes
 accelerate
 torch
 mlx-lm
+agno>=1.7
+sqlalchemy>=2.0
+psycopg[binary]>=3.1
 # dev / tooling
 pre-commit
 ruff

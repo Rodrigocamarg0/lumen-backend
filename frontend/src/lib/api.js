@@ -47,12 +47,12 @@ export async function fetchHealth() {
 
 /**
  * Streams a chat request and calls callbacks for each SSE event type.
+ * History is managed server-side by Agno; do not send it from the client.
  *
  * @param {{
  *   message: string,
  *   persona_id: string,
  *   session_id: string|null,
- *   history: {role:string, content:string}[],
  *   onToken: (token:string) => void,
  *   onCitations: (citations:object[]) => void,
  *   onStats: (stats:object) => void,
@@ -64,7 +64,6 @@ export async function streamChat({
   message,
   persona_id,
   session_id,
-  history,
   onToken,
   onCitations,
   onStats,
@@ -74,7 +73,6 @@ export async function streamChat({
     message,
     persona_id,
     session_id,
-    history,
     options: {
       max_new_tokens: 1024,
       top_k_chunks: 5,
@@ -145,6 +143,47 @@ export async function streamChat({
   }
 
   return fullText;
+}
+
+/* ─── Sessions ──────────────────────────────────────────── */
+
+/**
+ * Fetch all sessions, optionally filtered by persona.
+ * @param {string|null} personaId
+ * @returns {Promise<object[]>} list of SessionSummary
+ */
+export async function fetchSessions(personaId = null) {
+  const url = personaId
+    ? `${API_BASE}/api/sessions?persona_id=${encodeURIComponent(personaId)}`
+    : `${API_BASE}/api/sessions`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
+/**
+ * Fetch the full turn history for a session.
+ * @param {string} sessionId
+ * @returns {Promise<{session_id:string, persona_id:string, turns:object[]}>}
+ */
+export async function fetchSessionDetail(sessionId) {
+  const res = await fetch(
+    `${API_BASE}/api/sessions/${encodeURIComponent(sessionId)}`,
+  );
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
+/**
+ * Delete a session and its history.
+ * @param {string} sessionId
+ */
+export async function deleteSession(sessionId) {
+  const res = await fetch(
+    `${API_BASE}/api/sessions/${encodeURIComponent(sessionId)}`,
+    { method: "DELETE" },
+  );
+  if (!res.ok && res.status !== 404) throw new Error(`HTTP ${res.status}`);
 }
 
 /* ─── Semantic Search ───────────────────────────────────── */
