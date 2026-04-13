@@ -1,0 +1,15 @@
+# CPU-only override — strips the NVIDIA GPU requirement from the backend.
+# Use when nvidia-container-toolkit is not available:
+#
+#   docker compose -f docker-compose.yml -f docker-compose.cpu.yml up
+#
+# This sets LLM_PROVIDER=openai so the backend uses the OpenAI API instead
+# of the local GPU model.
+
+services:
+  backend:
+    deploy: {}
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=
+      - DATABASE_URL=postgresql+psycopg://ai:ai@postgres:5432/ai
+      - LLM_PROVIDER=openai
