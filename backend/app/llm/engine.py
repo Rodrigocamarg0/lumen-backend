@@ -286,14 +286,31 @@ def _load_cuda(model_name: str) -> None:
             bnb_4bit_compute_dtype=compute_dtype,
             llm_int8_enable_fp32_cpu_offload=True,
         )
-        logger.info(f"Loading model {model_name} in 4-bit (compute_dtype={compute_dtype}) …")
+        # Force all layers onto the GPU when the model fits in VRAM.
+        # device_map="auto" is too conservative — it spills layers to CPU
+        # even when there is room, which kills throughput on small cards.
+        vram_free = torch.cuda.mem_get_info(0)[0] // (1024 * 1024)
+        device_map = "cuda" if vram_free >= settings.MIN_VRAM_MB_FOR_GPU_ONLY else "auto"
+        logger.info(
+            f"Loading model {model_name} in 4-bit "
+            f"(compute_dtype={compute_dtype}, device_map={device_map!r}, "
+            f"free_vram={vram_free}MB) …"
+        )
         _model = AutoModelForCausalLM.from_pretrained(
             model_name,
             quantization_config=bnb_config,
-            device_map="auto",
+            device_map=device_map,
             dtype=compute_dtype,
             offload_buffers=True,
         )
+        device_map_used = getattr(_model, "hf_device_map", {})
+        cpu_layers = [k for k, v in device_map_used.items() if str(v) == "cpu"]
+        if cpu_layers:
+            logger.warning(
+                f"{len(cpu_layers)} layers on CPU — inference will be slow: {cpu_layers[:5]}"
+            )
+        else:
+            logger.info("All layers on GPU")
         if settings.USE_TURBOQUANT_CACHE:
             try:
                 patch_model_for_quantized_attention(_model)

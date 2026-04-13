@@ -16,6 +16,9 @@ class Settings(BaseSettings):
     KV_CACHE_BITS: float = 3.5
     KV_CACHE_OUTLIER_THRESHOLD: float = 10.0
     MAX_NEW_TOKENS: int = 512
+    # Force device_map="cuda" when free VRAM >= this threshold (MB).
+    # Prevents "auto" from spilling layers to CPU on small-VRAM cards.
+    MIN_VRAM_MB_FOR_GPU_ONLY: int = 1800
     OPENAI_API_KEY: str = ""
     HF_TOKEN: str = ""
 
