@@ -280,6 +280,7 @@ def _load_cuda(model_name: str) -> None:
             bnb_4bit_use_double_quant=True,
             bnb_4bit_quant_type="nf4",
             bnb_4bit_compute_dtype=compute_dtype,
+            llm_int8_enable_fp32_cpu_offload=True,
         )
         logger.info(f"Loading model {model_name} in 4-bit (compute_dtype={compute_dtype}) …")
         _model = AutoModelForCausalLM.from_pretrained(
