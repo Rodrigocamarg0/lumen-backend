@@ -227,7 +227,7 @@ def _load_mlx(model_name: str) -> None:
         _model, _tokenizer = mlx_load(mlx_id)
         logger.info("MLX model ready")
     except Exception as exc:
-        logger.error(f"Failed to load LLM: {exc}")
+        logger.error(f"Failed to load MLX model: {exc}")
         raise
 
 
@@ -291,7 +291,14 @@ def _load_cuda(model_name: str) -> None:
             offload_buffers=True,
         )
         if settings.USE_TURBOQUANT_CACHE:
-            patch_model_for_quantized_attention(_model)
+            try:
+                patch_model_for_quantized_attention(_model)
+                logger.info("TurboQuant KV cache patching applied")
+            except RuntimeError as exc:
+                logger.warning(
+                    f"TurboQuant KV cache disabled — architecture not supported "
+                    f"({model_name}): {exc}. Falling back to standard KV cache."
+                )
         _model.eval()
         logger.info("CUDA model ready")
     except Exception as exc:
