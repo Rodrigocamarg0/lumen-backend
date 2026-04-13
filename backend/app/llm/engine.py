@@ -190,7 +190,7 @@ async def _astream_openai(
     stream = await client.chat.completions.create(
         model=settings.OPENAI_MODEL,
         messages=messages,
-        max_tokens=max_new_tokens,
+        max_completion_tokens=max_new_tokens,
         temperature=temperature,
         stream=True,
     )
