@@ -8,8 +8,9 @@
 
 services:
   backend:
+    runtime: runc
     deploy: {}
     environment:
-      - NVIDIA_VISIBLE_DEVICES=
+      - NVIDIA_VISIBLE_DEVICES=void
       - DATABASE_URL=postgresql+psycopg://ai:ai@postgres:5432/ai
       - LLM_PROVIDER=openai
