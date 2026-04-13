@@ -81,6 +81,7 @@ class SearchResponse(BaseModel):
 
 class HealthResponse(BaseModel):
     status: Literal["ok", "degraded", "error"]
+    llm_provider: str
     model_loaded: bool
     index_loaded: bool
     persona_available: list[str]

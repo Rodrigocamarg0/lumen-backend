@@ -1,9 +1,11 @@
 """
-LLM engine — auto-selects backend based on available hardware:
+LLM engine — routes to the configured provider:
 
-  • Apple Silicon (MPS)  → mlx-lm   (native Metal, recommended)
-  • NVIDIA CUDA          → HuggingFace Transformers + BitsAndBytes 4-bit
-  • CPU fallback         → HuggingFace Transformers fp32 (slow, last resort)
+  LLM_PROVIDER=openai  → OpenAI Chat Completions API (streaming)
+  LLM_PROVIDER=local   → auto-selects hardware backend:
+    • Apple Silicon (MPS)  → mlx-lm
+    • NVIDIA CUDA          → HuggingFace Transformers + BitsAndBytes 4-bit
+    • CPU fallback         → HuggingFace Transformers fp32 (slow, last resort)
 
 Streaming is yielded token-by-token; an async wrapper bridges the sync
 MLX/HF generators to FastAPI's async SSE handler.
@@ -64,8 +66,14 @@ _last_kv_cache_metrics: dict[str, object] = {
 
 
 def load(model_name: str = "google/gemma-4-E4B-it") -> None:
-    """Load model into singletons. No-op if already loaded with same name."""
+    """Load model into singletons. No-op for the OpenAI provider."""
     global _tokenizer, _model, _model_name
+
+    if settings.LLM_PROVIDER == "openai":
+        if not settings.OPENAI_API_KEY:
+            raise RuntimeError("LLM_PROVIDER=openai but OPENAI_API_KEY is not set in .env")
+        logger.info(f"OpenAI provider — model={settings.OPENAI_MODEL}. No local load needed.")
+        return
 
     if _model is not None and _model_name == model_name:
         logger.info("LLM already loaded — skipping")
@@ -90,6 +98,8 @@ def load(model_name: str = "google/gemma-4-E4B-it") -> None:
 
 
 def is_loaded() -> bool:
+    if settings.LLM_PROVIDER == "openai":
+        return bool(settings.OPENAI_API_KEY)
     return _model is not None
 
 
@@ -129,7 +139,14 @@ async def astream_tokens(
     max_new_tokens: int = 1024,
     temperature: float = 0.7,
 ) -> AsyncIterator[str]:
-    """Async wrapper — bridges the sync generator to an async event loop."""
+    """Async token stream — routes to OpenAI or local backend."""
+    if settings.LLM_PROVIDER == "openai":
+        async for tok in _astream_openai(
+            system_prompt, history, user_message, max_new_tokens, temperature
+        ):
+            yield tok
+        return
+
     loop = asyncio.get_event_loop()
     queue: asyncio.Queue[str | None] = asyncio.Queue()
 
@@ -149,6 +166,38 @@ async def astream_tokens(
         if tok is None:
             break
         yield tok
+
+
+# ---------------------------------------------------------------------------
+# OpenAI backend
+# ---------------------------------------------------------------------------
+
+
+async def _astream_openai(
+    system_prompt: str,
+    history: list[dict],
+    user_message: str,
+    max_new_tokens: int,
+    temperature: float,
+) -> AsyncIterator[str]:
+    from openai import AsyncOpenAI  # type: ignore[import]
+
+    client = AsyncOpenAI(api_key=settings.OPENAI_API_KEY)
+    messages = [{"role": "system", "content": system_prompt}]
+    messages.extend(history)
+    messages.append({"role": "user", "content": user_message})
+
+    stream = await client.chat.completions.create(
+        model=settings.OPENAI_MODEL,
+        messages=messages,
+        max_tokens=max_new_tokens,
+        temperature=temperature,
+        stream=True,
+    )
+    async for chunk in stream:
+        token = chunk.choices[0].delta.content
+        if token:
+            yield token
 
 
 # ---------------------------------------------------------------------------

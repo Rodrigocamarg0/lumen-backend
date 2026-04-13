@@ -2,6 +2,7 @@ from fastapi import APIRouter
 
 from app import state
 from app.api.models import HealthResponse
+from app.config import settings
 
 router = APIRouter()
 
@@ -25,8 +26,13 @@ async def health_check():
     else:
         status = "error"
 
+    llm_provider = settings.LLM_PROVIDER
+    if settings.LLM_PROVIDER == "openai":
+        llm_provider = f"openai/{settings.OPENAI_MODEL}"
+
     return HealthResponse(
         status=status,
+        llm_provider=llm_provider,
         model_loaded=model_loaded,
         index_loaded=index_loaded,
         persona_available=persona_available,
