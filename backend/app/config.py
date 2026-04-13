@@ -6,7 +6,7 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     # LLM provider: "local" (Gemma via HF/MLX) or "openai"
     LLM_PROVIDER: str = "local"
-    OPENAI_MODEL: str = "gpt-4.1-nano"  # override with OPENAI_MODEL= in .env
+    OPENAI_MODEL: str = "gpt-4.1-nano"
 
     MODEL_ID: str = "google/gemma-4-E4B-it"
     QUANTIZATION_BITS: float = 3.5
