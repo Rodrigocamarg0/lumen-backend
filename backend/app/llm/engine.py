@@ -71,6 +71,14 @@ def load(model_name: str = "google/gemma-4-E4B-it") -> None:
         logger.info("LLM already loaded — skipping")
         return
 
+    if BACKEND == "cuda":
+        vram_mb = torch.cuda.get_device_properties(0).total_memory // (1024 * 1024)
+        if vram_mb <= 6144 and not settings.USE_TURBOQUANT_CACHE:
+            logger.warning(
+                f"VRAM={vram_mb}MB — TurboQuant KV cache is strongly recommended on this "
+                "GPU. Set USE_TURBOQUANT_CACHE=true in .env to reduce KV cache VRAM usage."
+            )
+
     if BACKEND == "mlx":
         _load_mlx(model_name)
     elif BACKEND == "cuda":

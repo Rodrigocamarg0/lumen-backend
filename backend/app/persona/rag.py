@@ -15,6 +15,7 @@ import logging
 import time
 import uuid
 
+from app.config import settings
 from app.corpus.embedder import Embedder
 from app.corpus.indexer import KardecIndex
 from app.persona.prompts import build_system_prompt, get_few_shot_examples
@@ -135,7 +136,7 @@ class RAGOrchestrator:
         message: str,
         session_id: str | None,
         history: list[dict],
-        max_new_tokens: int = 1024,
+        max_new_tokens: int = settings.MAX_NEW_TOKENS,
         top_k_chunks: int = 5,
         temperature: float = 0.7,
     ) -> AsyncIterator[tuple[str, object]]:  # (event_type, payload)

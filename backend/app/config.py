@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     USE_TURBOQUANT_CACHE: bool = False
     KV_CACHE_BITS: float = 3.5
     KV_CACHE_OUTLIER_THRESHOLD: float = 10.0
+    MAX_NEW_TOKENS: int = 512
     OPENAI_API_KEY: str = ""
     HF_TOKEN: str = ""
 
