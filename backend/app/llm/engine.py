@@ -238,6 +238,7 @@ def _load_cuda(model_name: str) -> None:
             quantization_config=bnb_config,
             device_map="auto",
             dtype=compute_dtype,
+            offload_buffers=True,
         )
         if settings.USE_TURBOQUANT_CACHE:
             patch_model_for_quantized_attention(_model)
@@ -258,11 +259,12 @@ def _stream_hf(
     assert _model is not None and _tokenizer is not None
     model, tokenizer = _model, _tokenizer
 
-    input_ids = _build_input_ids_hf(system_prompt, history, user_message)
+    input_ids, attention_mask = _build_input_ids_hf(system_prompt, history, user_message)
     streamer = TextIteratorStreamer(tokenizer, skip_prompt=True, skip_special_tokens=True)
     cache = None
     gen_kwargs = {
         "input_ids": input_ids,
+        "attention_mask": attention_mask,
         "max_new_tokens": max_new_tokens,
         "do_sample": temperature > 0,
         "temperature": temperature if temperature > 0 else None,
@@ -342,12 +344,13 @@ def _build_prompt(system_prompt: str, history: list[dict], user_message: str) ->
     )
 
 
-def _build_input_ids_hf(system_prompt: str, history: list[dict], user_message: str):
-    """HuggingFace tokenised input (CUDA/CPU path)."""
+def _build_input_ids_hf(system_prompt: str, history: list[dict], user_message: str) -> tuple:
+    """HuggingFace tokenised input (CUDA/CPU path). Returns (input_ids, attention_mask)."""
     assert _model is not None and _tokenizer is not None
     prompt = _build_prompt(system_prompt, history, user_message)
     device = next(_model.parameters()).device
-    return _tokenizer([prompt], return_tensors="pt").input_ids.to(device)
+    encoded = _tokenizer([prompt], return_tensors="pt")
+    return encoded.input_ids.to(device), encoded.attention_mask.to(device)
 
 
 # ---------------------------------------------------------------------------
