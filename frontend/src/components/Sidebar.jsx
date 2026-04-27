@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import FlameIcon from "./FlameIcon.jsx";
-import { fetchHealth, PERSONAS } from "../lib/api.js";
+import { fetchHealth } from "../lib/api.js";
 
 function formatDate(unixTs) {
   if (!unixTs) return "";
@@ -215,6 +215,17 @@ export default function Sidebar({
         <div className="p-4 border-t border-gray-200 dark:border-gray-700 text-xs text-gray-500 dark:text-gray-400">
           <HealthDot />
           <div className="mt-1">Base: Obras de referência espírita</div>
+          <div className="mt-2 pt-2 border-t border-gray-200/60 dark:border-gray-700/60">
+            Um projeto da{" "}
+            <a
+              href="https://camisetaespirita.com.br/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-gray-700 dark:text-gray-200 hover:text-orange-500 dark:hover:text-orange-400 underline-offset-4 hover:underline transition"
+            >
+              Alma
+            </a>
+          </div>
         </div>
       </aside>
     </>

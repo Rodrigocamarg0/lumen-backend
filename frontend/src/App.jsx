@@ -5,6 +5,7 @@ import WelcomeScreen from "./components/WelcomeScreen.jsx";
 import ChatArea from "./components/ChatArea.jsx";
 import InputArea from "./components/InputArea.jsx";
 import MemoriesModal from "./components/MemoriesModal.jsx";
+import IncognitoIcon from "./components/IncognitoIcon.jsx";
 import { useChat } from "./hooks/useChat.js";
 import { useAuth } from "./auth/useAuth.js";
 import {
@@ -181,9 +182,22 @@ export default function App() {
         />
 
         {incognito && (
-          <div className="px-4 py-2 text-xs text-center bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 border-b border-gray-800 dark:border-gray-300">
-            Modo anônimo — esta conversa não será salva e não atualizará suas
-            memórias.
+          <div
+            role="status"
+            className="flex items-center justify-center gap-2 px-4 py-2
+                       bg-slate-900 dark:bg-slate-950
+                       text-slate-100
+                       border-b border-slate-800
+                       text-xs tracking-wide shadow-sm"
+          >
+            <IncognitoIcon className="w-4 h-4 flex-shrink-0 text-slate-300" />
+            <span>
+              <span className="font-semibold">Modo anônimo</span>
+              <span className="text-slate-300">
+                {" "}
+                — esta conversa não será salva e não atualizará suas memórias.
+              </span>
+            </span>
           </div>
         )}
 

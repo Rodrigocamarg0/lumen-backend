@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { PERSONAS } from "../lib/api.js";
+import { PERSONA_CATALOG, isPersonaEnabled } from "../lib/api.js";
 
 export default function InputArea({
   currentPersona,
@@ -51,11 +51,14 @@ export default function InputArea({
                          hover:bg-gray-200 dark:hover:bg-gray-700 transition"
               aria-label="Selecionar persona"
             >
-              {PERSONAS.map((p) => (
-                <option key={p.id} value={p.id}>
-                  {p.name}
-                </option>
-              ))}
+              {PERSONA_CATALOG.map((p) => {
+                const enabled = isPersonaEnabled(p.id);
+                return (
+                  <option key={p.id} value={p.id} disabled={!enabled}>
+                    {enabled ? p.name : `${p.name} (Em breve)`}
+                  </option>
+                );
+              })}
             </select>
             <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
               <svg

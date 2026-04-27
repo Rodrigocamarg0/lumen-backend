@@ -1,5 +1,5 @@
 import LogoFlame from "./LogoFlame.jsx";
-import { PERSONAS } from "../lib/api.js";
+import { PERSONA_CATALOG, isPersonaEnabled } from "../lib/api.js";
 
 export default function WelcomeScreen({
   currentPersona,
@@ -17,32 +17,55 @@ export default function WelcomeScreen({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full max-w-lg">
-        {PERSONAS.map((p) => (
-          <button
-            key={p.id}
-            onClick={() => onPersonaSelect(p.id)}
-            className={[
-              "p-4 rounded-xl border transition text-left group",
-              currentPersona === p.id
-                ? "border-orange-300 dark:border-orange-700 bg-orange-50 dark:bg-orange-900/20"
-                : "border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800",
-            ].join(" ")}
-          >
-            <div
+        {PERSONA_CATALOG.map((p) => {
+          const enabled = isPersonaEnabled(p.id);
+          const selected = enabled && currentPersona === p.id;
+          return (
+            <button
+              key={p.id}
+              type="button"
+              onClick={enabled ? () => onPersonaSelect(p.id) : undefined}
+              disabled={!enabled}
+              aria-disabled={!enabled}
+              title={enabled ? undefined : "Em breve"}
               className={[
-                "font-medium mb-1 transition",
-                currentPersona === p.id
-                  ? "text-orange-500"
-                  : "group-hover:text-orange-500",
+                "relative p-4 rounded-xl border transition text-left group",
+                selected
+                  ? "border-orange-300 dark:border-orange-700 bg-orange-50 dark:bg-orange-900/20"
+                  : "border-gray-200 dark:border-gray-700",
+                enabled
+                  ? "hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer"
+                  : "opacity-60 cursor-not-allowed",
               ].join(" ")}
             >
-              {p.name}
-            </div>
-            <div className="text-xs text-gray-500 dark:text-gray-400">
-              {p.subtitle}
-            </div>
-          </button>
-        ))}
+              {!enabled && (
+                <span
+                  className="absolute top-2 right-2 px-2 py-0.5 rounded-full
+                             text-[10px] font-semibold uppercase tracking-wide
+                             bg-orange-100 text-orange-700
+                             dark:bg-orange-900/40 dark:text-orange-300"
+                >
+                  Em breve
+                </span>
+              )}
+              <div
+                className={[
+                  "font-medium mb-1 transition",
+                  selected
+                    ? "text-orange-500"
+                    : enabled
+                      ? "group-hover:text-orange-500"
+                      : "",
+                ].join(" ")}
+              >
+                {p.name}
+              </div>
+              <div className="text-xs text-gray-500 dark:text-gray-400">
+                {p.subtitle}
+              </div>
+            </button>
+          );
+        })}
       </div>
     </div>
   );

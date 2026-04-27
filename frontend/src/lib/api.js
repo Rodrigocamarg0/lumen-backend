@@ -55,6 +55,10 @@ export const PERSONAS = PERSONA_CATALOG.filter((persona) =>
   ENABLED_PERSONAS.has(persona.id),
 );
 
+export function isPersonaEnabled(id) {
+  return ENABLED_PERSONAS.has(id);
+}
+
 function parseEnabledPersonas(value) {
   const items = value
     .split(",")
@@ -75,6 +79,25 @@ export function getPersona(id) {
 export async function fetchHealth() {
   const res = await fetch(`${API_BASE}/api/health`);
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
+/* ─── Terms Acceptance ──────────────────────────────────── */
+
+/**
+ * Record LGPD-compliant terms acceptance on the server (audit trail).
+ * Must be called BEFORE updating Supabase user metadata.
+ * @param {string} termsVersion
+ * @param {string} accessToken
+ * @returns {Promise<{accepted: boolean, terms_version: string, accepted_at: string}>}
+ */
+export async function acceptTerms(termsVersion, accessToken) {
+  const res = await fetch(`${API_BASE}/api/me/terms-acceptance`, {
+    method: "POST",
+    headers: authHeaders(accessToken, { "Content-Type": "application/json" }),
+    body: JSON.stringify({ terms_version: termsVersion }),
+  });
+  if (!res.ok) throw new Error(await parseApiError(res));
   return res.json();
 }
 

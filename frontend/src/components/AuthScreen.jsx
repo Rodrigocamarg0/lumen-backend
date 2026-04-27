@@ -33,23 +33,39 @@ export default function AuthScreen() {
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-3 gap-6 text-sm text-stone-400 max-w-3xl">
-            <div>
-              <div className="text-stone-100 font-medium">
-                Histórico privado
+          <div className="space-y-6 max-w-3xl">
+            <div className="grid sm:grid-cols-3 gap-6 text-sm text-stone-400">
+              <div>
+                <div className="text-stone-100 font-medium">
+                  Histórico privado
+                </div>
+                <p className="mt-1">Sessões vinculadas apenas à sua conta.</p>
               </div>
-              <p className="mt-1">Sessões vinculadas apenas à sua conta.</p>
-            </div>
-            <div>
-              <div className="text-stone-100 font-medium">Google ou e-mail</div>
-              <p className="mt-1">Autenticação gerenciada pelo Supabase.</p>
-            </div>
-            <div>
-              <div className="text-stone-100 font-medium">
-                Citações preservadas
+              <div>
+                <div className="text-stone-100 font-medium">
+                  Google ou e-mail
+                </div>
+                <p className="mt-1">Autenticação gerenciada pelo Supabase.</p>
               </div>
-              <p className="mt-1">Respostas continuam ligadas às fontes.</p>
+              <div>
+                <div className="text-stone-100 font-medium">
+                  Citações preservadas
+                </div>
+                <p className="mt-1">Respostas continuam ligadas às fontes.</p>
+              </div>
             </div>
+            <p className="text-xs text-stone-500">
+              Um projeto da{" "}
+              <a
+                href="https://camisetaespirita.com.br/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-stone-300 hover:text-orange-300 underline-offset-4 hover:underline transition"
+              >
+                Alma
+              </a>
+              , marca de camisetas espíritas.
+            </p>
           </div>
         </section>
 

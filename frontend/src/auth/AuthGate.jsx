@@ -1,5 +1,6 @@
 import AuthScreen from "../components/AuthScreen.jsx";
 import LogoFlame from "../components/LogoFlame.jsx";
+import TermsModal from "../components/TermsModal.jsx";
 import { useAuth } from "./useAuth.js";
 
 export function AuthGate({ children }) {
@@ -17,6 +18,8 @@ export function AuthGate({ children }) {
   }
 
   if (!user) return <AuthScreen />;
+
+  if (!user.user_metadata?.terms_accepted_at) return <TermsModal />;
 
   return children;
 }

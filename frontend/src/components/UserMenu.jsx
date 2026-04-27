@@ -50,7 +50,7 @@ export default function UserMenu({ onSignOut, onOpenMemories }) {
             onClick={handleOpenMemories}
             className="w-full rounded-xl px-3 py-2 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
           >
-            Minhas memórias
+            Personalidade do Usuário
           </button>
           <button
             type="button"

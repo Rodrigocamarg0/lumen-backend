@@ -133,10 +133,11 @@ def create_app(app_settings: Settings = settings) -> FastAPI:
 
     add_security_middleware(app, app_settings)
 
-    from app.api.routes import chat, health, me, memories, personas, search, sessions
+    from app.api.routes import chat, health, me, memories, personas, search, sessions, terms
 
     app.include_router(health.router, prefix="/api", tags=["Health"])
     app.include_router(me.router, prefix="/api", tags=["Auth"])
+    app.include_router(terms.router, prefix="/api", tags=["Auth"])
     app.include_router(personas.router, prefix="/api", tags=["Personas"])
     app.include_router(chat.router, prefix="/api", tags=["Chat"])
     app.include_router(search.router, prefix="/api", tags=["Search"])
