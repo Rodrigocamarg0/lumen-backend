@@ -19,6 +19,17 @@ class ChatOptions(BaseModel):
     max_new_tokens: int = Field(1024, ge=64, le=4096)
     top_k_chunks: int = Field(5, ge=1, le=20)
     temperature: float = Field(0.7, ge=0.0, le=1.5)
+    reasoning_effort: Literal["off", "low", "medium", "high", "xhigh"] = "off"
+    answer_mode: Literal[
+        "default",
+        "concise",
+        "scholarly",
+        "pastoral",
+        "socratic",
+        "citation_heavy",
+    ] = "default"
+    study_goal: str | None = Field(default=None, max_length=500)
+    incognito: bool = False
 
 
 class ChatRequest(BaseModel):
@@ -44,11 +55,6 @@ class GenerationStats(BaseModel):
     session_id: str
     tokens_generated: int
     tokens_per_second: float
-    kv_cache_tokens: int
-    kv_cache_mb: float
-    kv_cache_compression_ratio: float | None = None
-    kv_cache_layers_initialized: int | None = None
-    kv_cache_max_seq_length: int | None = None
     rag_latency_ms: int
     generation_latency_ms: int
 
@@ -90,6 +96,13 @@ class HealthResponse(BaseModel):
     version: str
 
 
+class PersonaResponse(BaseModel):
+    id: str
+    name: str
+    subtitle: str
+    description: str
+
+
 # ---------------------------------------------------------------------------
 # Session models (Phase 2 — Agno persistent history)
 # ---------------------------------------------------------------------------
@@ -102,6 +115,8 @@ class SessionSummary(BaseModel):
     updated_at: int
     turn_count: int
     preview: str
+    title: str | None = None
+    status: str = "active"
 
     @classmethod
     def from_agno(cls, session: object, persona_id: str) -> SessionSummary:
@@ -126,3 +141,14 @@ class SessionDetail(BaseModel):
     session_id: str
     persona_id: str
     turns: list[Message]
+
+
+class UserMemoryResponse(BaseModel):
+    id: str
+    persona_id: str
+    memory: str
+    topics: list[str] = Field(default_factory=list)
+    confidence: float
+    source_session_id: str | None
+    created_at: int
+    updated_at: int

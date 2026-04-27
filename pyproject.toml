@@ -1,9 +1,28 @@
 [project]
 name = "lumen"
 version = "0.1.0"
-description = "Local AI chat over Spiritist author corpora — Gemma 4 E4B + RAG + TurboQuant KV cache"
+description = "External-model AI chat over Spiritist author corpora with RAG"
 requires-python = ">=3.11"
-readme = "README.md"
+dependencies = [
+    "agno>=1.7",
+    "faiss-cpu",
+    "fastapi",
+    "openai",
+    "pdfminer.six",
+    "psycopg[binary]>=3.1",
+    "pydantic",
+    "pydantic-settings",
+    "pyjwt[crypto]>=2.8",
+    "sqlalchemy>=2.0",
+    "tiktoken",
+    "uvicorn[standard]",
+]
+
+[dependency-groups]
+dev = [
+    "pre-commit",
+    "ruff",
+]
 
 # ── Ruff — Python linter + formatter ──────────────────────────────────────────
 

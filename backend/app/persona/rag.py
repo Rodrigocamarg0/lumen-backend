@@ -66,7 +66,7 @@ def chunk_to_citation(chunk: dict) -> dict:
 
 
 # ---------------------------------------------------------------------------
-# Session KV-cache store (in-memory; no persistence needed for Phase 1)
+# Lightweight stream accounting
 # ---------------------------------------------------------------------------
 
 _sessions: dict[str, dict] = {}
@@ -77,7 +77,7 @@ def _get_or_create_session(session_id: str | None) -> str:
     if sid not in _sessions:
         _sessions[sid] = {
             "history": [],
-            "kv_tokens": 0,
+            "tokens_generated": 0,
             "last_active": time.time(),
         }
     else:
@@ -136,9 +136,13 @@ class RAGOrchestrator:
         message: str,
         session_id: str | None,
         history: list[dict],
+        session_summary: str | None = None,
+        user_memories: list[str] | None = None,
+        session_state: dict | None = None,
         max_new_tokens: int = settings.MAX_NEW_TOKENS,
         top_k_chunks: int = 5,
         temperature: float = 0.7,
+        reasoning_effort: str = "off",
     ) -> AsyncIterator[tuple[str, object]]:  # (event_type, payload)
         """
         Async generator that yields (event_type, payload) tuples:
@@ -161,7 +165,13 @@ class RAGOrchestrator:
             return
 
         # 2. Build system prompt with context
-        system_prompt = build_system_prompt(persona_id, chunks)
+        system_prompt = build_system_prompt(
+            persona_id,
+            chunks,
+            session_summary=session_summary,
+            user_memories=user_memories,
+            session_state=session_state,
+        )
 
         # 3. Merge few-shot examples into history (prepend to passed history)
         few_shot = get_few_shot_examples(persona_id)
@@ -185,6 +195,7 @@ class RAGOrchestrator:
                 user_message=message,
                 max_new_tokens=max_new_tokens,
                 temperature=temperature,
+                reasoning_effort=reasoning_effort,
             ):
                 tokens_generated += 1
                 yield ("token", token)
@@ -202,23 +213,13 @@ class RAGOrchestrator:
         yield ("citations", citations)
 
         # 6. Stats
-        session["kv_tokens"] += tokens_generated
-        kv_tokens = session["kv_tokens"]
-        kv_metrics = engine.kv_cache_metrics()
-        kv_mb = float(kv_metrics.get("compressed_mb", 0.0))
-
+        session["tokens_generated"] += tokens_generated
         stats = {
             "session_id": sid,
             "tokens_generated": tokens_generated,
             "tokens_per_second": round(tps, 1),
-            "kv_cache_tokens": kv_tokens,
-            "kv_cache_mb": kv_mb,
             "rag_latency_ms": rag_latency_ms,
             "generation_latency_ms": gen_latency_ms,
         }
-        if kv_metrics.get("enabled"):
-            stats["kv_cache_compression_ratio"] = kv_metrics.get("compression_ratio", 1.0)
-            stats["kv_cache_layers_initialized"] = kv_metrics.get("layers_initialized", 0)
-            stats["kv_cache_max_seq_length"] = kv_metrics.get("max_seq_length", 0)
         yield ("stats", stats)
         yield ("done", None)

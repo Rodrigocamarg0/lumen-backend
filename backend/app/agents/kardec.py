@@ -11,7 +11,6 @@ from __future__ import annotations
 
 from agno.agent import Agent
 from agno.models.openai import OpenAIChat
-from agno.models.openai.like import OpenAILike
 
 from app.agents.db import get_db
 from app.config import settings
@@ -21,15 +20,8 @@ from app.persona.prompts import get_prompt
 def make_kardec_agent() -> Agent:
     # model= is required by Agno's constructor but is never called for inference
     # here — generation happens in rag.astream_response(). We configure it to
-    # match the active LLM_PROVIDER so Agno initialises without errors.
-    if settings.LLM_PROVIDER == "openai":
-        model = OpenAIChat(id=settings.OPENAI_MODEL)
-    else:
-        model = OpenAILike(
-            id=settings.MODEL_ID,
-            base_url="http://localhost:8000/v1",
-            api_key="local",
-        )
+    # match the external OpenAI provider so Agno initialises without errors.
+    model = OpenAIChat(id=settings.OPENAI_MODEL)
 
     return Agent(
         id="kardec",

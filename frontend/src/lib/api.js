@@ -1,6 +1,26 @@
 const API_BASE = import.meta.env.VITE_API_BASE ?? "";
+const ENABLED_PERSONAS = parseEnabledPersonas(
+  import.meta.env.VITE_ENABLED_PERSONAS ?? "kardec",
+);
 
-export const PERSONAS = [
+function authHeaders(accessToken, extra = {}) {
+  return {
+    ...extra,
+    ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+  };
+}
+
+async function parseApiError(response) {
+  const err = await response.json().catch(() => ({}));
+  if (response.status === 401) {
+    return err.detail ?? "Sessão expirada. Entre novamente para continuar.";
+  }
+  return Array.isArray(err.detail)
+    ? err.detail.map((e) => `${e.loc?.slice(-1)[0] ?? ""}: ${e.msg}`).join("; ")
+    : (err.detail ?? `HTTP ${response.status}`);
+}
+
+export const PERSONA_CATALOG = [
   {
     id: "kardec",
     name: "Allan Kardec",
@@ -23,13 +43,28 @@ export const PERSONAS = [
       "Espírito de elevada hierarquia que orientou Chico Xavier por décadas, com sabedoria e fraternidade.",
   },
   {
-    id: "joana",
+    id: "joanna",
     name: "Joanna de Ângelis",
     subtitle: "Psicologia e espiritualidade",
     description:
       "Psicóloga espiritual que une ciência e fé nas obras psicografadas por Divaldo Franco.",
   },
 ];
+
+export const PERSONAS = PERSONA_CATALOG.filter((persona) =>
+  ENABLED_PERSONAS.has(persona.id),
+);
+
+function parseEnabledPersonas(value) {
+  const items = value
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean);
+  if (!items.length) return new Set(["kardec"]);
+  if (items.includes("all"))
+    return new Set(PERSONA_CATALOG.map((persona) => persona.id));
+  return new Set(items);
+}
 
 export function getPersona(id) {
   return PERSONAS.find((p) => p.id === id) ?? PERSONAS[0];
@@ -56,6 +91,8 @@ export async function fetchHealth() {
  *   onToken: (token:string) => void,
  *   onCitations: (citations:object[]) => void,
  *   onStats: (stats:object) => void,
+ *   onSession: (session:object) => void,
+ *   accessToken: string,
  *   signal: AbortSignal,
  * }} params
  * @returns {Promise<string>} full generated text
@@ -64,38 +101,35 @@ export async function streamChat({
   message,
   persona_id,
   session_id,
+  incognito = false,
   onToken,
   onCitations,
   onStats,
+  onSession,
+  accessToken,
   signal,
 }) {
   const body = {
     message,
     persona_id,
-    session_id,
+    session_id: incognito ? null : session_id,
     options: {
       max_new_tokens: 1024,
       top_k_chunks: 5,
       temperature: 0.7,
+      incognito,
     },
   };
 
   const response = await fetch(`${API_BASE}/api/chat`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: authHeaders(accessToken, { "Content-Type": "application/json" }),
     body: JSON.stringify(body),
     signal,
   });
 
   if (!response.ok) {
-    const err = await response.json().catch(() => ({}));
-    // Pydantic validation errors return detail as an array of objects
-    const detail = Array.isArray(err.detail)
-      ? err.detail
-          .map((e) => `${e.loc?.slice(-1)[0] ?? ""}: ${e.msg}`)
-          .join("; ")
-      : (err.detail ?? `HTTP ${response.status}`);
-    throw new Error(detail);
+    throw new Error(await parseApiError(response));
   }
 
   const reader = response.body.getReader();
@@ -133,6 +167,8 @@ export async function streamChat({
           onCitations(data.citations ?? []);
         } else if (eventType === "stats") {
           onStats(data.stats ?? {});
+        } else if (eventType === "session") {
+          onSession?.(data);
         } else if (eventType === "error") {
           throw new Error(data.detail ?? "Unknown error");
         }
@@ -152,12 +188,12 @@ export async function streamChat({
  * @param {string|null} personaId
  * @returns {Promise<object[]>} list of SessionSummary
  */
-export async function fetchSessions(personaId = null) {
+export async function fetchSessions(personaId = null, accessToken) {
   const url = personaId
     ? `${API_BASE}/api/sessions?persona_id=${encodeURIComponent(personaId)}`
     : `${API_BASE}/api/sessions`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const res = await fetch(url, { headers: authHeaders(accessToken) });
+  if (!res.ok) throw new Error(await parseApiError(res));
   return res.json();
 }
 
@@ -166,11 +202,12 @@ export async function fetchSessions(personaId = null) {
  * @param {string} sessionId
  * @returns {Promise<{session_id:string, persona_id:string, turns:object[]}>}
  */
-export async function fetchSessionDetail(sessionId) {
+export async function fetchSessionDetail(sessionId, accessToken) {
   const res = await fetch(
     `${API_BASE}/api/sessions/${encodeURIComponent(sessionId)}`,
+    { headers: authHeaders(accessToken) },
   );
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  if (!res.ok) throw new Error(await parseApiError(res));
   return res.json();
 }
 
@@ -178,22 +215,56 @@ export async function fetchSessionDetail(sessionId) {
  * Delete a session and its history.
  * @param {string} sessionId
  */
-export async function deleteSession(sessionId) {
+export async function deleteSession(sessionId, accessToken) {
   const res = await fetch(
     `${API_BASE}/api/sessions/${encodeURIComponent(sessionId)}`,
-    { method: "DELETE" },
+    { method: "DELETE", headers: authHeaders(accessToken) },
   );
-  if (!res.ok && res.status !== 404) throw new Error(`HTTP ${res.status}`);
+  if (!res.ok && res.status !== 404) throw new Error(await parseApiError(res));
+}
+
+/* ─── Memories ──────────────────────────────────────────── */
+
+/**
+ * List the current user's stored memories, optionally filtered by persona.
+ * @param {string|null} personaId
+ * @param {string} accessToken
+ */
+export async function fetchMemories(personaId, accessToken) {
+  const url = personaId
+    ? `${API_BASE}/api/memories?persona_id=${encodeURIComponent(personaId)}`
+    : `${API_BASE}/api/memories`;
+  const res = await fetch(url, { headers: authHeaders(accessToken) });
+  if (!res.ok) throw new Error(await parseApiError(res));
+  return res.json();
+}
+
+/**
+ * Soft-delete a stored memory by id.
+ * @param {string} memoryId
+ * @param {string} accessToken
+ */
+export async function deleteMemory(memoryId, accessToken) {
+  const res = await fetch(
+    `${API_BASE}/api/memories/${encodeURIComponent(memoryId)}`,
+    { method: "DELETE", headers: authHeaders(accessToken) },
+  );
+  if (!res.ok && res.status !== 404) throw new Error(await parseApiError(res));
 }
 
 /* ─── Semantic Search ───────────────────────────────────── */
 
-export async function search(query, top_k = 10) {
+export async function search(
+  query,
+  top_k = 10,
+  accessToken,
+  persona_id = getPersona()?.id ?? "kardec",
+) {
   const res = await fetch(`${API_BASE}/api/search`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ query, top_k }),
+    headers: authHeaders(accessToken, { "Content-Type": "application/json" }),
+    body: JSON.stringify({ query, top_k, persona_id }),
   });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  if (!res.ok) throw new Error(await parseApiError(res));
   return res.json();
 }

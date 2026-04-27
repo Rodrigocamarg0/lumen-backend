@@ -37,7 +37,7 @@ def _generate_rotation(dim: int, seed: int) -> np.ndarray:
 def _sphere_coordinate_pdf(dimension: int, grid: np.ndarray) -> np.ndarray:
     alpha = (dimension - 3) / 2
     density = np.power(np.clip(1.0 - grid**2, 0.0, None), alpha, dtype=np.float64)
-    density /= np.trapezoid(density, grid)
+    density /= np.trapz(density, grid)
     return density
 
 
@@ -61,10 +61,10 @@ def _conditional_centroid(
 
     x = grid[mask]
     p = density[mask]
-    mass = np.trapezoid(p, x)
+    mass = np.trapz(p, x)
     if mass <= 1e-12:
         return float((left + right) / 2)
-    centroid = np.trapezoid(x * p, x) / mass
+    centroid = np.trapz(x * p, x) / mass
     return float(centroid)
 
 

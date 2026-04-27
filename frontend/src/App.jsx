@@ -4,7 +4,9 @@ import Header from "./components/Header.jsx";
 import WelcomeScreen from "./components/WelcomeScreen.jsx";
 import ChatArea from "./components/ChatArea.jsx";
 import InputArea from "./components/InputArea.jsx";
+import MemoriesModal from "./components/MemoriesModal.jsx";
 import { useChat } from "./hooks/useChat.js";
+import { useAuth } from "./auth/useAuth.js";
 import {
   deleteSession,
   fetchSessionDetail,
@@ -25,6 +27,7 @@ function applyTheme(theme) {
 }
 
 export default function App() {
+  const { accessToken, user } = useAuth();
   const [theme, setTheme] = useState(() => {
     const t = loadTheme();
     applyTheme(t);
@@ -35,6 +38,8 @@ export default function App() {
   const [currentPersona, setCurrentPersona] = useState("kardec");
   const [showWelcome, setShowWelcome] = useState(true);
   const [systemNotes, setSystemNotes] = useState([]);
+  const [incognito, setIncognito] = useState(false);
+  const [memoriesOpen, setMemoriesOpen] = useState(false);
 
   const [sessions, setSessions] = useState([]);
 
@@ -46,25 +51,24 @@ export default function App() {
     clearMessages,
     loadSession,
     onTurnCompleteRef,
-  } = useChat();
+  } = useChat({ accessToken, incognito });
 
-  // Restore welcome state: if we have a session from localStorage, hide welcome
   useEffect(() => {
-    if (sessionId && messages.length === 0) {
-      // Fetch the last session to pre-populate (optional; just hide welcome)
-      setShowWelcome(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    clearMessages();
+    setSessions([]);
+    setShowWelcome(true);
+    setSystemNotes([]);
+  }, [clearMessages, user?.id]);
 
   const refreshSessions = useCallback(async () => {
+    if (!accessToken) return;
     try {
-      const data = await fetchSessions(currentPersona);
+      const data = await fetchSessions(currentPersona, accessToken);
       setSessions(data);
     } catch {
-      // silently ignore — sessions are non-critical
+      setSessions([]);
     }
-  }, [currentPersona]);
+  }, [accessToken, currentPersona]);
 
   // Load sessions on mount and when persona changes
   useEffect(() => {
@@ -103,9 +107,19 @@ export default function App() {
     setSidebarOpen(false);
   }
 
+  function handleIncognitoToggle() {
+    setIncognito((prev) => {
+      const next = !prev;
+      clearMessages();
+      setShowWelcome(true);
+      setSystemNotes([]);
+      return next;
+    });
+  }
+
   async function handleSelectSession(session) {
     try {
-      const detail = await fetchSessionDetail(session.session_id);
+      const detail = await fetchSessionDetail(session.session_id, accessToken);
       loadSession(session.session_id, detail.turns);
       if (session.persona_id && session.persona_id !== currentPersona) {
         setCurrentPersona(session.persona_id);
@@ -119,7 +133,7 @@ export default function App() {
 
   async function handleDeleteSession(sessionId) {
     try {
-      await deleteSession(sessionId);
+      await deleteSession(sessionId, accessToken);
       setSessions((prev) => prev.filter((s) => s.session_id !== sessionId));
     } catch (err) {
       console.error("Failed to delete session:", err);
@@ -160,7 +174,18 @@ export default function App() {
           currentPersona={currentPersona}
           theme={theme}
           onThemeToggle={handleThemeToggle}
+          onSignOut={handleNewChat}
+          onOpenMemories={() => setMemoriesOpen(true)}
+          incognito={incognito}
+          onIncognitoToggle={handleIncognitoToggle}
         />
+
+        {incognito && (
+          <div className="px-4 py-2 text-xs text-center bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 border-b border-gray-800 dark:border-gray-300">
+            Modo anônimo — esta conversa não será salva e não atualizará suas
+            memórias.
+          </div>
+        )}
 
         {showWelcome ? (
           <div className="flex-1 overflow-y-auto">
@@ -186,6 +211,14 @@ export default function App() {
           autoFocus={!showWelcome}
         />
       </div>
+
+      {memoriesOpen && (
+        <MemoriesModal
+          accessToken={accessToken}
+          personaId={currentPersona}
+          onClose={() => setMemoriesOpen(false)}
+        />
+      )}
     </div>
   );
 }

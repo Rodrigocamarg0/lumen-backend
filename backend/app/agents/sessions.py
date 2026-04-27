@@ -41,6 +41,7 @@ def load_history(
 async def save_turn(
     agent: Agent,
     session_id: str,
+    user_id: str,
     user_message: str,
     assistant_content: str,
 ) -> None:
@@ -51,22 +52,27 @@ async def save_turn(
     try:
         # Import low-level Agno types here so startup doesn't fail if agno is
         # not yet installed.
-        from agno.agent.session import AgentSession  # type: ignore[import]
         from agno.models.message import Message  # type: ignore[import]
-        from agno.run.response import RunOutput, RunStatus  # type: ignore[import]
+        from agno.run.agent import RunOutput  # type: ignore[import]
+        from agno.run.base import RunStatus  # type: ignore[import]
+        from agno.session.agent import AgentSession  # type: ignore[import]
 
         session: AgentSession | None = agent.get_session(session_id=session_id)
         if session is None:
             session = AgentSession(
                 session_id=session_id,
                 agent_id=agent.id,
+                user_id=user_id,
                 agent_data={"agent_id": agent.id, "name": agent.name},
             )
+        elif not session.user_id:
+            session.user_id = user_id
 
         run = RunOutput(
             run_id=str(uuid.uuid4()),
             agent_id=agent.id,
             session_id=session_id,
+            user_id=user_id,
             messages=[
                 Message(role="user", content=user_message),
                 Message(role="assistant", content=assistant_content),

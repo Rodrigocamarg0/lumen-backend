@@ -18,5 +18,8 @@ def get_db() -> PostgresDb:
         _db = PostgresDb(
             db_url=settings.DATABASE_URL,
             session_table="lumen_sessions",
+            memory_table="lumen_memories",
+            metrics_table="lumen_metrics",
+            eval_table="lumen_evals",
         )
     return _db

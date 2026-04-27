@@ -2,9 +2,10 @@
 FastAPI application entry point.
 
 Startup sequence (lifespan):
-  1. Load FAISS index + chunk metadata from disk.
-  2. Load Gemma 4 E4B (4-bit) into GPU memory.
-  3. Wire up the RAGOrchestrator singleton in `app.state`.
+  1. Initialize app database tables.
+  2. Load FAISS index + chunk metadata from disk.
+  3. Validate external LLM provider config.
+  4. Wire up the RAGOrchestrator singleton in `app.state`.
 
 If the index or model files are absent the server still starts but the
 /api/health endpoint will report `status: "degraded"` or `"error"`.
@@ -17,11 +18,10 @@ import logging
 from pathlib import Path
 
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 
 from app import state
-from app.api.routes import chat, config, health, search, sessions
-from app.config import settings
+from app.config import Settings, settings
+from app.security import add_security_middleware
 
 logger = logging.getLogger("main")
 
@@ -65,6 +65,14 @@ async def lifespan(app: FastAPI):
 
     # Load the FAISS index in a thread-pool executor (I/O bound)
     try:
+        from app.db.session import init_db
+
+        init_db()
+        logger.info("Application database tables ready")
+    except Exception as exc:
+        logger.error(f"Failed to initialize application database: {exc}")
+
+    try:
         from app.corpus.embedder import Embedder
         from app.corpus.indexer import KardecIndex
 
@@ -99,14 +107,13 @@ async def lifespan(app: FastAPI):
         state.rag = None
         logger.error(f"Failed to load index: {exc}")
 
-    # Load LLM (CPU/GPU bound — done in executor to avoid blocking startup)
+    # Validate external LLM provider configuration.
     try:
         from app.llm import engine as llm_engine
 
-        logger.info(f"Loading LLM: {settings.MODEL_ID} …")
-        await loop.run_in_executor(None, lambda: llm_engine.load(settings.MODEL_ID))
+        llm_engine.load()
     except Exception as exc:
-        logger.error(f"Failed to load LLM: {exc}")
+        logger.error(f"Failed to initialize LLM provider: {exc}")
 
     yield  # ---- Application running ----
 
@@ -114,29 +121,35 @@ async def lifespan(app: FastAPI):
     logger.info("Shutting down Lumen …")
 
 
+def create_app(app_settings: Settings = settings) -> FastAPI:
+    app_settings.validate_security_config()
+
+    app = FastAPI(
+        title="Lumen API",
+        description="Lumen — Persona Engine (Kardec Corpus RAG)",
+        version="1.0.0",
+        lifespan=lifespan,
+    )
+
+    add_security_middleware(app, app_settings)
+
+    from app.api.routes import chat, health, me, memories, personas, search, sessions
+
+    app.include_router(health.router, prefix="/api", tags=["Health"])
+    app.include_router(me.router, prefix="/api", tags=["Auth"])
+    app.include_router(personas.router, prefix="/api", tags=["Personas"])
+    app.include_router(chat.router, prefix="/api", tags=["Chat"])
+    app.include_router(search.router, prefix="/api", tags=["Search"])
+    app.include_router(sessions.router, prefix="/api", tags=["Sessions"])
+    app.include_router(memories.router, prefix="/api", tags=["Memories"])
+    return app
+
+
 # ---------------------------------------------------------------------------
 # App factory
 # ---------------------------------------------------------------------------
 
-app = FastAPI(
-    title="Lumen API",
-    description="Lumen — Persona Engine (Kardec Corpus RAG)",
-    version="1.0.0",
-    lifespan=lifespan,
-)
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000", "*"],
-    allow_methods=["GET", "POST"],
-    allow_headers=["Content-Type"],
-)
-
-app.include_router(health.router, prefix="/api", tags=["Health"])
-app.include_router(chat.router, prefix="/api", tags=["Chat"])
-app.include_router(search.router, prefix="/api", tags=["Search"])
-app.include_router(config.router, prefix="/api", tags=["Config"])
-app.include_router(sessions.router, prefix="/api", tags=["Sessions"])
+app = create_app()
 
 # ---------------------------------------------------------------------------
 # Dev server

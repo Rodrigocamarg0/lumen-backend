@@ -261,23 +261,6 @@ function Citations({ citations, onCitationClick }) {
   );
 }
 
-/* ─── Stats line ────────────────────────────────────────── */
-
-function StatsLine({ stats }) {
-  if (!stats) return null;
-  const parts = [
-    stats.tokens_generated && `${stats.tokens_generated} tokens`,
-    stats.tokens_per_second && `${stats.tokens_per_second} tok/s`,
-    stats.rag_latency_ms && `RAG ${stats.rag_latency_ms}ms`,
-  ].filter(Boolean);
-  if (!parts.length) return null;
-  return (
-    <p className="text-[10px] text-gray-500 dark:text-gray-500 mt-1.5">
-      {parts.join(" · ")}
-    </p>
-  );
-}
-
 /* ─── Individual message ────────────────────────────────── */
 
 function Message({ msg, onCitationClick }) {
@@ -340,7 +323,6 @@ function Message({ msg, onCitationClick }) {
                 citations={msg.citations}
                 onCitationClick={onCitationClick}
               />
-              <StatsLine stats={msg.stats} />
             </>
           )}
         </div>

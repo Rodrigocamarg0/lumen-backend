@@ -7,15 +7,15 @@
 
 ## Stack
 
-Python 3.11+ · FastAPI · Uvicorn · mlx-lm (Apple Silicon) · HuggingFace Transformers (CUDA/CPU) · FAISS · OpenAI Embeddings API · pydantic-settings
+Python 3.11+ · FastAPI · Uvicorn · FAISS · OpenAI API · Supabase Auth · SQLAlchemy/Postgres · pydantic-settings
 
 ---
 
 ## Run
 
 ```bash
-cd backend && source venv/bin/activate
-uvicorn app.main:app --reload --port 8000
+cd backend
+uv run uvicorn app.main:app --reload --port 8000
 # health check: GET http://localhost:8000/api/health
 ```
 
@@ -32,14 +32,14 @@ app/
 │   ├── models.py  ← Pydantic request/response schemas
 │   └── routes/    ← chat.py · search.py · health.py
 ├── corpus/        ← parser · chunker · embedder · indexer
-├── llm/           ← engine.py (MLX / CUDA / CPU auto-detection)
+├── llm/           ← engine.py (external OpenAI provider)
 ├── persona/       ← prompts.py · rag.py (RAGOrchestrator)
 └── cache/         ← TurboQuantCache (Phase 2, not yet implemented)
 ```
 
 **Reference docs:**
 - API contract (endpoints, request/response schemas, SSE events): `specs/architecture/api_contract.md`
-- LLM engine rules (MLX sampler, BitsAndBytes, CUDA dtype): `docs/llm-engine.md`
+- LLM engine rules (external OpenAI provider): `../docs/llm-engine.md`
 - Corpus parsing and chunk metadata: `specs/architecture/parsing_strategy.md`
 
 ---
@@ -56,8 +56,8 @@ app/
 ## Tests
 
 ```bash
-cd backend && source venv/bin/activate
-pytest tests/ -v
+cd backend
+uv run pytest tests/ -v
 ```
 
 Mirror `app/` structure in `tests/`: `tests/corpus/`, `tests/api/`, `tests/llm/`, etc.
@@ -80,7 +80,7 @@ Mirror `app/` structure in `tests/`: `tests/corpus/`, `tests/api/`, `tests/llm/`
 - [ ] `pre-commit run --all-files` — all hooks green
 - [ ] No unused imports (ruff F401), no dead functions
 - [ ] No module files that nothing imports
-- [ ] Server starts: `uvicorn app.main:app`
+- [ ] Server starts: `uv run uvicorn app.main:app`
 
 ---
 

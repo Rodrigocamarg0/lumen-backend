@@ -230,7 +230,14 @@ _FEW_SHOT["kardec"] = _KARDEC_FEW_SHOT
 # ---------------------------------------------------------------------------
 
 
-def build_system_prompt(persona_id: str, context_chunks: list[dict]) -> str:
+def build_system_prompt(
+    persona_id: str,
+    context_chunks: list[dict],
+    *,
+    session_summary: str | None = None,
+    user_memories: list[str] | None = None,
+    session_state: dict | None = None,
+) -> str:
     """
     Render the system prompt for `persona_id`, injecting the retrieved
     RAG context chunks into the {context} placeholder.
@@ -256,8 +263,41 @@ def build_system_prompt(persona_id: str, context_chunks: list[dict]) -> str:
             parts.append(f"[{citation}]\n{chunk['texto']}")
         context_block = "\n\n---\n\n".join(parts)
 
+    supplemental_parts = []
+    if session_state:
+        state_lines = [f"- {key}: {value}" for key, value in session_state.items() if value]
+        if state_lines:
+            supplemental_parts.append(
+                "━━━ ESTADO DA SESSÃO ━━━\n"
+                "Use estes dados apenas como preferências operacionais desta conversa:\n"
+                + "\n".join(state_lines)
+            )
+    if user_memories:
+        memory_lines = [f"- {memory}" for memory in user_memories if memory]
+        if memory_lines:
+            supplemental_parts.append(
+                "━━━ MEMÓRIA DO USUÁRIO ━━━\n"
+                "Use estas memórias apenas para personalizar tom, formato e continuidade; "
+                "elas não são fonte doutrinária:\n" + "\n".join(memory_lines)
+            )
+    if session_summary:
+        supplemental_parts.append(
+            "━━━ RESUMO DA CONVERSA ━━━\n"
+            "Use este resumo apenas para continuidade da conversa, preservando a autoridade "
+            "doutrinária dos trechos recuperados:\n"
+            f"{session_summary}"
+        )
+
     template = get_prompt(persona_id)
-    return template.replace("{context}", context_block)
+    rendered = template.replace("{context}", context_block)
+    if not supplemental_parts:
+        return rendered
+
+    supplemental_block = "\n\n".join(supplemental_parts)
+    return rendered.replace(
+        "━━━ CONTEXTO RECUPERADO ━━━",
+        f"{supplemental_block}\n\n━━━ CONTEXTO RECUPERADO ━━━",
+    )
 
 
 def _format_chunk_citation(chunk: dict) -> str:

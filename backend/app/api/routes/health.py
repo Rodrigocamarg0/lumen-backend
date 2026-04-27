@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
 from app import state
+from app.agents.registry import list_persona_ids
 from app.api.models import HealthResponse
 from app.config import settings
 
@@ -17,7 +18,7 @@ async def health_check():
 
     persona_available: list[str] = []
     if model_loaded and index_loaded:
-        persona_available = ["kardec"]
+        persona_available = list_persona_ids()
 
     if model_loaded and index_loaded:
         status = "ok"
