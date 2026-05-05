@@ -29,7 +29,7 @@ class Message(BaseModel):
 
 class ChatOptions(BaseModel):
     max_new_tokens: int = Field(1024, ge=64, le=4096)
-    top_k_chunks: int = Field(5, ge=1, le=20)
+    top_k_chunks: int = Field(10, ge=1, le=20)
     temperature: float = Field(0.7, ge=0.0, le=1.5)
     reasoning_effort: Literal["off", "low", "medium", "high", "xhigh"] = "off"
     answer_mode: Literal[

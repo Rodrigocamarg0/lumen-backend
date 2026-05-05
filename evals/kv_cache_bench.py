@@ -146,7 +146,7 @@ def run_queries(
         body = {
             "message": q["query"],
             "persona_id": persona_id,
-            "options": {"max_new_tokens": 1024, "top_k_chunks": 5, "temperature": 0.0},
+            "options": {"max_new_tokens": 1024, "top_k_chunks": 10, "temperature": 0.0},
         }
         t0 = time.perf_counter()
         row = _stream_sse(chat_url, body)

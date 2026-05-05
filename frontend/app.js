@@ -132,7 +132,7 @@ async function _streamChat(userMessage, textEl, citationsEl) {
         history: State.history.slice(0, -1), // exclude the just-added user turn
         options: {
             max_new_tokens: 1024,
-            top_k_chunks: 5,
+            top_k_chunks: 10,
             temperature: 0.7,
         },
     };

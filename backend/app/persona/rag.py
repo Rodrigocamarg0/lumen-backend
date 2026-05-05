@@ -12,7 +12,9 @@ from __future__ import annotations
 
 from collections.abc import AsyncIterator
 import logging
+import re
 import time
+import unicodedata
 import uuid
 
 from app.config import settings
@@ -21,6 +23,38 @@ from app.corpus.indexer import KardecIndex
 from app.persona.prompts import build_system_prompt, get_few_shot_examples
 
 logger = logging.getLogger("rag")
+
+_MIN_RERANK_CANDIDATES = 50
+_MAX_RERANK_CANDIDATES = 120
+_QUESTION_BOOST_WEIGHT = 0.16
+_QUESTION_TEXT_LIMIT = 500
+_TOKEN_RE = re.compile(r"[\wÀ-ÿ]+", re.UNICODE)
+_QUESTION_STOPWORDS = {
+    "a",
+    "ao",
+    "aos",
+    "as",
+    "com",
+    "da",
+    "das",
+    "de",
+    "do",
+    "dos",
+    "e",
+    "em",
+    "na",
+    "nas",
+    "no",
+    "nos",
+    "o",
+    "os",
+    "por",
+    "que",
+    "se",
+    "tem",
+    "um",
+    "uma",
+}
 
 
 def _engine():
@@ -63,6 +97,68 @@ def chunk_to_citation(chunk: dict) -> dict:
         "score": round(float(chunk.get("score", 0.0)), 4),
         "excerpt": (chunk.get("texto") or "")[:200],
     }
+
+
+def _normalize_token(token: str) -> str:
+    decomposed = unicodedata.normalize("NFKD", token.lower())
+    return "".join(ch for ch in decomposed if not unicodedata.combining(ch))
+
+
+def _content_tokens(text: str) -> set[str]:
+    return {
+        token
+        for raw_token in _TOKEN_RE.findall(text)
+        if len(token := _normalize_token(raw_token)) > 2 and token not in _QUESTION_STOPWORDS
+    }
+
+
+def _chunk_question_text(chunk: dict) -> str:
+    if not chunk.get("questao"):
+        return ""
+    text = (chunk.get("texto") or "").strip()
+    if not text:
+        return ""
+    answer_pos = text.find('"')
+    if answer_pos >= 0:
+        text = text[:answer_pos]
+    return text[:_QUESTION_TEXT_LIMIT].strip()
+
+
+def question_similarity(query: str, chunk: dict) -> float:
+    """
+    Lightweight lexical similarity between the user prompt and the chunk's
+    leading question. This complements embedding search when the user asks a
+    paraphrase of a canonical L.E. question whose answer text dilutes the chunk
+    embedding.
+    """
+    query_tokens = _content_tokens(query)
+    question_tokens = _content_tokens(_chunk_question_text(chunk))
+    if not query_tokens or not question_tokens:
+        return 0.0
+    overlap = query_tokens & question_tokens
+    containment = len(overlap) / min(len(query_tokens), len(question_tokens))
+    jaccard = len(overlap) / len(query_tokens | question_tokens)
+    return round((0.7 * containment) + (0.3 * jaccard), 6)
+
+
+def rerank_question_matches(query: str, chunks: list[dict], top_k: int) -> list[dict]:
+    reranked: list[dict] = []
+    for index, chunk in enumerate(chunks):
+        item = dict(chunk)
+        semantic_score = float(item.get("score", 0.0))
+        question_score = question_similarity(query, item)
+        item["semantic_score"] = round(semantic_score, 6)
+        item["question_match_score"] = question_score
+        item["score"] = round(semantic_score + (_QUESTION_BOOST_WEIGHT * question_score), 6)
+        item["_retrieval_rank"] = index
+        reranked.append(item)
+
+    reranked.sort(
+        key=lambda item: (float(item["score"]), -int(item["_retrieval_rank"])), reverse=True
+    )
+    for item in reranked:
+        item.pop("_retrieval_rank", None)
+    return reranked[:top_k]
 
 
 # ---------------------------------------------------------------------------
@@ -116,7 +212,9 @@ class RAGOrchestrator:
         t0 = time.perf_counter()
         q_vec = self.embedder.encode_query(query)
         t_embed = time.perf_counter()
-        chunks = self.index.search(q_vec, top_k=top_k, min_score=min_score)
+        candidate_k = min(max(top_k * 5, _MIN_RERANK_CANDIDATES), _MAX_RERANK_CANDIDATES)
+        chunks = self.index.search(q_vec, top_k=candidate_k, min_score=min_score)
+        chunks = rerank_question_matches(query, chunks, top_k=top_k)
         t_search = time.perf_counter()
         embed_ms = int((t_embed - t0) * 1000)
         search_ms = int((t_search - t_embed) * 1000)
@@ -140,7 +238,7 @@ class RAGOrchestrator:
         user_memories: list[str] | None = None,
         session_state: dict | None = None,
         max_new_tokens: int = settings.MAX_NEW_TOKENS,
-        top_k_chunks: int = 5,
+        top_k_chunks: int = 10,
         temperature: float = 0.7,
         reasoning_effort: str = "off",
     ) -> AsyncIterator[tuple[str, object]]:  # (event_type, payload)
