@@ -46,7 +46,7 @@ function linkifyCitations(text, citations) {
   // Match [...] but avoid already-linked markdown syntax [text](url)
   return text.replace(/\[([^\]]+)\](?!\()/g, (match, label) => {
     if (label in labelToIdx) {
-      return `[${label}](citation://${labelToIdx[label]})`;
+      return `[${label}](#citation-${labelToIdx[label]})`;
     }
     return match;
   });
@@ -114,12 +114,15 @@ function MarkdownContent({ content, citations, onCitationClick }) {
           return <code className={className}>{children}</code>;
         },
         a: ({ href, children }) => {
-          if (href?.startsWith("citation://")) {
-            const idx = parseInt(href.slice("citation://".length), 10);
+          if (href?.startsWith("#citation-")) {
+            const idx = parseInt(href.slice("#citation-".length), 10);
             const citation = citations?.[idx];
             return (
               <button
-                onClick={() => citation && onCitationClick(citation)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (citation) onCitationClick(citation);
+                }}
                 className="inline text-orange-500 hover:underline cursor-pointer text-[0.8em] font-medium align-baseline"
                 title={citation?.excerpt ?? citation?.label}
               >
@@ -127,6 +130,25 @@ function MarkdownContent({ content, citations, onCitationClick }) {
               </button>
             );
           }
+
+          // Fallback if href was stripped or LLM generated a weird link
+          const text = Array.isArray(children) ? children.join("") : children;
+          const matchedCitation = citations?.find((c) => c.label === text);
+          if (matchedCitation) {
+            return (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  onCitationClick(matchedCitation);
+                }}
+                className="inline text-orange-500 hover:underline cursor-pointer text-[0.8em] font-medium align-baseline"
+                title={matchedCitation?.excerpt ?? matchedCitation?.label}
+              >
+                {children}
+              </button>
+            );
+          }
+
           return (
             <a
               href={href}
