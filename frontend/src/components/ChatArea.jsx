@@ -266,19 +266,61 @@ function TypingIndicator() {
 /* ─── Citation pills ────────────────────────────────────── */
 
 function Citations({ citations, onCitationClick }) {
+  const [isOpen, setIsOpen] = useState(false);
+
   if (!citations?.length) return null;
+
   return (
-    <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-700 flex flex-wrap gap-2">
-      {citations.map((c, i) => (
-        <button
-          key={i}
-          className="citation-pill"
-          onClick={() => onCitationClick(c)}
-          title={c.excerpt}
+    <div className="mt-3 border-t border-gray-200 dark:border-gray-700">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex items-center justify-between pt-2.5 pb-1 text-left hover:opacity-80 transition-opacity"
+      >
+        <span className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
+          <svg
+            className="w-3.5 h-3.5 text-gray-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+            />
+          </svg>
+          Fontes ({citations.length})
+        </span>
+        <svg
+          className={`w-3.5 h-3.5 text-gray-400 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
         >
-          {c.label}
-        </button>
-      ))}
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
+      </button>
+
+      {isOpen && (
+        <div className="pt-2 pb-1 flex flex-wrap gap-2">
+          {citations.map((c, i) => (
+            <button
+              key={i}
+              className="citation-pill"
+              onClick={() => onCitationClick(c)}
+              title={c.excerpt}
+            >
+              {c.label}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
