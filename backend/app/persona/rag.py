@@ -4,6 +4,7 @@ System Prompt → LLM Generation (streaming).
 
 The orchestrator holds references to:
   - a KardecIndex (FAISS wrapper)
+  - an optional QuestionIndex (question-only embeddings for RRF fusion)
   - an Embedder (OpenAI text-embedding-3-small)
   - the LLM engine module (app.llm.engine)
 """
@@ -20,6 +21,7 @@ import uuid
 from app.config import settings
 from app.corpus.embedder import Embedder
 from app.corpus.indexer import KardecIndex
+from app.corpus.question_index import QuestionIndex
 from app.persona.prompts import build_system_prompt, get_few_shot_examples
 
 logger = logging.getLogger("rag")
@@ -28,6 +30,7 @@ _MIN_RERANK_CANDIDATES = 50
 _MAX_RERANK_CANDIDATES = 120
 _QUESTION_BOOST_WEIGHT = 0.16
 _QUESTION_TEXT_LIMIT = 500
+_QUESTION_RRF_THRESHOLD = 0.50  # cosine sim below this → reranker; above → RRF fusion
 _TOKEN_RE = re.compile(r"[\wÀ-ÿ]+", re.UNICODE)
 _QUESTION_STOPWORDS = {
     "a",
@@ -162,6 +165,47 @@ def rerank_question_matches(query: str, chunks: list[dict], top_k: int) -> list[
 
 
 # ---------------------------------------------------------------------------
+# Reciprocal Rank Fusion (RRF)
+# ---------------------------------------------------------------------------
+
+_RRF_K = 60  # standard RRF smoothing constant
+
+
+def reciprocal_rank_fusion(
+    semantic_results: list[dict],
+    question_results: list[dict],
+    top_k: int,
+) -> list[dict]:
+    """Merge two ranked lists using Reciprocal Rank Fusion.
+
+    RRF score = sum(1 / (k + rank)) for each list the doc appears in.
+    This fuses full-text semantic search with question-only search to
+    improve recall for paraphrased queries without degrading exact matches.
+    """
+    scores: dict[str, float] = {}
+    chunk_map: dict[str, dict] = {}
+
+    for rank, chunk in enumerate(semantic_results, 1):
+        cid = chunk.get("id", "")
+        scores[cid] = scores.get(cid, 0) + 1.0 / (_RRF_K + rank)
+        chunk_map[cid] = chunk
+
+    for rank, chunk in enumerate(question_results, 1):
+        cid = chunk.get("id", "")
+        scores[cid] = scores.get(cid, 0) + 1.0 / (_RRF_K + rank)
+        if cid not in chunk_map:
+            chunk_map[cid] = chunk
+
+    sorted_ids = sorted(scores, key=lambda cid: scores[cid], reverse=True)
+    merged: list[dict] = []
+    for cid in sorted_ids[:top_k]:
+        item = dict(chunk_map[cid])
+        item["score"] = round(scores[cid], 6)
+        merged.append(item)
+    return merged
+
+
+# ---------------------------------------------------------------------------
 # Lightweight stream accounting
 # ---------------------------------------------------------------------------
 
@@ -192,9 +236,15 @@ class RAGOrchestrator:
     and in the passed-in index/embedder singletons).
     """
 
-    def __init__(self, index: KardecIndex, embedder: Embedder):
+    def __init__(
+        self,
+        index: KardecIndex,
+        embedder: Embedder,
+        question_index: QuestionIndex | None = None,
+    ):
         self.index = index
         self.embedder = embedder
+        self.question_index = question_index
 
     # ------------------------------------------------------------------
     # Retrieval
@@ -208,21 +258,70 @@ class RAGOrchestrator:
     ) -> tuple[list[dict], int]:
         """
         Returns (chunks_with_score, latency_ms).
+
+        When a QuestionIndex is available, fuses full-text semantic results
+        with question-only results via RRF (Reciprocal Rank Fusion).
+        Otherwise falls back to semantic search + question reranker.
         """
         t0 = time.perf_counter()
         q_vec = self.embedder.encode_query(query)
         t_embed = time.perf_counter()
         candidate_k = min(max(top_k * 5, _MIN_RERANK_CANDIDATES), _MAX_RERANK_CANDIDATES)
-        chunks = self.index.search(q_vec, top_k=candidate_k, min_score=min_score)
-        chunks = rerank_question_matches(query, chunks, top_k=top_k)
+
+        semantic_results = self.index.search(q_vec, top_k=candidate_k, min_score=min_score)
+
+        # Adaptive strategy: search question-only index once, then decide
+        # whether to fuse (RRF) or fall back to lexical reranker.
+        q_results = self._question_search(q_vec, candidate_k)
+        strategy = self._pick_strategy(q_results)
+
+        if strategy == "rrf":
+            chunks = reciprocal_rank_fusion(semantic_results, q_results, top_k=top_k)
+        else:
+            chunks = rerank_question_matches(query, semantic_results, top_k=top_k)
+
         t_search = time.perf_counter()
         embed_ms = int((t_embed - t0) * 1000)
         search_ms = int((t_search - t_embed) * 1000)
         latency_ms = int((t_search - t0) * 1000)
         logger.debug(
-            f"RAG embed={embed_ms}ms  search={search_ms}ms  total={latency_ms}ms  chunks={len(chunks)}"
+            f"RAG strategy={strategy}  embed={embed_ms}ms  search={search_ms}ms  "
+            f"total={latency_ms}ms  chunks={len(chunks)}"
         )
         return chunks, latency_ms
+
+    # ------------------------------------------------------------------
+    # Adaptive strategy selection
+    # ------------------------------------------------------------------
+
+    def _question_search(self, q_vec, candidate_k: int) -> list[dict]:
+        """Search question-only index (returns [] when unavailable)."""
+        if not self.question_index or not self.question_index.is_ready():
+            return []
+        return self.question_index.search(q_vec, top_k=candidate_k)
+
+    @staticmethod
+    def _pick_strategy(q_results: list[dict]) -> str:
+        """Choose retrieval strategy based on question-index confidence.
+
+        Decision logic (calibrated via threshold sweep on gold dataset):
+        - Empty question results → "rerank" (question index unavailable)
+        - Top question-only hit ≥ threshold → "rrf" (query resembles an
+          L.E. question; RRF fusion dominates for paraphrases and exact)
+        - Below threshold → "rerank" (query is broad/conceptual; the
+          lexical reranker preserves more relevant semantic results)
+        """
+        if not q_results:
+            return "rerank"
+
+        top_score = float(q_results[0].get("score", 0.0))
+
+        if top_score >= _QUESTION_RRF_THRESHOLD:
+            logger.debug(f"Adaptive: rrf (question_score={top_score:.3f})")
+            return "rrf"
+
+        logger.debug(f"Adaptive: rerank (question_score={top_score:.3f})")
+        return "rerank"
 
     # ------------------------------------------------------------------
     # Streaming generation

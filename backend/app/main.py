@@ -90,8 +90,24 @@ async def lifespan(app: FastAPI):
 
         from app.persona.rag import RAGOrchestrator
 
-        state.rag = RAGOrchestrator(index=idx, embedder=embedder)
-        logger.info("RAG orchestrator ready")
+        q_index = None
+        try:
+            from app.corpus.question_index import QuestionIndex
+
+            # Build question-only embeddings for L.E. chunks (RRF fusion).
+            # Optional: if this fails, keep the baseline FAISS RAG path available.
+            chunks_dir = INDEX_DIR.parent / "chunks"
+            q_embedder = Embedder(model_name=embedding_model)
+            q_index = await loop.run_in_executor(
+                None,
+                lambda: QuestionIndex.build(chunks_dir, q_embedder),
+            )
+        except Exception as exc:
+            logger.warning(f"Question index unavailable; using baseline RAG retrieval: {exc}")
+
+        state.rag = RAGOrchestrator(index=idx, embedder=embedder, question_index=q_index)
+        q_index_size = q_index.size if q_index is not None else 0
+        logger.info(f"RAG orchestrator ready (question_index: {q_index_size} questions)")
     except FileNotFoundError:
         logger.warning(
             "FAISS index not found — run `python -m app.corpus.parser` and "

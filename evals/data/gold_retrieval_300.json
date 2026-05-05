@@ -1,0 +1,1943 @@
+[
+  {
+    "query": "Poderemos sempre saber o nome do Espírito nosso protetor ou anjo de guarda?",
+    "expected_ids": [
+      "lde-q0504"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q504 — Capítulo IX — Da intervenção dos Espíritos no mundo corporal"
+  },
+  {
+    "query": "Alimentam ódio entre si os Espíritos?",
+    "expected_ids": [
+      "lde-q0292"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q292 — Capítulo VI — Da vida espírita"
+  },
+  {
+    "query": "Poderá ser tão adiantado quanto o de um adulto o Espírito de uma criança que morreu em tenra idade?",
+    "expected_ids": [
+      "lde-q0197"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q197 — Capítulo IV — Da pluralidade das existências"
+  },
+  {
+    "query": "O Espírito do homem tem, após a morte, consciência de suas existências anteriores ao período de humanidade?",
+    "expected_ids": [
+      "lde-q0608"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q608 — Capítulo XI — Dos três reinos"
+  },
+  {
+    "query": "Pode alguém, por um proceder impecável na vida atual, transpor todos os graus da escala do aperfeiçoamento e tornar-se Espírito puro, sem passar por outros graus intermédios?",
+    "expected_ids": [
+      "lde-q0192"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q192 — Capítulo IV — Da pluralidade das existências"
+  },
+  {
+    "query": "Por que razão, não obstante ser falsa, a crença politeísta é uma das mais antigas e espalhadas?",
+    "expected_ids": [
+      "lde-q0667"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q667 — Capítulo II — Da lei de adoração"
+  },
+  {
+    "query": "Os parentes e amigos, que nos precederam na outra vida, maior simpatia nos votam do que os Espíritos que nos são estranhos?",
+    "expected_ids": [
+      "lde-q0488"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q488 — Capítulo IX — Da intervenção dos Espíritos no mundo corporal"
+  },
+  {
+    "query": "Os Espíritos que se achavam em boas condições ao deixarem a Terra, sempre podem proteger os que lhes são caros e que lhes sobrevivem?",
+    "expected_ids": [
+      "lde-q0508"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q508 — Capítulo IX — Da intervenção dos Espíritos no mundo corporal"
+  },
+  {
+    "query": "A oferenda feita a Deus, de frutos da terra, tinha a seus olhos mais mérito do que o sacrifício dos animais?",
+    "expected_ids": [
+      "lde-q0672"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q672 — Capítulo II — Da lei de adoração"
+  },
+  {
+    "query": "Tem meios o homem de distinguir por si mesmo o que é bem do que é mal?",
+    "expected_ids": [
+      "lde-q0631"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q631 — Capítulo I — Da lei divina ou natural"
+  },
+  {
+    "query": "O conhecimento do Espiritismo exerce alguma influência sobre a duração, mais ou menos longa, da perturbação?",
+    "expected_ids": [
+      "lde-q0165"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q165 — Capítulo IV — Da pluralidade das existências"
+  },
+  {
+    "query": "Qual o meio prático mais eficaz que tem o homem de se melhorar nesta vida e de resistir à atração do mal?",
+    "expected_ids": [
+      "lde-q0919"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q919 — Capítulo I — Das penas e gozos terrestres"
+  },
+  {
+    "query": "Não parece natural que se escolham as provas menos dolorosas?",
+    "expected_ids": [
+      "lde-q0266"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q266 — Capítulo VI — Da vida espírita"
+  },
+  {
+    "query": "São habitados todos os globos que se movem no Espaço?",
+    "expected_ids": [
+      "lde-q0055"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q55 — Capítulo III — Da criação"
+  },
+  {
+    "query": "Que se deve pensar da expulsão dos demônios, mencionada no Evangelho?",
+    "expected_ids": [
+      "lde-q0480"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q480 — Capítulo IX — Da intervenção dos Espíritos no mundo corporal"
+  },
+  {
+    "query": "Quando o pai, que vela pelo filho, reencarna, continua a velar por ele?",
+    "expected_ids": [
+      "lde-q0510"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q510 — Capítulo IX — Da intervenção dos Espíritos no mundo corporal"
+  },
+  {
+    "query": "Pode um homem, nas suas novas existências, descer mais baixo do que esteja na atual?",
+    "expected_ids": [
+      "lde-q0193"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q193 — Capítulo IV — Da pluralidade das existências"
+  },
+  {
+    "query": "O Universo foi criado, ou existe de toda a eternidade, como Deus?",
+    "expected_ids": [
+      "lde-q0037"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q37 — Capítulo III — Da criação"
+  },
+  {
+    "query": "Se acontecesse que muitos Espíritos se apresentassem para tomar determinado corpo destinado a nascer, que é o que decidiria sobre a qual deles pertenceria o corpo?",
+    "expected_ids": [
+      "lde-q0338"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q338 — Capítulo VII — Da volta do Espírito à vida corporal"
+  },
+  {
+    "query": "Pois que a sua clarividência é a de sua alma ou de seu Espírito, por que o sonâmbulo não vê tudo e tantas vezes se engana?",
+    "expected_ids": [
+      "lde-q0430"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q430 — Capítulo VIII — Da emancipação da alma"
+  },
+  {
+    "query": "Incorrerá em culpa aquele que sonda as chagas da sociedade e as expõe em público?",
+    "expected_ids": [
+      "lde-q0904"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q904 — Capítulo XII — Da perfeição moral"
+  },
+  {
+    "query": "Podem certos Espíritos auxiliar o progresso das artes, protegendo os que às artes se dedicam?",
+    "expected_ids": [
+      "lde-q0521"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q521 — Capítulo IX — Da intervenção dos Espíritos no mundo corporal"
+  },
+  {
+    "query": "Donde deriva a semelhança de caráter que muitas vezes existe entre dois irmãos, mormente se gêmeos?",
+    "expected_ids": [
+      "lde-q0211"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q211 — Capítulo IV — Da pluralidade das existências"
+  },
+  {
+    "query": "Qual o limite do trabalho?",
+    "expected_ids": [
+      "lde-q0683"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q683 — Capítulo III — Da lei do trabalho"
+  },
+  {
+    "query": "Será certo dizer-se que os Espíritos são imateriais?",
+    "expected_ids": [
+      "lde-q0082"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q82 — Capítulo I — Dos Espíritos"
+  },
+  {
+    "query": "Os Espíritos percebem sempre os desígnios que lhes compete executar?",
+    "expected_ids": [
+      "lde-q0570"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q570 — Capítulo X — Das ocupações e missões dos Espíritos"
+  },
+  {
+    "query": "É Lei da Natureza a destruição?",
+    "expected_ids": [
+      "lde-q0728"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q728 — Capítulo VI — Da lei de destruição"
+  },
+  {
+    "query": "Uma vez que não devemos criar sofrimentos voluntários, que nenhuma utilidade tenham para outrem, deveremos cuidar de preservar- -nos dos que prevejamos ou nos ameacem?",
+    "expected_ids": [
+      "lde-q0727"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q727 — Capítulo VI — Da lei de destruição"
+  },
+  {
+    "query": "Que se deve pensar dos que abusam da superioridade de suas posições sociais, para, em proveito próprio, oprimir os fracos?",
+    "expected_ids": [
+      "lde-q0807"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q807 — Capítulo IX — Da lei de igualdade"
+  },
+  {
+    "query": "Poderiam os nossos bom e mau gênios encarnar, a fim de mais de perto nos acompanharem na vida?",
+    "expected_ids": [
+      "lde-q0516"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q516 — Capítulo IX — Da intervenção dos Espíritos no mundo corporal"
+  },
+  {
+    "query": "Qual a causa da animalização da matéria?",
+    "expected_ids": [
+      "lde-q0062"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q62 — Capítulo IV — Do princípio vital"
+  },
+  {
+    "query": "Pela sua natureza especial, os mundos transitórios se conservam perpetuamente destinados aos Espíritos errantes?",
+    "expected_ids": [
+      "lde-q0236"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q236 — Capítulo VI — Da vida espírita"
+  },
+  {
+    "query": "Não sucede frequentemente resultar o mal, que o homem pratica, da posição em que os outros homens o colocam? Quais, nesse caso, os culpados?",
+    "expected_ids": [
+      "lde-q0639"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q639 — Capítulo I — Da lei divina ou natural"
+  },
+  {
+    "query": "É eterna a Lei de Deus?",
+    "expected_ids": [
+      "lde-q0615"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q615 — Capítulo I — Da lei divina ou natural"
+  },
+  {
+    "query": "Independe da vontade delas a força que as atrai umas para as outras?",
+    "expected_ids": [
+      "lde-q0588"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q588 — Capítulo XI — Dos três reinos"
+  },
+  {
+    "query": "Algumas pessoas julgam ter vaga recordação de um passado desconhecido, que se lhes apresenta como a imagem fugitiva de um sonho, que em vão se tenta reter. Não há nisso simples ilusão?",
+    "expected_ids": [
+      "lde-q0396"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q396 — Capítulo VII — Da volta do Espírito à vida corporal"
+  },
+  {
+    "query": "A duração, os Espíritos a compreendem como nós?",
+    "expected_ids": [
+      "lde-q0240"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q240 — Capítulo VI — Da vida espírita"
+  },
+  {
+    "query": "Os povos hão formado ideias muito divergentes acerca da Cria- ção, de acordo com as luzes que possuíam. Apoiada na Ciência, a razão reconheceu a inverossimilhança de algumas dessas teorias. A que os Espíritos apresentam confirma a opinião de há muito partilhada pelos homens mais esclarecidos. A objeção que se lhe pode fazer é a de estar em contradição com o texto dos livros sagrados. Mas um exame sério mostrará que essa contradição é mais aparente do que real e que decorre da interpretação dada ao que muitas vezes só tinha sentido alegórico. A questão de ter sido Adão, como primeiro homem, a origem exclusiva da Humanidade, não é a única a cujo respeito as crenças religiosas tiveram que se modificar. O movimento da Terra pareceu, em determinada época, tão em oposição às letras sagradas, que não houve gênero de perseguições a que essa teoria não tivesse servido de pretexto, e, no entanto, a Terra gira, malgrado os anátemas, não podendo ninguém hoje contestá-lo, sem agravo à sua própria razão. Diz também a Bíblia que o mundo foi criado em seis dias e põe a época da sua criação há quatro mil anos, mais ou menos, antes da Era Cristã. Anteriormente, a Terra não existia; foi tirada do nada: o texto é formal. Eis, porém, que a Ciência positiva, a inexorável Ciência, prova o contrário. A história da formação do globo terráqueo está escrita em caracteres irrecusáveis no mundo fóssil, achando-se provado que os seis dias da criação indicam outros tantos períodos, cada um de, talvez, muitas centenas de milhares de anos. Isto não é um sistema, uma doutrina, uma opinião isolada; é um fato tão certo como o do movimento da Terra e que a Teologia não pode negar-se a admitir, o que demonstra evidentemente o erro em que se está sujeito a cair tomando ao pé da letra expressões de uma linguagem frequentemente figurada. Dever-se-á daí concluir que a Bíblia é um erro? Não; a conclusão a tirar-se é que os homens se equivocaram ao interpretá-la. Escavando os arquivos da Terra, a Ciência descobriu em que ordem os seres vivos lhe apareceram na superfície, ordem que está de acordo com o que diz em Gênesis, havendo apenas a notar-se a diferença de que essa obra, em vez de executada milagrosamente por Deus em algumas horas, se realizou, sempre pela sua vontade, mas conforme a lei das forças da Natureza, em alguns milhões de anos. Ficou sendo Deus, por isso, menor e menos poderoso? Perdeu em sublimidade a sua obra, por não ter o prestígio da instantaneidade? Indubitavelmente, não. Fora mister fazer-se da Da criação Divindade bem mesquinha ideia, para se não reconhecer a sua onipotência nas leis eternas que ela estabeleceu para regerem os mundos. A Ciência, longe de apoucar a obra divina, no-la mostra sob aspecto mais grandioso e mais acorde com as noções que temos do poder e da majestade de Deus, pela razão mesma de ela se haver efetuado sem derrogação das Leis da Natureza. De acordo, neste ponto, com Moisés, a Ciência coloca o homem em último lugar na ordem da criação dos seres vivos. Moisés, porém, indica, como o do dilúvio universal, o ano 16547 da forma- ção do mundo, ao passo que a Geologia nos aponta o grande cataclismo como anterior ao aparecimento do homem, atendendo a que, até hoje, não se encontrou, nas camadas primitivas, traço algum de sua presença, nem da dos animais de igual categoria, do ponto de vista físico. Contudo, nada prova que isso seja impossível. Muitas descobertas já fizeram surgir dúvidas a tal respeito. Pode dar-se que, de um momento para outro, se adquira a certeza material da anterioridade da raça humana e então se reconhecerá que, a esse propósito, como a tantos outros, o texto bíblico encerra uma figura. A questão está em saber se o cataclismo geológico é o mesmo a que assistiu Noé. Ora, o tempo necessário à formação das camadas fósseis não permite confundi-los e, desde que se achem vestígios da existência do homem antes da grande catástrofe, provado ficará, ou que Adão não foi o primeiro homem, ou que a sua criação se perde na noite dos tempos. Contra a evidência não há raciocínios possíveis; forçoso será aceitar-se esse fato, como se aceitaram o do movimento da Terra e os seis períodos da Criação. A existência do homem antes do dilúvio geológico ainda é, com efeito, hipotética. Eis aqui, porém, alguma coisa que o é menos. Admitindo-se que o homem tenha aparecido pela primeira vez na Terra 4.000 anos antes do Cristo e que, 1.650 anos mais tarde, toda a raça humana foi destruída, com exceção de uma só família, resulta que o povoamento da Terra data apenas de Noé, ou seja: de 2.350 anos antes da nossa era. Ora, quando os hebreus emigraram para o Egito, por volta de 1700 a.C., encontraram 7 N.E.: Ano do calendário judaico. esse país muito povoado e já bastante adiantado em civilização. A História prova que, nessa época, as Índias e outros países também estavam florescentes, sem mesmo se ter em conta a cronologia de certos povos, que remonta a uma época muito mais afastada. Teria sido preciso, nesse caso, que de 2300 a 1700 a.C., isto é, num espaço de 600 anos, não somente a posteridade de um único homem houvesse podido povoar todos os imensos países então conhecidos, suposto que os outros não o fossem, mas também que, nesse curto lapso de tempo, a espécie humana houvesse podido elevar-se da ignorância absoluta do estado primitivo ao mais alto grau de desenvolvimento intelectual, o que é contrário a todas as leis antropológicas. A diversidade das raças corrobora, igualmente, esta opinião. O clima e os costumes produzem, é certo, modificações no caráter físico; sabe-se, porém, até onde pode ir a influência dessas causas. Entretanto, o exame fisiológico demonstra haver, entre certas raças, diferenças constitucionais mais profundas do que as que o clima é capaz de determinar. O cruzamento das raças dá origem aos tipos intermediários. Ele tende a apagar os caracteres extremos, mas não os cria; apenas produz variedades. Ora, para que tenha havido cruzamento de raças, preciso era que houvesse raças distintas. Como, porém, se explicará a existência delas, atribuindo-se-lhes uma origem comum e, sobretudo, tão pouco afastada? Como se há de admitir que, em poucos séculos, alguns descendentes de Noé se tenham transformado ao ponto de produzirem a raça etíope, por exemplo? Tão pouco admissível é semelhante metamorfose, quanto à hipótese de uma origem comum para o lobo e o cordeiro, para o elefante e o pulgão, para o pássaro e o peixe. Ainda uma vez: nada pode prevalecer contra a evidência dos fatos. Tudo, ao invés, se explica, admitindo-se: que a existência do homem é anterior à época em que vulgarmente se pretende que ela começou; que diversas são as origens; que Adão, vivendo há 6.000 anos, tenha povoado uma região ainda desabitada; que o dilúvio de Noé foi uma catástrofe parcial, confundida com o cataclismo geológico; e atentando-se, finalmente, na forma alegórica, peculiar ao estilo oriental, forma com que deparamos nos Da criação livros sagrados de todos os povos. Isto faz ver quanto é prudente não lançar levianamente a pecha de falsas as doutrinas que podem, cedo ou tarde, como tantas outras, desmentir os que as combatem. As ideias religiosas, longe de perderem alguma coisa, se engrandecem, caminhando de par com a Ciência. Esse o meio único de não apresentarem lado vulnerável ao ceticismo. Do princípio vital • Seres orgânicos e inorgânicos • A vida e a morte • Inteligência e instinto Seres orgânicos e inorgânicos Os seres orgânicos são os que têm em si uma fonte de atividade íntima que lhes dá a vida. Nascem, crescem, reproduzem-se por si mesmos e morrem. São providos de órgãos especiais para a execução dos diferentes atos da vida, órgãos esses apropriados às necessidades que a conservação própria lhes impõe. Nessa classe estão compreendidos os homens, os animais e as plantas. Seres inorgânicos são todos os que carecem de vitalidade, de movimentos próprios e que se formam apenas pela agregação da matéria. Tais são os minerais, a água, o ar etc.",
+    "expected_ids": [
+      "lde-q0059"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q59 — Capítulo IV — Do princípio vital"
+  },
+  {
+    "query": "Podem ser consideradas suicidas e sofrem as consequências de um suicídio as mulheres que, em certos países, se queimam voluntariamente sobre os corpos dos maridos? Das penas e gozos terrestres",
+    "expected_ids": [
+      "lde-q0955"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q955 — Capítulo I — Das penas e gozos terrestres"
+  },
+  {
+    "query": "Haverá Espíritos que se liguem a uma família inteira para protegê-la? 14",
+    "expected_ids": [
+      "lde-q0517"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q517 — Capítulo IX — Da intervenção dos Espíritos no mundo corporal"
+  },
+  {
+    "query": "O instintivo respeito que, em todos os tempos e entre todos os povos, o homem consagrou e consagra aos mortos é efeito da intuição que tem da vida futura?",
+    "expected_ids": [
+      "lde-q0329"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q329 — Capítulo VII — Da volta do Espírito à vida corporal"
+  },
+  {
+    "query": "Que se há de pensar dessas pessoas que se ligam a certos indivíduos para levá-los à perdição, ou para guiá-los pelo bom caminho?",
+    "expected_ids": [
+      "lde-q0515"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q515 — Capítulo IX — Da intervenção dos Espíritos no mundo corporal"
+  },
+  {
+    "query": "Basta o arrependimento durante a vida para que as faltas do Espírito se apaguem e ele ache graça diante de Deus? Das penas e gozos futuros",
+    "expected_ids": [
+      "lde-q0999"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q999 — Capítulo II — Das penas e gozos futuros"
+  },
+  {
+    "query": "O mesmo Espírito dá ao homem as qualidades morais e as da inteligência?",
+    "expected_ids": [
+      "lde-q0364"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q364 — Capítulo VII — Da volta do Espírito à vida corporal"
+  },
+  {
+    "query": "Que utilidade encontrará um Espírito na sua encarnação em um corpo que morre poucos dias depois de nascido?",
+    "expected_ids": [
+      "lde-q0347"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q347 — Capítulo VII — Da volta do Espírito à vida corporal"
+  },
+  {
+    "query": "Não sendo completa a união do Espírito ao corpo, não estando definitivamente consumada, senão depois do nascimento, poder-se-á considerar o feto como dotado de alma?",
+    "expected_ids": [
+      "lde-q0353"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q353 — Capítulo VII — Da volta do Espírito à vida corporal"
+  },
+  {
+    "query": "Passando de um mundo superior a outro inferior, conserva o Espírito, integralmente, as faculdades adquiridas?",
+    "expected_ids": [
+      "lde-q0805"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q805 — Capítulo IX — Da lei de igualdade"
+  },
+  {
+    "query": "Da existência de diferentes ordens de Espíritos, resulta para estes alguma hierarquia de poderes? Há entre eles subordinação e autoridade?",
+    "expected_ids": [
+      "lde-q0274"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q274 — Capítulo VI — Da vida espírita"
+  },
+  {
+    "query": "Constituindo elas atributos próprios do Espírito, ser-lhe-á possível subtrair-se às percepções?",
+    "expected_ids": [
+      "lde-q0250"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q250 — Capítulo VI — Da vida espírita"
+  },
+  {
+    "query": "Pode o homem eximir-se da influência dos Espíritos que procuram arrastá-lo ao mal?",
+    "expected_ids": [
+      "lde-q0467"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q467 — Capítulo IX — Da intervenção dos Espíritos no mundo corporal"
+  },
+  {
+    "query": "Pode o homem gozar de completa felicidade na Terra?",
+    "expected_ids": [
+      "lde-q0920"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q920 — Capítulo I — Das penas e gozos terrestres"
+  },
+  {
+    "query": "Os avisos dos Espíritos protetores objetivam unicamente o nosso procedimento moral, ou também o proceder que devamos adotar nos assuntos da vida particular?",
+    "expected_ids": [
+      "lde-q0524"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q524 — Capítulo IX — Da intervenção dos Espíritos no mundo corporal"
+  },
+  {
+    "query": "Frequentemente, os pais transmitem aos filhos a parecença física. Transmitirão também alguma parecença moral? 12",
+    "expected_ids": [
+      "lde-q0207"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q207 — Capítulo IV — Da pluralidade das existências"
+  },
+  {
+    "query": "De que natureza será a missão do conquistador que apenas visa satisfazer à sua ambição e que, para alcançar esse objetivo, não vacila ante nenhuma das calamidades que vai espalhando?",
+    "expected_ids": [
+      "lde-q0584"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q584 — Capítulo XI — Dos três reinos"
+  },
+  {
+    "query": "Que se deve pensar dos que vivem em absoluta reclusão, fugindo ao pernicioso contato do mundo?",
+    "expected_ids": [
+      "lde-q0770"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q770 — Capítulo VII — Da lei de sociedade"
+  },
+  {
+    "query": "Podem tornar-se de futuro simpáticos, Espíritos que presentemente não o são?",
+    "expected_ids": [
+      "lde-q0303"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q303 — Capítulo VI — Da vida espírita"
+  },
+  {
+    "query": "Donde se origina a crença, com que deparamos entre todos os povos, na existência de penas e recompensas porvindouras?",
+    "expected_ids": [
+      "lde-q0960"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q960 — Capítulo II — Das penas e gozos futuros"
+  },
+  {
+    "query": "Experimentam sensações? Sofrem quando as mutilam?",
+    "expected_ids": [
+      "lde-q0587"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q587 — Capítulo XI — Dos três reinos"
+  },
+  {
+    "query": "Qual a causa da clarividência sonambúlica?",
+    "expected_ids": [
+      "lde-q0428"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q428 — Capítulo VIII — Da emancipação da alma"
+  },
+  {
+    "query": "Define-se geralmente a matéria como o que tem extensão, o que é capaz de nos impressionar os sentidos, o que é impenetrável. São exatas estas definições?",
+    "expected_ids": [
+      "lde-q0022"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q22 — Capítulo II — Dos elementos gerais do Universo"
+  },
+  {
+    "query": "Em que sentido se deve entender a palavra metade, de que alguns Espíritos se servem para designar os Espíritos simpáticos?",
+    "expected_ids": [
+      "lde-q0299"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q299 — Capítulo VI — Da vida espírita"
+  },
+  {
+    "query": "Será desculpável o suicídio, quando tenha por fim obstar a que a vergonha caia sobre os filhos, ou sobre a família?",
+    "expected_ids": [
+      "lde-q0949"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q949 — Capítulo I — Das penas e gozos terrestres"
+  },
+  {
+    "query": "Dar-se-á que alguma vez possam ter sido agradáveis a Deus os sacrifícios humanos praticados com piedosa intenção?",
+    "expected_ids": [
+      "lde-q0670"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q670 — Capítulo II — Da lei de adoração"
+  },
+  {
+    "query": "A posição social não constitui às vezes, para o homem, obstáculo à inteira liberdade de seus atos?",
+    "expected_ids": [
+      "lde-q0850"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q850 — Capítulo X — Da lei de liberdade"
+  },
+  {
+    "query": "Doutras vezes, num estado que ainda não é bem o do adormecimento, estando com os olhos fechados, vemos imagens distintas, figuras cujas mínimas particularidades percebemos. Que há aí, efeito de visão ou de imaginação?",
+    "expected_ids": [
+      "lde-q0410"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q410 — Capítulo VIII — Da emancipação da alma"
+  },
+  {
+    "query": "Dado é ao homem receber, sem ser por meio das investigações da Ciência, comunicações de ordem mais elevada acerca do que lhe escapa ao testemunho dos sentidos?",
+    "expected_ids": [
+      "lde-q0020"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q20 — Capítulo II — Dos elementos gerais do Universo"
+  },
+  {
+    "query": "Que se deve entender por infinito?",
+    "expected_ids": [
+      "lde-q0002"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q2 — Capítulo I — De Deus"
+  },
+  {
+    "query": "Donde vieram para a Terra os seres vivos?",
+    "expected_ids": [
+      "lde-q0044"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q44 — Capítulo III — Da criação"
+  },
+  {
+    "query": "Pode o Espírito, mudando de corpo, perder algumas faculdades intelectuais, deixar de ter, por exemplo, o gosto das artes?",
+    "expected_ids": [
+      "lde-q0220"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q220 — Capítulo IV — Da pluralidade das existências"
+  },
+  {
+    "query": "Como se comunicam entre si os Espíritos?",
+    "expected_ids": [
+      "lde-q0282"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q282 — Capítulo VI — Da vida espírita"
+  },
+  {
+    "query": "A antipatia entre duas pessoas nasce primeiro na que tem pior Espírito, ou na que o tem melhor?",
+    "expected_ids": [
+      "lde-q0391"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q391 — Capítulo VII — Da volta do Espírito à vida corporal"
+  },
+  {
+    "query": "Poderá dar-se que o Espírito protetor abandone o seu protegido, por se lhe mostrar este rebelde aos conselhos?",
+    "expected_ids": [
+      "lde-q0495"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q495 — Capítulo IX — Da intervenção dos Espíritos no mundo corporal"
+  },
+  {
+    "query": "Tendo o homem, no estado de natureza, menos necessidades, isento se acha das tribulações que para si mesmo cria, quando num estado de maior adiantamento. Diante disso, que se deve pensar da opinião dos que consideram aquele estado como o da mais perfeita felicidade na Terra?",
+    "expected_ids": [
+      "lde-q0777"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q777 — Capítulo VIII — Da lei do progresso"
+  },
+  {
+    "query": "Donde procede a doutrina do fogo eterno?",
+    "expected_ids": [
+      "lde-q0974"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q974 — Capítulo II — Das penas e gozos futuros"
+  },
+  {
+    "query": "Que efeito podem produzir as fórmulas e práticas mediante as quais pessoas há que pretendem dispor do concurso dos Espíritos?",
+    "expected_ids": [
+      "lde-q0553"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q553 — Capítulo IX — Da intervenção dos Espíritos no mundo corporal"
+  },
+  {
+    "query": "Tem algum fundamento o pretender-se que a alma dos cretinos e dos idiotas é de natureza inferior? Da volta do Espírito à vida corporal",
+    "expected_ids": [
+      "lde-q0371"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q371 — Capítulo VII — Da volta do Espírito à vida corporal"
+  },
+  {
+    "query": "Por que alguns homens muito inteligentes, o que indica acharem- -se encarnados neles Espíritos superiores, são ao mesmo tempo profundamente viciosos?",
+    "expected_ids": [
+      "lde-q0365"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q365 — Capítulo VII — Da volta do Espírito à vida corporal"
+  },
+  {
+    "query": "O fenômeno a que se dá a designação de dupla vista tem alguma relação com o sonho e o sonambulismo?",
+    "expected_ids": [
+      "lde-q0447"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q447 — Capítulo VIII — Da emancipação da alma"
+  },
+  {
+    "query": "Na erraticidade, o Espírito progride?",
+    "expected_ids": [
+      "lde-q0230"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q230 — Capítulo VI — Da vida espírita"
+  },
+  {
+    "query": "Donde provém a inferioridade moral da mulher em certos países?",
+    "expected_ids": [
+      "lde-q0818"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q818 — Capítulo IX — Da lei de igualdade"
+  },
+  {
+    "query": "A matéria opõe obstáculo aos Espíritos?",
+    "expected_ids": [
+      "lde-q0091"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q91 — Capítulo I — Dos Espíritos"
+  },
+  {
+    "query": "Abstraindo do obstáculo que a imperfeição dos órgãos opõe à sua livre manifestação, o Espírito, numa criancinha, pensa como criança ou como adulto?",
+    "expected_ids": [
+      "lde-q0380"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q380 — Capítulo VII — Da volta do Espírito à vida corporal"
+  },
+  {
+    "query": "O exemplo da lagarta que, primeiro, anda de rastos pela terra, depois se encerra na sua crisálida em estado de morte aparente, para enfim renascer com uma existência brilhante, pode dar-nos ideia da vida terrestre, do túmulo e, finalmente, da nossa nova existência?",
+    "expected_ids": [
+      "lde-q0158"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q158 — Capítulo III — Da volta do Espírito, extinta a vida corpórea, à vida espiritual"
+  },
+  {
+    "query": "Nos mundos superiores, as plantas são de natureza mais perfeita, como os outros seres?",
+    "expected_ids": [
+      "lde-q0591"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q591 — Capítulo XI — Dos três reinos"
+  },
+  {
+    "query": "Tem o homem culpa dos assassínios que pratica durante a guerra?",
+    "expected_ids": [
+      "lde-q0749"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q749 — Capítulo VI — Da lei de destruição"
+  },
+  {
+    "query": "Pois que o espírito é, em si, alguma coisa, não seria mais exato e menos sujeito a confusão dar aos dois elementos gerais as designações de — matéria inerte e matéria inteligente?",
+    "expected_ids": [
+      "lde-q0028"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q28 — Capítulo II — Dos elementos gerais do Universo"
+  },
+  {
+    "query": "Nos mundos mais aperfeiçoados, os homens se acham submetidos à mesma necessidade de trabalhar?",
+    "expected_ids": [
+      "lde-q0678"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q678 — Capítulo III — Da lei do trabalho"
+  },
+  {
+    "query": "Acontecendo que os pressentimentos e a voz do instinto são sempre algum tanto vagos, que devemos fazer, na incerteza em que ficamos?",
+    "expected_ids": [
+      "lde-q0523"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q523 — Capítulo IX — Da intervenção dos Espíritos no mundo corporal"
+  },
+  {
+    "query": "Citais, entre as condições da felicidade dos bons Espíritos, a ausência das necessidades materiais; mas a satisfação dessas necessidades não representa para o homem uma fonte de gozos?",
+    "expected_ids": [
+      "lde-q0968"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q968 — Capítulo II — Das penas e gozos futuros"
+  },
+  {
+    "query": "Que objetivo visa a Providência criando seres desgraçados, como os cretinos e os idiotas?",
+    "expected_ids": [
+      "lde-q0372"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q372 — Capítulo VII — Da volta do Espírito à vida corporal"
+  },
+  {
+    "query": "Como criou Deus o Universo?",
+    "expected_ids": [
+      "lde-q0038"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q38 — Capítulo III — Da criação"
+  },
+  {
+    "query": "Como poderá o homem ser levado a reformar suas leis?",
+    "expected_ids": [
+      "lde-q0797"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q797 — Capítulo VIII — Da lei do progresso"
+  },
+  {
+    "query": "Poderá dar-se que Espíritos vindos de um mundo inferior à Terra, ou de um povo muito atrasado, como os canibais, por exemplo, nasçam no seio de povos civilizados?",
+    "expected_ids": [
+      "lde-q0272"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q272 — Capítulo VI — Da vida espírita"
+  },
+  {
+    "query": "Que é o que motiva a mudança que se opera no caráter do indivíduo em certa idade, especialmente ao sair da adolescência? É que o Espírito se modifica? Da volta do Espírito à vida corporal",
+    "expected_ids": [
+      "lde-q0385"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q385 — Capítulo VII — Da volta do Espírito à vida corporal"
+  },
+  {
+    "query": "Será passível de censura o homem, por ter consciência do bem que faz e por confessá-lo a si mesmo?",
+    "expected_ids": [
+      "lde-q0906"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q906 — Capítulo XII — Da perfeição moral"
+  },
+  {
+    "query": "Alguma outra coisa incumbe aos Espíritos fazer, que não seja melhorarem-se pessoalmente?",
+    "expected_ids": [
+      "lde-q0558"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q558 — Capítulo X — Das ocupações e missões dos Espíritos"
+  },
+  {
+    "query": "Então, a fatalidade que parece presidir aos destinos materiais de nossa vida também é resultante do nosso livre-arbítrio?",
+    "expected_ids": [
+      "lde-q0866"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q866 — Capítulo X — Da lei de liberdade"
+  },
+  {
+    "query": "A prece é meio eficiente para a cura da obsessão?",
+    "expected_ids": [
+      "lde-q0479"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q479 — Capítulo IX — Da intervenção dos Espíritos no mundo corporal"
+  },
+  {
+    "query": "Que pensar daquele que se mata, na esperança de chegar mais depressa a uma vida melhor?",
+    "expected_ids": [
+      "lde-q0950"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q950 — Capítulo I — Das penas e gozos terrestres"
+  },
+  {
+    "query": "Posto de parte o direito que a lei humana consagra, qual a base da justiça, segundo a lei natural?",
+    "expected_ids": [
+      "lde-q0876"
+    ],
+    "type": "exact_question",
+    "source_book": "lde",
+    "notes": "Q876 — Capítulo XI — Da lei de justiça, de amor e de caridade"
+  },
+  {
+    "query": "O que é Deus?",
+    "expected_ids": [
+      "lde-q0001"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Primeira questão do LdE — resposta direta e canônica sobre a natureza de Deus"
+  },
+  {
+    "query": "Deus tem uma forma?",
+    "expected_ids": [
+      "lde-q0010",
+      "lde-q0012",
+      "lde-q0013",
+      "lde-q0015"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Pergunta sobre a forma ou representação física de Deus"
+  },
+  {
+    "query": "O que é o espírito?",
+    "expected_ids": [
+      "lde-q0023",
+      "lde-q0024",
+      "lde-q0025"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Definição fundamental de espírito — princípio inteligente"
+  },
+  {
+    "query": "Os espíritos têm um começo?",
+    "expected_ids": [
+      "lde-q0078"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Questão sobre a origem e anterioridade dos espíritos"
+  },
+  {
+    "query": "O que é a alma?",
+    "expected_ids": [
+      "lde-q0134",
+      "lde-q0135"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Distinção entre espírito encarnado (alma) e espírito em si"
+  },
+  {
+    "query": "O espírito conserva sua individualidade após a morte?",
+    "expected_ids": [
+      "lde-q0152",
+      "lde-q0150",
+      "lde-q0153"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Conservação da individualidade e da personalidade após a desencarnação"
+  },
+  {
+    "query": "O que é o perispírito?",
+    "expected_ids": [
+      "lde-q0093",
+      "gen-c15-p018",
+      "lde-q0187"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Definição do envoltório semi-material que reveste o espírito"
+  },
+  {
+    "query": "Os animais têm alma?",
+    "expected_ids": [
+      "lde-q0597",
+      "lde-q0598",
+      "lde-q0600"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Questão sobre o princípio inteligente nos animais e sua diferença da alma humana"
+  },
+  {
+    "query": "O que acontece com a alma após a morte?",
+    "expected_ids": [
+      "lde-q0148",
+      "lde-q0149",
+      "lde-q0150"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Separação da alma do corpo físico e estado imediato pós-morte"
+  },
+  {
+    "query": "A separação da alma do corpo é instantânea?",
+    "expected_ids": [
+      "lde-q0155"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Duração do processo de desencarnação"
+  },
+  {
+    "query": "O espírito tem consciência de si mesmo após a morte?",
+    "expected_ids": [
+      "lde-q0150"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Questão sobre a conservação da consciência individual após a morte"
+  },
+  {
+    "query": "O que é a reencarnação?",
+    "expected_ids": [
+      "lde-q0166",
+      "lde-q0167",
+      "lde-q0171"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Definição e finalidade das reencarnações sucessivas"
+  },
+  {
+    "query": "Por que reencarnamos?",
+    "expected_ids": [
+      "lde-q0167"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Finalidade da reencarnação — expiação e progresso"
+  },
+  {
+    "query": "Podemos escolher a família em que nascemos?",
+    "expected_ids": [
+      "lde-q0258",
+      "lde-q0259",
+      "lde-q0205"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Escolha da família e das condições de encarnação"
+  },
+  {
+    "query": "O que é o mundo dos espíritos?",
+    "expected_ids": [
+      "lde-q0084"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Descrição do mundo espiritual como estado natural dos espíritos"
+  },
+  {
+    "query": "Existem espíritos maus?",
+    "expected_ids": [
+      "lde-q0100",
+      "lde-q0549",
+      "lde-q0280"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Existência de espíritos imperfeitos e sua influência"
+  },
+  {
+    "query": "Como os espíritos se comunicam entre si?",
+    "expected_ids": [
+      "lde-q0223",
+      "lde-q0282",
+      "lde-q0284"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Forma de comunicação do mundo espiritual — transmissão do pensamento"
+  },
+  {
+    "query": "Os espíritos podem ver tudo?",
+    "expected_ids": [
+      "lde-q0237"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Faculdades dos espíritos — visão e percepção no estado espiritual"
+  },
+  {
+    "query": "O que são os espíritos superiores?",
+    "expected_ids": [
+      "lde-q0108"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Classificação dos espíritos puros ou superiores"
+  },
+  {
+    "query": "Qual a diferença entre espíritos bons e maus?",
+    "expected_ids": [
+      "lde-q0106",
+      "lde-q0114",
+      "lde-q0115",
+      "lde-q0280"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Critério moral na hierarquia espiritual"
+  },
+  {
+    "query": "O que é o inferno na doutrina espírita?",
+    "expected_ids": [
+      "lde-q1009",
+      "cei-p1-c04-p057",
+      "cei-p1-c04-p058",
+      "cei-p1-c04-p060"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Negação do inferno eterno e sua reinterpretação como estado temporário"
+  },
+  {
+    "query": "Existe o purgatório?",
+    "expected_ids": [
+      "lde-q1011",
+      "cei-p1-c05-p001",
+      "cei-p1-c05-p002"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Equivalente espírita do purgatório — erraticidade e expiação"
+  },
+  {
+    "query": "O que é o paraíso?",
+    "expected_ids": [
+      "lde-q1016",
+      "cei-p1-c03-p009"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Descrição do estado de perfeição e bem-aventurança espiritual"
+  },
+  {
+    "query": "A criança que morre em tenra idade sofre?",
+    "expected_ids": [
+      "lde-q0197"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Condição das almas das crianças que faleceram jovens"
+  },
+  {
+    "query": "O suicídio é condenado pelo Espiritismo?",
+    "expected_ids": [
+      "lde-q0952",
+      "lde-q0957",
+      "cei-p2-c16-p099"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Posição da doutrina sobre o suicídio e suas consequências para o espírito"
+  },
+  {
+    "query": "O que é a lei de causa e efeito?",
+    "expected_ids": [
+      "lde-q0399"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Lei da causalidade moral — as consequências de nossos atos no mundo espiritual"
+  },
+  {
+    "query": "O que é a caridade na visão espírita?",
+    "expected_ids": [
+      "lde-q0886"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "A caridade como lei suprema e caminho para o progresso espiritual"
+  },
+  {
+    "query": "Existe o livre-arbítrio?",
+    "expected_ids": [
+      "lde-q0843",
+      "lde-q0851",
+      "lde-q0852"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Existência e extensão do livre-arbítrio humano"
+  },
+  {
+    "query": "O homem tem responsabilidade por seus atos?",
+    "expected_ids": [
+      "lde-q0872",
+      "lde-q0843",
+      "lde-q0834"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Responsabilidade moral derivada do livre-arbítrio"
+  },
+  {
+    "query": "O que são os espíritos guardiões?",
+    "expected_ids": [
+      "lde-q0495",
+      "lde-q0496",
+      "lde-q0497"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Existência e papel dos espíritos protetores ou anjos da guarda"
+  },
+  {
+    "query": "Os espíritos podem influenciar nossos pensamentos?",
+    "expected_ids": [
+      "lde-q0459"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Influência dos espíritos sobre o pensamento e as ações humanas"
+  },
+  {
+    "query": "O que é a mediunidade?",
+    "expected_ids": [
+      "lde-q0184"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Faculdade mediúnica — capacidade de perceber e transmitir comunicações espirituais"
+  },
+  {
+    "query": "Como reconhecer um bom espírito?",
+    "expected_ids": [
+      "lde-q0594"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Critérios para distinguir comunicações de espíritos bons e maus"
+  },
+  {
+    "query": "O que é a erraticidade?",
+    "expected_ids": [
+      "lde-q0224"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Estado dos espíritos que não se encontram encarnados nem no mundo espiritual superior"
+  },
+  {
+    "query": "O corpo ressuscita após a morte?",
+    "expected_ids": [
+      "lde-q1011",
+      "cei-p1-c05-p001",
+      "cei-p1-c05-p002"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Posição espírita sobre a ressurreição física — negação e reinterpretação"
+  },
+  {
+    "query": "Qual o destino das raças primitivas?",
+    "expected_ids": [
+      "lde-q0188"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "O progresso espiritual das raças consideradas inferiores pelo pensamento oitocentista"
+  },
+  {
+    "query": "O que é o fluido vital?",
+    "expected_ids": [
+      "lde-q0066"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Definição do fluido vital e sua relação com a matéria e o espírito"
+  },
+  {
+    "query": "O universo foi criado do nada?",
+    "expected_ids": [
+      "lde-q0037"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "A questão da criação ex nihilo e a eternidade da matéria"
+  },
+  {
+    "query": "Existem outros mundos habitados?",
+    "expected_ids": [
+      "lde-q0055"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Pluralidade dos mundos habitados e seus diferentes graus de evolução"
+  },
+  {
+    "query": "O espírito pode se manifestar aos vivos?",
+    "expected_ids": [
+      "lde-q0319"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Possibilidade de aparições e manifestações dos espíritos desencarnados"
+  },
+  {
+    "query": "Por que o mal existe no mundo?",
+    "expected_ids": [
+      "lde-q0765"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "O problema do mal e sua relação com o livre-arbítrio e a imperfeição dos espíritos"
+  },
+  {
+    "query": "O que é a lei do progresso?",
+    "expected_ids": [
+      "lde-q0780"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "O progresso como lei universal — inevitabilidade do aperfeiçoamento espiritual"
+  },
+  {
+    "query": "A riqueza é um obstáculo ao progresso espiritual?",
+    "expected_ids": [
+      "lde-q0810",
+      "lde-q0811"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "A riqueza e sua relação com as provas espirituais"
+  },
+  {
+    "query": "O que é o estado de espírito errante?",
+    "expected_ids": [
+      "lde-q0226"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Descrição da existência errante entre duas encarnações"
+  },
+  {
+    "query": "Os espíritos recordam suas vidas passadas?",
+    "expected_ids": [
+      "lde-q0392",
+      "lde-q0393",
+      "lde-q0394"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Memória das existências anteriores e por que ela é geralmente apagada"
+  },
+  {
+    "query": "O que é a expiação espiritual?",
+    "expected_ids": [
+      "lde-q0983"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Natureza e finalidade das provas e sofrimentos como forma de expiação"
+  },
+  {
+    "query": "Existem anjos e demônios?",
+    "expected_ids": [
+      "lde-q0128",
+      "lde-q0129",
+      "lde-q0130",
+      "lde-q0131"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Reinterpretação espírita de anjos e demônios como espíritos em diferentes graus"
+  },
+  {
+    "query": "O que é a consciência moral?",
+    "expected_ids": [
+      "lde-q0621"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "A consciência como voz do espírito interior — guia moral interno"
+  },
+  {
+    "query": "O pensamento pode agir à distância?",
+    "expected_ids": [
+      "lde-q0454"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Influência do pensamento sobre os espíritos e sobre outras pessoas à distância"
+  },
+  {
+    "query": "O que distingue o ser humano dos animais?",
+    "expected_ids": [
+      "lde-q0605"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "A diferença fundamental entre o espírito humano e o princípio inteligente dos animais"
+  },
+  {
+    "query": "Antes de reencarnar, o espírito sabe o que vai passar na vida?",
+    "expected_ids": [
+      "lde-q0258",
+      "lde-q0259"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Paráfrase de Q258 — previsão do futuro antes da reencarnação"
+  },
+  {
+    "query": "O que acontece quando morremos?",
+    "expected_ids": [
+      "lde-q0148",
+      "lde-q0149",
+      "lde-q0150"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Pergunta ampla sobre pós-morte — várias questões relevantes"
+  },
+  {
+    "query": "Os espíritos sofrem no outro mundo?",
+    "expected_ids": [
+      "lde-q0237",
+      "cei-p1-c02-p001",
+      "cei-p1-c02-p002"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Cross-book: LDE sobre sofrimento espiritual + CeI sobre penas"
+  },
+  {
+    "query": "Qual o papel da prece para os espíritas?",
+    "expected_ids": [
+      "ese-c27-p001",
+      "ese-c27-p002",
+      "ese-c27-p003"
+    ],
+    "type": "conceptual_query",
+    "source_book": "ese",
+    "notes": "ESE cap. 27 — Da Prece"
+  },
+  {
+    "query": "A Terra é o único mundo habitado?",
+    "expected_ids": [
+      "lde-q0055",
+      "lde-q0056",
+      "gen-c03-p001"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Pluralidade dos mundos — LDE + Gênese cap. 3"
+  },
+  {
+    "query": "Todos os espíritos são iguais em grau de evolução?",
+    "expected_ids": [
+      "lde-q0096",
+      "lde-q0097",
+      "lde-q0100"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Hierarquia espiritual e progresso"
+  },
+  {
+    "query": "O que a doutrina espírita diz sobre o perdão?",
+    "expected_ids": [
+      "ese-c10-p001",
+      "ese-c10-p002",
+      "ese-c10-p003"
+    ],
+    "type": "conceptual_query",
+    "source_book": "ese",
+    "notes": "ESE cap. 10 — Bem-aventurados os que são misericordiosos"
+  },
+  {
+    "query": "Como funciona a comunicação com os mortos?",
+    "expected_ids": [
+      "lde-q0282",
+      "lde-q0283",
+      "lde-q0284"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Comunicação dos espíritos com os vivos"
+  },
+  {
+    "query": "A matéria é eterna ou foi criada?",
+    "expected_ids": [
+      "lde-q0022",
+      "lde-q0037",
+      "gen-c06-p001"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Criação e eternidade da matéria — LDE + Gênese"
+  },
+  {
+    "query": "Existe destino ou tudo é livre-arbítrio?",
+    "expected_ids": [
+      "lde-q0851",
+      "lde-q0843",
+      "lde-q0852"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Fatalidade vs livre-arbítrio"
+  },
+  {
+    "query": "O que Kardec ensina sobre a pena de morte?",
+    "expected_ids": [
+      "lde-q0760",
+      "lde-q0761",
+      "lde-q0762"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Pena de morte e direito de matar"
+  },
+  {
+    "query": "É possível lembrar de vidas passadas?",
+    "expected_ids": [
+      "lde-q0392",
+      "lde-q0393",
+      "lde-q0394"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Memória das existências anteriores"
+  },
+  {
+    "query": "Os animais também evoluem espiritualmente?",
+    "expected_ids": [
+      "lde-q0597",
+      "lde-q0598",
+      "lde-q0600"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Progresso nos animais e princípio inteligente"
+  },
+  {
+    "query": "A ciência e a religião são compatíveis?",
+    "expected_ids": [
+      "gen-c01-p001",
+      "gen-c01-p002",
+      "gen-c01-p003"
+    ],
+    "type": "conceptual_query",
+    "source_book": "gen",
+    "notes": "Gênese cap. 1 — relação ciência e religião"
+  },
+  {
+    "query": "Os espíritos podem enganar os médiuns?",
+    "expected_ids": [
+      "lde-q0474",
+      "lde-q0475"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Mistificação espiritual e critério de discernimento"
+  },
+  {
+    "query": "O sofrimento tem alguma utilidade espiritual?",
+    "expected_ids": [
+      "lde-q0932",
+      "lde-q0933",
+      "ese-c05-p001"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Finalidade do sofrimento — expiação e progresso"
+  },
+  {
+    "query": "Qual a diferença entre o espírito e a alma?",
+    "expected_ids": [
+      "lde-q0134",
+      "lde-q0135"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Distinção técnica espírito/alma"
+  },
+  {
+    "query": "O que são os mundos de expiação?",
+    "expected_ids": [
+      "lde-q0170",
+      "lde-q0171",
+      "lde-q0172"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Diferentes categorias de mundos"
+  },
+  {
+    "query": "É errado buscar riqueza material?",
+    "expected_ids": [
+      "lde-q0810",
+      "lde-q0811",
+      "ese-c16-p001"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Riqueza e provas espirituais — LDE + ESE"
+  },
+  {
+    "query": "O que é o elemento universal?",
+    "expected_ids": [
+      "lde-q0027",
+      "lde-q0029",
+      "gen-c02-p001"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Fluido cósmico universal e matéria primitiva"
+  },
+  {
+    "query": "Allan Kardec acredita em demônios?",
+    "expected_ids": [
+      "lde-q0128",
+      "lde-q0129",
+      "lde-q0130",
+      "lde-q0131"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Reinterpretação de anjos e demônios"
+  },
+  {
+    "query": "Posso me comunicar com meus parentes falecidos?",
+    "expected_ids": [
+      "lde-q0282",
+      "lde-q0284",
+      "lde-q0285"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Comunicação com entes queridos desencarnados"
+  },
+  {
+    "query": "O corpo humano foi formado por acaso?",
+    "expected_ids": [
+      "lde-q0132",
+      "lde-q0133",
+      "gen-c10-p001"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Formação do corpo e união alma-matéria — LDE + Gênese"
+  },
+  {
+    "query": "A reencarnação acontece em outros planetas?",
+    "expected_ids": [
+      "lde-q0172",
+      "lde-q0173",
+      "lde-q0174"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Transmigração entre mundos"
+  },
+  {
+    "query": "Qual o sentido espírita do casamento?",
+    "expected_ids": [
+      "lde-q0695",
+      "lde-q0696",
+      "lde-q0697"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Casamento e relação entre os sexos"
+  },
+  {
+    "query": "O que causa os sonhos?",
+    "expected_ids": [
+      "lde-q0400",
+      "lde-q0401",
+      "lde-q0402"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Origem dos sonhos e emancipação da alma"
+  },
+  {
+    "query": "Como deve ser a educação das crianças segundo o espiritismo?",
+    "expected_ids": [
+      "lde-q0383",
+      "lde-q0385",
+      "ese-c14-p001"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Educação moral das crianças"
+  },
+  {
+    "query": "Existem provas científicas da reencarnação?",
+    "expected_ids": [
+      "lde-q0166",
+      "lde-q0167",
+      "gen-c01-p001"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Evidência da reencarnação — perspectiva doutrinária"
+  },
+  {
+    "query": "O que significa caridade fora da caridade não há salvação?",
+    "expected_ids": [
+      "ese-c15-p001",
+      "ese-c15-p002",
+      "ese-c15-p003"
+    ],
+    "type": "conceptual_query",
+    "source_book": "ese",
+    "notes": "ESE cap. 15 — Caridade como caminho de salvação"
+  },
+  {
+    "query": "O inferno eterno existe na visão espírita?",
+    "expected_ids": [
+      "lde-q1009",
+      "cei-p1-c03-p001",
+      "cei-p1-c04-p001"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Negação do inferno eterno — LDE + CeI"
+  },
+  {
+    "query": "Como se classificam os espíritos?",
+    "expected_ids": [
+      "lde-q0096",
+      "lde-q0097",
+      "lde-q0100",
+      "lde-q0107"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Escala espírita — classificação dos espíritos"
+  },
+  {
+    "query": "O que são as provas e expiações?",
+    "expected_ids": [
+      "lde-q0258",
+      "lde-q0259",
+      "lde-q0983"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Natureza das provas terrenas"
+  },
+  {
+    "query": "Os espíritos errantes podem nos ajudar?",
+    "expected_ids": [
+      "lde-q0495",
+      "lde-q0496",
+      "lde-q0497"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Espíritos protetores e anjo da guarda"
+  },
+  {
+    "query": "Qual a origem do dilúvio bíblico segundo Kardec?",
+    "expected_ids": [
+      "gen-c09-p001",
+      "gen-c09-p002"
+    ],
+    "type": "conceptual_query",
+    "source_book": "gen",
+    "notes": "Gênese cap. 9 — Dilúvio e geologia"
+  },
+  {
+    "query": "O que Kardec diz sobre os milagres?",
+    "expected_ids": [
+      "gen-c13-p001",
+      "gen-c13-p002",
+      "gen-c13-p003"
+    ],
+    "type": "conceptual_query",
+    "source_book": "gen",
+    "notes": "Gênese cap. 13 — Milagres na interpretação espírita"
+  },
+  {
+    "query": "Quais são as penas e gozos futuros?",
+    "expected_ids": [
+      "cei-p1-c01-p001",
+      "cei-p1-c01-p002",
+      "cei-p1-c02-p001"
+    ],
+    "type": "conceptual_query",
+    "source_book": "cei",
+    "notes": "CeI parte 1 — doutrina das penas futuras"
+  },
+  {
+    "query": "O que a doutrina espírita diz sobre o céu?",
+    "expected_ids": [
+      "lde-q1016",
+      "cei-p1-c03-p001"
+    ],
+    "type": "conceptual_query",
+    "source_book": "cei",
+    "notes": "Conceito de céu — LDE + CeI"
+  },
+  {
+    "query": "Há espíritos que nunca erraram?",
+    "expected_ids": [
+      "lde-q0115",
+      "lde-q0116",
+      "lde-q0117"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Espíritos puros e anjos"
+  },
+  {
+    "query": "O espírito escolhe seu sexo ao reencarnar?",
+    "expected_ids": [
+      "lde-q0200",
+      "lde-q0201",
+      "lde-q0202"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Sexo do espírito e escolha de encarnação"
+  },
+  {
+    "query": "É possível evocar espíritos perigosos?",
+    "expected_ids": [
+      "lde-q0474",
+      "lde-q0475"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Perigos da evocação irresponsável"
+  },
+  {
+    "query": "Qual a finalidade da vida terrestre?",
+    "expected_ids": [
+      "lde-q0132",
+      "lde-q0167",
+      "lde-q0780"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Propósito da existência na Terra"
+  },
+  {
+    "query": "A eutanásia é aceitável pelo espiritismo?",
+    "expected_ids": [
+      "lde-q0952",
+      "lde-q0953"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Abreviação voluntária da vida"
+  },
+  {
+    "query": "O que Kardec ensina sobre a igualdade de direitos?",
+    "expected_ids": [
+      "lde-q0803",
+      "lde-q0804",
+      "lde-q0805"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Igualdade natural e desigualdade social"
+  },
+  {
+    "query": "As guerras vão acabar algum dia?",
+    "expected_ids": [
+      "lde-q0742",
+      "lde-q0743"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Guerras e progresso da humanidade"
+  },
+  {
+    "query": "Os espíritos podem se materializar?",
+    "expected_ids": [
+      "lde-q0319",
+      "lde-q0320",
+      "lde-q0321"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Aparições e materializações"
+  },
+  {
+    "query": "Qual é a moral espírita sobre o trabalho?",
+    "expected_ids": [
+      "lde-q0674",
+      "lde-q0675",
+      "lde-q0676"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Necessidade e valor do trabalho"
+  },
+  {
+    "query": "A inteligência depende do cérebro?",
+    "expected_ids": [
+      "lde-q0369",
+      "lde-q0370",
+      "lde-q0371"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Inteligência, cérebro e espírito"
+  },
+  {
+    "query": "Como a Gênese explica a criação do homem?",
+    "expected_ids": [
+      "gen-c10-p001",
+      "gen-c10-p002",
+      "gen-c11-p001"
+    ],
+    "type": "conceptual_query",
+    "source_book": "gen",
+    "notes": "Gênese caps. 10-11 — criação e evolução humana"
+  },
+  {
+    "query": "A dor física tem explicação espiritual?",
+    "expected_ids": [
+      "lde-q0257",
+      "lde-q0932",
+      "lde-q0933"
+    ],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Causas espirituais do sofrimento físico"
+  },
+  {
+    "query": "Os espíritos têm sentimentos como nós?",
+    "expected_ids": [
+      "lde-q0237",
+      "lde-q0238",
+      "lde-q0239"
+    ],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Faculdades e sentimentos dos espíritos"
+  }
+]

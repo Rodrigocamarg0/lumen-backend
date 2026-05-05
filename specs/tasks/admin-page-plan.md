@@ -57,22 +57,22 @@ The system already tracks sessions, users, and LLM traces efficiently in the Pos
 ## 3. Task Breakdown
 
 ### Phase A: Security & Database Adjustments
-- [ ] **Task A.1:** Update Supabase Auth logic (`verifier.py`) to expose a `require_admin` dependency for FastAPI routes.
-- [ ] **Task A.2:** Create the `PersonaConfig` SQLAlchemy model.
-- [ ] **Task A.3:** Add an Alembic migration (or column migration in `session.py`) to create the `persona_configs` table. Seed it using the existing data from `_KARDEC_SYSTEM_PROMPT`.
+- [x] **Task A.1:** Update Supabase Auth logic (`verifier.py`) to expose a `require_admin` dependency for FastAPI routes.
+- [x] **Task A.2:** Create the `PersonaConfig` SQLAlchemy model.
+- [x] **Task A.3:** Add an Alembic migration (or column migration in `session.py`) to create the `persona_configs` table. Seed it using the existing data from `_KARDEC_SYSTEM_PROMPT`.
 
 ### Phase B: Backend API Endpoints
-- [ ] **Task B.1:** Create `backend/app/api/routes/admin.py` and register it in `main.py`.
-- [ ] **Task B.2:** Implement `GET /api/admin/stats` (using SQLAlchemy `func.count` and `func.avg` to aggregate runs and users).
-- [ ] **Task B.3:** Implement `GET /api/admin/traces` with pagination and filtering (e.g., `?limit=50&offset=0&persona=kardec`).
-- [ ] **Task B.4:** Implement `GET` and `PUT` for `/api/admin/personas/{id}`.
-- [ ] **Task B.5:** Update `build_system_prompt` and `get_few_shot_examples` in `prompts.py` to fetch overrides from the database.
+- [x] **Task B.1:** Create `backend/app/api/routes/admin.py` and register it in `main.py`.
+- [x] **Task B.2:** Implement `GET /api/admin/stats` (using SQLAlchemy `func.count` and `func.avg` to aggregate runs and users).
+- [x] **Task B.3:** Implement `GET /api/admin/traces` with pagination and filtering (e.g., `?limit=50&offset=0&persona=kardec`).
+- [x] **Task B.4:** Implement `GET` and `PUT` for `/api/admin/personas/{id}`.
+- [x] **Task B.5:** Update `build_system_prompt` and `get_few_shot_examples` in `prompts.py` to fetch overrides from the database.
 
 ### Phase C: Frontend Admin Dashboard
-- [ ] **Task C.1:** Scaffold `/admin` layout in React (Sidebar + Content area) and apply the `admin` role auth guard.
-- [ ] **Task C.2:** Build the **Overview** dashboard (Charts for tokens/sec, latency, and session counts).
-- [ ] **Task C.3:** Build the **Traces** table with expandable rows to inspect `ConversationMessage` JSON payloads (Citations and RAG context).
-- [ ] **Task C.4:** Build the **Prompts Configurator** interface, saving changes to the `PUT` endpoint.
+- [x] **Task C.1:** Scaffold `/admin` layout in React (Sidebar + Content area) and apply the `admin` role auth guard.
+- [x] **Task C.2:** Build the **Overview** dashboard (Charts for tokens/sec, latency, and session counts).
+- [x] **Task C.3:** Build the **Traces** table with expandable rows to inspect `ConversationMessage` JSON payloads (Citations and RAG context).
+- [x] **Task C.4:** Build the **Prompts Configurator** interface, saving changes to the `PUT` endpoint.
 
 ---
 

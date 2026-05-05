@@ -1,0 +1,352 @@
+[
+  {
+    "query": "Antes de reencarnar, o espírito sabe o que vai passar na vida?",
+    "expected_ids": ["lde-q0258", "lde-q0259"],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Paráfrase de Q258 — previsão do futuro antes da reencarnação"
+  },
+  {
+    "query": "O que acontece quando morremos?",
+    "expected_ids": ["lde-q0148", "lde-q0149", "lde-q0150"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Pergunta ampla sobre pós-morte — várias questões relevantes"
+  },
+  {
+    "query": "Os espíritos sofrem no outro mundo?",
+    "expected_ids": ["lde-q0237", "cei-p1-c02-p001", "cei-p1-c02-p002"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Cross-book: LDE sobre sofrimento espiritual + CeI sobre penas"
+  },
+  {
+    "query": "Qual o papel da prece para os espíritas?",
+    "expected_ids": ["ese-c27-p001", "ese-c27-p002", "ese-c27-p003"],
+    "type": "conceptual_query",
+    "source_book": "ese",
+    "notes": "ESE cap. 27 — Da Prece"
+  },
+  {
+    "query": "A Terra é o único mundo habitado?",
+    "expected_ids": ["lde-q0055", "lde-q0056", "gen-c03-p001"],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Pluralidade dos mundos — LDE + Gênese cap. 3"
+  },
+  {
+    "query": "Todos os espíritos são iguais em grau de evolução?",
+    "expected_ids": ["lde-q0096", "lde-q0097", "lde-q0100"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Hierarquia espiritual e progresso"
+  },
+  {
+    "query": "O que a doutrina espírita diz sobre o perdão?",
+    "expected_ids": ["ese-c10-p001", "ese-c10-p002", "ese-c10-p003"],
+    "type": "conceptual_query",
+    "source_book": "ese",
+    "notes": "ESE cap. 10 — Bem-aventurados os que são misericordiosos"
+  },
+  {
+    "query": "Como funciona a comunicação com os mortos?",
+    "expected_ids": ["lde-q0282", "lde-q0283", "lde-q0284"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Comunicação dos espíritos com os vivos"
+  },
+  {
+    "query": "A matéria é eterna ou foi criada?",
+    "expected_ids": ["lde-q0022", "lde-q0037", "gen-c06-p001"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Criação e eternidade da matéria — LDE + Gênese"
+  },
+  {
+    "query": "Existe destino ou tudo é livre-arbítrio?",
+    "expected_ids": ["lde-q0851", "lde-q0843", "lde-q0852"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Fatalidade vs livre-arbítrio"
+  },
+  {
+    "query": "O que Kardec ensina sobre a pena de morte?",
+    "expected_ids": ["lde-q0760", "lde-q0761", "lde-q0762"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Pena de morte e direito de matar"
+  },
+  {
+    "query": "É possível lembrar de vidas passadas?",
+    "expected_ids": ["lde-q0392", "lde-q0393", "lde-q0394"],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Memória das existências anteriores"
+  },
+  {
+    "query": "Os animais também evoluem espiritualmente?",
+    "expected_ids": ["lde-q0597", "lde-q0598", "lde-q0600"],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Progresso nos animais e princípio inteligente"
+  },
+  {
+    "query": "A ciência e a religião são compatíveis?",
+    "expected_ids": ["gen-c01-p001", "gen-c01-p002", "gen-c01-p003"],
+    "type": "conceptual_query",
+    "source_book": "gen",
+    "notes": "Gênese cap. 1 — relação ciência e religião"
+  },
+  {
+    "query": "Os espíritos podem enganar os médiuns?",
+    "expected_ids": ["lde-q0474", "lde-q0475"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Mistificação espiritual e critério de discernimento"
+  },
+  {
+    "query": "O sofrimento tem alguma utilidade espiritual?",
+    "expected_ids": ["lde-q0932", "lde-q0933", "ese-c05-p001"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Finalidade do sofrimento — expiação e progresso"
+  },
+  {
+    "query": "Qual a diferença entre o espírito e a alma?",
+    "expected_ids": ["lde-q0134", "lde-q0135"],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Distinção técnica espírito/alma"
+  },
+  {
+    "query": "O que são os mundos de expiação?",
+    "expected_ids": ["lde-q0170", "lde-q0171", "lde-q0172"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Diferentes categorias de mundos"
+  },
+  {
+    "query": "É errado buscar riqueza material?",
+    "expected_ids": ["lde-q0810", "lde-q0811", "ese-c16-p001"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Riqueza e provas espirituais — LDE + ESE"
+  },
+  {
+    "query": "O que é o elemento universal?",
+    "expected_ids": ["lde-q0027", "lde-q0029", "gen-c02-p001"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Fluido cósmico universal e matéria primitiva"
+  },
+  {
+    "query": "Allan Kardec acredita em demônios?",
+    "expected_ids": ["lde-q0128", "lde-q0129", "lde-q0130", "lde-q0131"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Reinterpretação de anjos e demônios"
+  },
+  {
+    "query": "Posso me comunicar com meus parentes falecidos?",
+    "expected_ids": ["lde-q0282", "lde-q0284", "lde-q0285"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Comunicação com entes queridos desencarnados"
+  },
+  {
+    "query": "O corpo humano foi formado por acaso?",
+    "expected_ids": ["lde-q0132", "lde-q0133", "gen-c10-p001"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Formação do corpo e união alma-matéria — LDE + Gênese"
+  },
+  {
+    "query": "A reencarnação acontece em outros planetas?",
+    "expected_ids": ["lde-q0172", "lde-q0173", "lde-q0174"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Transmigração entre mundos"
+  },
+  {
+    "query": "Qual o sentido espírita do casamento?",
+    "expected_ids": ["lde-q0695", "lde-q0696", "lde-q0697"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Casamento e relação entre os sexos"
+  },
+  {
+    "query": "O que causa os sonhos?",
+    "expected_ids": ["lde-q0400", "lde-q0401", "lde-q0402"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Origem dos sonhos e emancipação da alma"
+  },
+  {
+    "query": "Como deve ser a educação das crianças segundo o espiritismo?",
+    "expected_ids": ["lde-q0383", "lde-q0385", "ese-c14-p001"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Educação moral das crianças"
+  },
+  {
+    "query": "Existem provas científicas da reencarnação?",
+    "expected_ids": ["lde-q0166", "lde-q0167", "gen-c01-p001"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Evidência da reencarnação — perspectiva doutrinária"
+  },
+  {
+    "query": "O que significa caridade fora da caridade não há salvação?",
+    "expected_ids": ["ese-c15-p001", "ese-c15-p002", "ese-c15-p003"],
+    "type": "conceptual_query",
+    "source_book": "ese",
+    "notes": "ESE cap. 15 — Caridade como caminho de salvação"
+  },
+  {
+    "query": "O inferno eterno existe na visão espírita?",
+    "expected_ids": ["lde-q1009", "cei-p1-c03-p001", "cei-p1-c04-p001"],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Negação do inferno eterno — LDE + CeI"
+  },
+  {
+    "query": "Como se classificam os espíritos?",
+    "expected_ids": ["lde-q0096", "lde-q0097", "lde-q0100", "lde-q0107"],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Escala espírita — classificação dos espíritos"
+  },
+  {
+    "query": "O que são as provas e expiações?",
+    "expected_ids": ["lde-q0258", "lde-q0259", "lde-q0983"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Natureza das provas terrenas"
+  },
+  {
+    "query": "Os espíritos errantes podem nos ajudar?",
+    "expected_ids": ["lde-q0495", "lde-q0496", "lde-q0497"],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Espíritos protetores e anjo da guarda"
+  },
+  {
+    "query": "Qual a origem do dilúvio bíblico segundo Kardec?",
+    "expected_ids": ["gen-c09-p001", "gen-c09-p002"],
+    "type": "conceptual_query",
+    "source_book": "gen",
+    "notes": "Gênese cap. 9 — Dilúvio e geologia"
+  },
+  {
+    "query": "O que Kardec diz sobre os milagres?",
+    "expected_ids": ["gen-c13-p001", "gen-c13-p002", "gen-c13-p003"],
+    "type": "conceptual_query",
+    "source_book": "gen",
+    "notes": "Gênese cap. 13 — Milagres na interpretação espírita"
+  },
+  {
+    "query": "Quais são as penas e gozos futuros?",
+    "expected_ids": ["cei-p1-c01-p001", "cei-p1-c01-p002", "cei-p1-c02-p001"],
+    "type": "conceptual_query",
+    "source_book": "cei",
+    "notes": "CeI parte 1 — doutrina das penas futuras"
+  },
+  {
+    "query": "O que a doutrina espírita diz sobre o céu?",
+    "expected_ids": ["lde-q1016", "cei-p1-c03-p001"],
+    "type": "conceptual_query",
+    "source_book": "cei",
+    "notes": "Conceito de céu — LDE + CeI"
+  },
+  {
+    "query": "Há espíritos que nunca erraram?",
+    "expected_ids": ["lde-q0115", "lde-q0116", "lde-q0117"],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Espíritos puros e anjos"
+  },
+  {
+    "query": "O espírito escolhe seu sexo ao reencarnar?",
+    "expected_ids": ["lde-q0200", "lde-q0201", "lde-q0202"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Sexo do espírito e escolha de encarnação"
+  },
+  {
+    "query": "É possível evocar espíritos perigosos?",
+    "expected_ids": ["lde-q0474", "lde-q0475"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Perigos da evocação irresponsável"
+  },
+  {
+    "query": "Qual a finalidade da vida terrestre?",
+    "expected_ids": ["lde-q0132", "lde-q0167", "lde-q0780"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Propósito da existência na Terra"
+  },
+  {
+    "query": "A eutanásia é aceitável pelo espiritismo?",
+    "expected_ids": ["lde-q0952", "lde-q0953"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Abreviação voluntária da vida"
+  },
+  {
+    "query": "O que Kardec ensina sobre a igualdade de direitos?",
+    "expected_ids": ["lde-q0803", "lde-q0804", "lde-q0805"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Igualdade natural e desigualdade social"
+  },
+  {
+    "query": "As guerras vão acabar algum dia?",
+    "expected_ids": ["lde-q0742", "lde-q0743"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Guerras e progresso da humanidade"
+  },
+  {
+    "query": "Os espíritos podem se materializar?",
+    "expected_ids": ["lde-q0319", "lde-q0320", "lde-q0321"],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Aparições e materializações"
+  },
+  {
+    "query": "Qual é a moral espírita sobre o trabalho?",
+    "expected_ids": ["lde-q0674", "lde-q0675", "lde-q0676"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Necessidade e valor do trabalho"
+  },
+  {
+    "query": "A inteligência depende do cérebro?",
+    "expected_ids": ["lde-q0369", "lde-q0370", "lde-q0371"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Inteligência, cérebro e espírito"
+  },
+  {
+    "query": "Como a Gênese explica a criação do homem?",
+    "expected_ids": ["gen-c10-p001", "gen-c10-p002", "gen-c11-p001"],
+    "type": "conceptual_query",
+    "source_book": "gen",
+    "notes": "Gênese caps. 10-11 — criação e evolução humana"
+  },
+  {
+    "query": "A dor física tem explicação espiritual?",
+    "expected_ids": ["lde-q0257", "lde-q0932", "lde-q0933"],
+    "type": "conceptual_query",
+    "source_book": "lde",
+    "notes": "Causas espirituais do sofrimento físico"
+  },
+  {
+    "query": "Os espíritos têm sentimentos como nós?",
+    "expected_ids": ["lde-q0237", "lde-q0238", "lde-q0239"],
+    "type": "near_paraphrase",
+    "source_book": "lde",
+    "notes": "Faculdades e sentimentos dos espíritos"
+  }
+]

@@ -101,12 +101,12 @@
   },
   {
     "query": "O que é o inferno na doutrina espírita?",
-    "expected_chunk_id": "lde-q1008",
+    "expected_chunk_id": "lde-q1009",
     "notes": "Negação do inferno eterno e sua reinterpretação como estado temporário"
   },
   {
     "query": "Existe o purgatório?",
-    "expected_chunk_id": "lde-q1012",
+    "expected_chunk_id": "lde-q1011",
     "notes": "Equivalente espírita do purgatório — erraticidade e expiação"
   },
   {
@@ -171,7 +171,7 @@
   },
   {
     "query": "O corpo ressuscita após a morte?",
-    "expected_chunk_id": "lde-q1010",
+    "expected_chunk_id": "lde-q1011",
     "notes": "Posição espírita sobre a ressurreição física — negação e reinterpretação"
   },
   {

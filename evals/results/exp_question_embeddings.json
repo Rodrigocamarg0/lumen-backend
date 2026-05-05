@@ -1,0 +1,377 @@
+{
+  "experiment": "question_only_embeddings_rrf",
+  "total_entries": 200,
+  "overall_semantic": {
+    "count": 200,
+    "recall@1": 0.6,
+    "recall@3": 0.68,
+    "recall@5": 0.72,
+    "recall@10": 0.755,
+    "mrr": 0.6549,
+    "ndcg@10": 0.6742,
+    "buckets": {
+      "top1": 120,
+      "over20": 25,
+      "top3": 16,
+      "top20": 10,
+      "top10": 7,
+      "miss": 14,
+      "top5": 8
+    }
+  },
+  "overall_fused": {
+    "count": 200,
+    "recall@1": 0.625,
+    "recall@3": 0.7,
+    "recall@5": 0.77,
+    "recall@10": 0.84,
+    "mrr": 0.6897,
+    "ndcg@10": 0.7225,
+    "buckets": {
+      "top1": 125,
+      "top10": 14,
+      "top3": 15,
+      "over20": 18,
+      "top5": 14,
+      "miss": 8,
+      "top20": 6
+    }
+  },
+  "overall_fused_reranked": {
+    "count": 200,
+    "recall@1": 0.66,
+    "recall@3": 0.715,
+    "recall@5": 0.76,
+    "recall@10": 0.79,
+    "mrr": 0.6999,
+    "ndcg@10": 0.7216,
+    "buckets": {
+      "top1": 132,
+      "top3": 11,
+      "miss": 42,
+      "top10": 6,
+      "top5": 9
+    }
+  },
+  "by_type": {
+    "exact_question": {
+      "semantic": {
+        "count": 100,
+        "recall@1": 0.94,
+        "recall@3": 0.98,
+        "recall@5": 0.98,
+        "recall@10": 0.98,
+        "mrr": 0.9594,
+        "ndcg@10": 0.9639,
+        "buckets": {
+          "top1": 94,
+          "over20": 1,
+          "top3": 4,
+          "top20": 1
+        }
+      },
+      "fused": {
+        "count": 100,
+        "recall@1": 0.95,
+        "recall@3": 0.98,
+        "recall@5": 0.98,
+        "recall@10": 1.0,
+        "mrr": 0.9677,
+        "ndcg@10": 0.9754,
+        "buckets": {
+          "top1": 95,
+          "top10": 2,
+          "top3": 3
+        }
+      },
+      "fused_reranked": {
+        "count": 100,
+        "recall@1": 0.99,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "recall@10": 1.0,
+        "mrr": 0.995,
+        "ndcg@10": 0.9963,
+        "buckets": {
+          "top1": 99,
+          "top3": 1
+        }
+      }
+    },
+    "near_paraphrase": {
+      "semantic": {
+        "count": 61,
+        "recall@1": 0.3279,
+        "recall@3": 0.459,
+        "recall@5": 0.5082,
+        "recall@10": 0.5902,
+        "mrr": 0.4195,
+        "ndcg@10": 0.4524,
+        "buckets": {
+          "top1": 20,
+          "top10": 5,
+          "over20": 11,
+          "top3": 8,
+          "miss": 8,
+          "top20": 6,
+          "top5": 3
+        }
+      },
+      "fused": {
+        "count": 61,
+        "recall@1": 0.3443,
+        "recall@3": 0.4918,
+        "recall@5": 0.6066,
+        "recall@10": 0.7049,
+        "mrr": 0.459,
+        "ndcg@10": 0.5127,
+        "buckets": {
+          "top1": 21,
+          "top10": 6,
+          "top3": 9,
+          "over20": 10,
+          "top5": 7,
+          "miss": 5,
+          "top20": 3
+        }
+      },
+      "fused_reranked": {
+        "count": 61,
+        "recall@1": 0.377,
+        "recall@3": 0.5082,
+        "recall@5": 0.5574,
+        "recall@10": 0.623,
+        "mrr": 0.4588,
+        "ndcg@10": 0.4985,
+        "buckets": {
+          "top1": 23,
+          "miss": 23,
+          "top3": 8,
+          "top10": 4,
+          "top5": 3
+        }
+      }
+    },
+    "conceptual_query": {
+      "semantic": {
+        "count": 39,
+        "recall@1": 0.1538,
+        "recall@3": 0.2564,
+        "recall@5": 0.3846,
+        "recall@10": 0.4359,
+        "mrr": 0.2425,
+        "ndcg@10": 0.2783,
+        "buckets": {
+          "top3": 4,
+          "miss": 6,
+          "top20": 3,
+          "top1": 6,
+          "over20": 13,
+          "top5": 5,
+          "top10": 2
+        }
+      },
+      "fused": {
+        "count": 39,
+        "recall@1": 0.2308,
+        "recall@3": 0.3077,
+        "recall@5": 0.4872,
+        "recall@10": 0.641,
+        "mrr": 0.3379,
+        "ndcg@10": 0.4022,
+        "buckets": {
+          "top1": 9,
+          "over20": 8,
+          "top3": 3,
+          "top10": 6,
+          "top5": 7,
+          "miss": 3,
+          "top20": 3
+        }
+      },
+      "fused_reranked": {
+        "count": 39,
+        "recall@1": 0.2564,
+        "recall@3": 0.3077,
+        "recall@5": 0.4615,
+        "recall@10": 0.5128,
+        "mrr": 0.3205,
+        "ndcg@10": 0.3661,
+        "buckets": {
+          "top5": 6,
+          "miss": 19,
+          "top1": 10,
+          "top10": 2,
+          "top3": 2
+        }
+      }
+    }
+  },
+  "miss_count": 42,
+  "misses": [
+    {
+      "query": "Os espíritos têm um começo?",
+      "expected_ids": [
+        "lde-q0078"
+      ],
+      "type": "near_paraphrase",
+      "source_book": "lde",
+      "semantic_rank": 24,
+      "fused_rank": 7,
+      "reranked_rank": null,
+      "reranked_top3": [
+        "lde-q0083",
+        "lde-q0200",
+        "lde-q0081"
+      ]
+    },
+    {
+      "query": "O espírito tem consciência de si mesmo após a morte?",
+      "expected_ids": [
+        "lde-q0150"
+      ],
+      "type": "near_paraphrase",
+      "source_book": "lde",
+      "semantic_rank": 31,
+      "fused_rank": 9,
+      "reranked_rank": null,
+      "reranked_top3": [
+        "lde-q0598",
+        "lde-q0162",
+        "lde-q0608"
+      ]
+    },
+    {
+      "query": "Os espíritos podem ver tudo?",
+      "expected_ids": [
+        "lde-q0237"
+      ],
+      "type": "near_paraphrase",
+      "source_book": "lde",
+      "semantic_rank": null,
+      "fused_rank": 126,
+      "reranked_rank": null,
+      "reranked_top3": [
+        "lde-q0457",
+        "lde-q0247",
+        "lde-q0456"
+      ]
+    },
+    {
+      "query": "O que é a lei de causa e efeito?",
+      "expected_ids": [
+        "lde-q0399"
+      ],
+      "type": "near_paraphrase",
+      "source_book": "lde",
+      "semantic_rank": null,
+      "fused_rank": null,
+      "reranked_rank": null,
+      "reranked_top3": [
+        "lde-q0063",
+        "lde-q0614",
+        "lde-q0795"
+      ]
+    },
+    {
+      "query": "O que são os espíritos guardiões?",
+      "expected_ids": [
+        "lde-q0495",
+        "lde-q0496",
+        "lde-q0497"
+      ],
+      "type": "near_paraphrase",
+      "source_book": "lde",
+      "semantic_rank": 4,
+      "fused_rank": 22,
+      "reranked_rank": null,
+      "reranked_top3": [
+        "lde-q0508",
+        "lde-q0514",
+        "lde-q0490"
+      ]
+    },
+    {
+      "query": "O que é a mediunidade?",
+      "expected_ids": [
+        "lde-q0184"
+      ],
+      "type": "near_paraphrase",
+      "source_book": "lde",
+      "semantic_rank": null,
+      "fused_rank": null,
+      "reranked_rank": null,
+      "reranked_top3": [
+        "ese-c24-p021",
+        "ese-c28-p059",
+        "ese-c28-p060"
+      ]
+    },
+    {
+      "query": "Como reconhecer um bom espírito?",
+      "expected_ids": [
+        "lde-q0594"
+      ],
+      "type": "near_paraphrase",
+      "source_book": "lde",
+      "semantic_rank": null,
+      "fused_rank": null,
+      "reranked_rank": null,
+      "reranked_top3": [
+        "lde-q0464",
+        "lde-q0023",
+        "lde-q0918"
+      ]
+    },
+    {
+      "query": "O corpo ressuscita após a morte?",
+      "expected_ids": [
+        "lde-q1011",
+        "cei-p1-c05-p001",
+        "cei-p1-c05-p002"
+      ],
+      "type": "near_paraphrase",
+      "source_book": "lde",
+      "semantic_rank": null,
+      "fused_rank": 110,
+      "reranked_rank": null,
+      "reranked_top3": [
+        "lde-q0305",
+        "lde-q0423",
+        "lde-q0223"
+      ]
+    },
+    {
+      "query": "Qual o destino das raças primitivas?",
+      "expected_ids": [
+        "lde-q0188"
+      ],
+      "type": "near_paraphrase",
+      "source_book": "lde",
+      "semantic_rank": null,
+      "fused_rank": 173,
+      "reranked_rank": null,
+      "reranked_top3": [
+        "lde-q0691",
+        "lde-q0690",
+        "gen-c11-p079"
+      ]
+    },
+    {
+      "query": "O espírito pode se manifestar aos vivos?",
+      "expected_ids": [
+        "lde-q0319"
+      ],
+      "type": "near_paraphrase",
+      "source_book": "lde",
+      "semantic_rank": 35,
+      "fused_rank": 15,
+      "reranked_rank": null,
+      "reranked_top3": [
+        "lde-q0023",
+        "lde-q0137",
+        "lde-q0473"
+      ]
+    }
+  ]
+}
