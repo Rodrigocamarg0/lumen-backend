@@ -15,12 +15,14 @@ import logging
 from typing import Annotated
 import uuid
 
+from agno.exceptions import InputCheckError
 from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 
 from app import state
 from app.agents.context import update_context_after_turn
+from app.agents.guardrails import execute_guardrails
 from app.agents.registry import get_agent, list_persona_ids
 from app.agents.sessions import load_history, save_turn
 from app.api.models import ChatRequest
@@ -70,6 +72,12 @@ async def chat_endpoint(
             status_code=503,
             detail="Model is still loading. Retry after /api/health reports model_loaded=true.",
         )
+
+    try:
+        execute_guardrails(request.message)
+    except InputCheckError as e:
+        logger.warning("Message from user %s blocked by guardrail: %s", current_user.id, e.message)
+        raise HTTPException(status_code=400, detail=f"Guardrail triggered: {e.message}") from e
 
     incognito = request.options.incognito
     agent = get_agent(request.persona_id)
