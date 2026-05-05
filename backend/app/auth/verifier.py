@@ -73,4 +73,5 @@ def verify_supabase_token(token: str) -> AuthenticatedUser:
         full_name=full_name,
         avatar_url=user_metadata.get("avatar_url") or user_metadata.get("picture"),
         auth_provider=app_metadata.get("provider"),
+        role=app_metadata.get("role"),
     )

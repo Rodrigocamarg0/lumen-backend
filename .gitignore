@@ -24,6 +24,7 @@ env/
 backend/data/kardec/chunks/
 backend/data/kardec/embeddings/
 backend/data/kardec/index/
+backend/data/embeddings_cache/
 books/
 
 # Frontend build output and deps

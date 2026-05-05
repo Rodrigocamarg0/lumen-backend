@@ -47,6 +47,13 @@ def init_db() -> None:
             except Exception:
                 logger.warning("Migration skipped (may already exist): %s", sql)
 
+    try:
+        from app.persona.prompts import seed_static_persona_configs
+
+        seed_static_persona_configs()
+    except Exception:
+        logger.exception("Failed to seed persona prompt configs")
+
 
 def get_db_session() -> Generator[Session]:
     get_engine()

@@ -92,11 +92,6 @@ async def lifespan(app: FastAPI):
 
         state.rag = RAGOrchestrator(index=idx, embedder=embedder)
         logger.info("RAG orchestrator ready")
-
-        from app.agents.registry import build_registry
-
-        build_registry()
-        logger.info("[agents] registry built")
     except FileNotFoundError:
         logger.warning(
             "FAISS index not found — run `python -m app.corpus.parser` and "
@@ -106,6 +101,16 @@ async def lifespan(app: FastAPI):
     except Exception as exc:
         state.rag = None
         logger.error(f"Failed to load index: {exc}")
+
+    # Build the persona agent registry regardless of RAG status.
+    # Agents can still function (without RAG context) in degraded mode.
+    try:
+        from app.agents.registry import build_registry
+
+        build_registry()
+        logger.info("[agents] registry built")
+    except Exception as exc:
+        logger.error(f"Failed to build agent registry: {exc}")
 
     # Validate external LLM provider configuration.
     try:
@@ -133,8 +138,9 @@ def create_app(app_settings: Settings = settings) -> FastAPI:
 
     add_security_middleware(app, app_settings)
 
-    from app.api.routes import chat, health, me, memories, personas, search, sessions, terms
+    from app.api.routes import admin, chat, health, me, memories, personas, search, sessions, terms
 
+    app.include_router(admin.router, prefix="/api", tags=["Admin"])
     app.include_router(health.router, prefix="/api", tags=["Health"])
     app.include_router(me.router, prefix="/api", tags=["Auth"])
     app.include_router(terms.router, prefix="/api", tags=["Auth"])

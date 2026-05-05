@@ -61,8 +61,8 @@ RSYNC_EXCLUDES=(
     "venv/"
     ".venv/"
     "env/"
-    # Generated data (large, rebuilt via ingest on VPS if needed)
-    "backend/data/"
+    # Embeddings cache (large, regenerable — the index itself IS synced)
+    "backend/data/embeddings_cache/"
     "books/"
     # Frontend build output and deps (rebuilt in Docker)
     "frontend/node_modules/"

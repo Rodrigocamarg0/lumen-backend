@@ -9,3 +9,8 @@ class AuthenticatedUser(BaseModel):
     full_name: str | None = None
     avatar_url: str | None = None
     auth_provider: str | None = None
+    role: str | None = None
+
+    @property
+    def is_admin(self) -> bool:
+        return self.role == "admin"

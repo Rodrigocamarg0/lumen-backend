@@ -6,6 +6,7 @@ import ChatArea from "./components/ChatArea.jsx";
 import InputArea from "./components/InputArea.jsx";
 import MemoriesModal from "./components/MemoriesModal.jsx";
 import IncognitoIcon from "./components/IncognitoIcon.jsx";
+import AdminDashboard from "./components/AdminDashboard.jsx";
 import { useChat } from "./hooks/useChat.js";
 import { useAuth } from "./auth/useAuth.js";
 import {
@@ -43,6 +44,7 @@ export default function App() {
   const [memoriesOpen, setMemoriesOpen] = useState(false);
 
   const [sessions, setSessions] = useState([]);
+  const isAdminRoute = window.location.pathname === "/admin";
 
   const {
     messages,
@@ -154,6 +156,8 @@ export default function App() {
   function handlePersonaSelect(id) {
     setCurrentPersona(id);
   }
+
+  if (isAdminRoute) return <AdminDashboard />;
 
   return (
     <div className="flex h-screen overflow-hidden bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans antialiased transition-colors duration-300">

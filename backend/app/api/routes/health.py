@@ -16,9 +16,7 @@ async def health_check():
     index_loaded = state.rag is not None and state.rag.index.is_ready()
     vram_used, vram_total = vram_info()
 
-    persona_available: list[str] = []
-    if model_loaded and index_loaded:
-        persona_available = list_persona_ids()
+    persona_available: list[str] = list_persona_ids()
 
     if model_loaded and index_loaded:
         status = "ok"

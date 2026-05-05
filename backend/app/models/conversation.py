@@ -115,6 +115,18 @@ class ConversationRun(Base):
     session: Mapped[ConversationSession] = relationship(back_populates="runs")
 
 
+class PersonaConfig(Base):
+    __tablename__ = "persona_configs"
+
+    persona_id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    system_prompt: Mapped[str] = mapped_column(Text, nullable=False)
+    few_shot_examples: Mapped[list] = mapped_column(JSONB, nullable=False, default=list)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utc_now, onupdate=utc_now
+    )
+    updated_by: Mapped[str | None] = mapped_column(ForeignKey("users.id"))
+
+
 class ConversationSessionSummary(Base):
     __tablename__ = "conversation_session_summaries"
 

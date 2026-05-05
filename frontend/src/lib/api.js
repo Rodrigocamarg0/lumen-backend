@@ -138,7 +138,7 @@ export async function streamChat({
     session_id: incognito ? null : session_id,
     options: {
       max_new_tokens: 1024,
-      top_k_chunks: 5,
+      top_k_chunks: 10,
       temperature: 0.7,
       incognito,
     },
@@ -288,6 +288,55 @@ export async function search(
     headers: authHeaders(accessToken, { "Content-Type": "application/json" }),
     body: JSON.stringify({ query, top_k, persona_id }),
   });
+  if (!res.ok) throw new Error(await parseApiError(res));
+  return res.json();
+}
+
+/* ─── Admin ─────────────────────────────────────────────── */
+
+export async function fetchAdminStats(accessToken) {
+  const res = await fetch(`${API_BASE}/api/admin/stats`, {
+    headers: authHeaders(accessToken),
+  });
+  if (!res.ok) throw new Error(await parseApiError(res));
+  return res.json();
+}
+
+export async function fetchAdminTraces(filters, accessToken) {
+  const params = new URLSearchParams();
+  Object.entries(filters ?? {}).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== "") {
+      params.set(key, String(value));
+    }
+  });
+  const query = params.toString();
+  const res = await fetch(
+    `${API_BASE}/api/admin/traces${query ? `?${query}` : ""}`,
+    {
+      headers: authHeaders(accessToken),
+    },
+  );
+  if (!res.ok) throw new Error(await parseApiError(res));
+  return res.json();
+}
+
+export async function fetchAdminPersonas(accessToken) {
+  const res = await fetch(`${API_BASE}/api/admin/personas`, {
+    headers: authHeaders(accessToken),
+  });
+  if (!res.ok) throw new Error(await parseApiError(res));
+  return res.json();
+}
+
+export async function updateAdminPersona(personaId, payload, accessToken) {
+  const res = await fetch(
+    `${API_BASE}/api/admin/personas/${encodeURIComponent(personaId)}`,
+    {
+      method: "PUT",
+      headers: authHeaders(accessToken, { "Content-Type": "application/json" }),
+      body: JSON.stringify(payload),
+    },
+  );
   if (!res.ok) throw new Error(await parseApiError(res));
   return res.json();
 }

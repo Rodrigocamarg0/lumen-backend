@@ -14,16 +14,26 @@ Usage (by agente-codex in persona/rag.py):
 
 from __future__ import annotations
 
+import logging
+
+from sqlalchemy import select
+
+logger = logging.getLogger("persona.prompts")
+
 # ---------------------------------------------------------------------------
 # Registry
 # ---------------------------------------------------------------------------
 
 _PROMPTS: dict[str, str] = {}
 _FEW_SHOT: dict[str, list[dict[str, str]]] = {}
+_PROMPT_CONFIG_CACHE: dict[str, tuple[str, list[dict[str, str]]]] = {}
 
 
 def get_prompt(persona_id: str) -> str:
     """Return the system prompt for the given persona."""
+    config = _get_persona_config(persona_id)
+    if config is not None:
+        return config[0]
     if persona_id not in _PROMPTS:
         raise KeyError(f"Unknown persona: {persona_id!r}. Available: {list(_PROMPTS)}")
     return _PROMPTS[persona_id]
@@ -36,7 +46,70 @@ def get_few_shot_examples(persona_id: str) -> list[dict[str, str]]:
     insertion into the HuggingFace chat template after the system prompt
     and before the live conversation history.
     """
+    config = _get_persona_config(persona_id)
+    if config is not None:
+        return config[1]
     return _FEW_SHOT.get(persona_id, [])
+
+
+def list_registered_persona_ids() -> list[str]:
+    return sorted(_PROMPTS)
+
+
+def invalidate_persona_config_cache(persona_id: str | None = None) -> None:
+    if persona_id is None:
+        _PROMPT_CONFIG_CACHE.clear()
+        return
+    _PROMPT_CONFIG_CACHE.pop(persona_id, None)
+
+
+def seed_static_persona_configs() -> None:
+    from app.db.session import SessionLocal, get_engine
+    from app.models.conversation import PersonaConfig
+
+    get_engine()
+    db = SessionLocal()
+    try:
+        for persona_id, prompt in _PROMPTS.items():
+            if db.get(PersonaConfig, persona_id) is not None:
+                continue
+            db.add(
+                PersonaConfig(
+                    persona_id=persona_id,
+                    system_prompt=prompt,
+                    few_shot_examples=_FEW_SHOT.get(persona_id, []),
+                )
+            )
+        db.commit()
+        invalidate_persona_config_cache()
+    finally:
+        db.close()
+
+
+def _get_persona_config(persona_id: str) -> tuple[str, list[dict[str, str]]] | None:
+    if persona_id in _PROMPT_CONFIG_CACHE:
+        return _PROMPT_CONFIG_CACHE[persona_id]
+
+    try:
+        from app.db.session import SessionLocal, get_engine
+        from app.models.conversation import PersonaConfig
+
+        get_engine()
+        db = SessionLocal()
+        try:
+            config = db.execute(
+                select(PersonaConfig).where(PersonaConfig.persona_id == persona_id)
+            ).scalar_one_or_none()
+            if config is None:
+                return None
+            value = (config.system_prompt, list(config.few_shot_examples or []))
+            _PROMPT_CONFIG_CACHE[persona_id] = value
+            return value
+        finally:
+            db.close()
+    except Exception:
+        logger.exception("Failed to load persona config for %s; using static fallback", persona_id)
+        return None
 
 
 # ---------------------------------------------------------------------------

@@ -45,7 +45,7 @@ export function useChat({ accessToken, incognito = false }) {
         id: crypto.randomUUID(),
         role: t.role,
         content: t.content,
-        citations: [],
+        citations: t.citations || [],
         stats: null,
         streaming: false,
       })),

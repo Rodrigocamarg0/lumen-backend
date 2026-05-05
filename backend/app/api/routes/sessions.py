@@ -87,7 +87,7 @@ def get_session(
         .order_by(ConversationMessage.message_index)
     )
     turns = [
-        ChatMessage(role=message.role, content=message.content)
+        ChatMessage(role=message.role, content=message.content, citations=message.citations)
         for message in db.execute(stmt).scalars()
         if message.role in ("user", "assistant") and message.content
     ]

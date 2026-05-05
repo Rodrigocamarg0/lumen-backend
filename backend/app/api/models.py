@@ -10,9 +10,21 @@ from typing import Literal
 from pydantic import BaseModel, Field
 
 
+class Citation(BaseModel):
+    id: str
+    obra: str
+    parte: str | None
+    capitulo: str | None
+    questao: int | None
+    label: str
+    score: float
+    excerpt: str
+
+
 class Message(BaseModel):
     role: Literal["user", "assistant"]
     content: str = Field(..., min_length=1)
+    citations: list[Citation] | list[dict] | None = None
 
 
 class ChatOptions(BaseModel):
@@ -38,17 +50,6 @@ class ChatRequest(BaseModel):
     session_id: str | None = None
     history: list[Message] = Field(default_factory=list, max_length=100)
     options: ChatOptions = Field(default_factory=ChatOptions)
-
-
-class Citation(BaseModel):
-    id: str
-    obra: str
-    parte: str | None
-    capitulo: str | None
-    questao: int | None
-    label: str
-    score: float
-    excerpt: str
 
 
 class GenerationStats(BaseModel):
@@ -152,3 +153,72 @@ class UserMemoryResponse(BaseModel):
     source_session_id: str | None
     created_at: int
     updated_at: int
+
+
+class AdminMetricPoint(BaseModel):
+    date: str
+    users: int = 0
+    sessions: int = 0
+    runs: int = 0
+    avg_tokens_per_second: float | None = None
+    avg_generation_latency_ms: float | None = None
+
+
+class AdminStatsResponse(BaseModel):
+    total_users: int
+    daily_active_users: int
+    weekly_active_users: int
+    monthly_active_users: int
+    total_sessions: int
+    active_sessions: int
+    concurrent_sessions: int
+    total_interactions: int
+    terms_acceptances: int
+    avg_tokens_per_second: float | None
+    avg_rag_latency_ms: float | None
+    avg_generation_latency_ms: float | None
+    series: list[AdminMetricPoint]
+
+
+class AdminTraceMessage(BaseModel):
+    role: str
+    content: str
+    citations: list | dict | None = None
+
+
+class AdminTrace(BaseModel):
+    id: str
+    session_id: str
+    user_id: str
+    persona_id: str
+    model_provider: str
+    model_id: str
+    status: str
+    error_detail: str | None
+    tokens_generated: int | None
+    tokens_per_second: float | None
+    rag_latency_ms: int | None
+    generation_latency_ms: int | None
+    created_at: int
+    completed_at: int
+    messages: list[AdminTraceMessage] = Field(default_factory=list)
+
+
+class AdminTracesResponse(BaseModel):
+    items: list[AdminTrace]
+    limit: int
+    offset: int
+    total: int
+
+
+class PersonaConfigResponse(BaseModel):
+    persona_id: str
+    system_prompt: str
+    few_shot_examples: list[dict]
+    updated_at: int
+    updated_by: str | None = None
+
+
+class PersonaConfigUpdate(BaseModel):
+    system_prompt: str = Field(..., min_length=1)
+    few_shot_examples: list[dict] = Field(default_factory=list)

@@ -32,6 +32,8 @@ _HEADER = re.compile(
     re.IGNORECASE,
 )
 _FOOTNOTE = re.compile(r"^[\*†]")
+_SENTENCE_TERMINAL = re.compile(r"""[.!?…)"'\]]$""")
+_NEW_NUMBERED_UNIT = re.compile(r"^\d{1,4}\.\s+")
 
 # LdE — actual PDF format:
 #   Questions are lone-number lines:  "1. "  (number + period + trailing space)
@@ -76,7 +78,10 @@ _LDE_PARTE_NAMES: dict[str, str] = {
 }
 
 # LdM
-_LDM_PART = re.compile(r"^PARTE\s+(PRIMEIRA|SEGUNDA)\b", re.IGNORECASE)
+_LDM_PART = re.compile(
+    r"^(?:PARTE\s+(PRIMEIRA|SEGUNDA)|((?:Primeira|Segunda))\s+Parte)\s*$",
+    re.IGNORECASE,
+)
 _LDM_CHAPTER = re.compile(
     r"^CAP[ÍI]TULO\s+((?:X{0,3})(IX|IV|V?I{0,3}))\s*[—–-]?\s*(.*)",
     re.IGNORECASE,
@@ -85,10 +90,17 @@ _LDM_ARTICLE = re.compile(r"^(\d{1,3})\.\s+([A-ZÁÉÍÓÚÂÊÎÔÛÃÕÀÈÌÒ
 
 # ESE / CeI / Gen chapter headings
 _CHAPTER_HEADING = re.compile(
-    r"^CAP[ÍI]TULO\s+((?:X{0,3})(IX|IV|V?I{0,3}|X{1,3}I{0,3}))\s*[—–-]?\s*(.*)",
+    r"^CAP[ÍI]TULO\s+((?:X{0,3})(IX|IV|V?I{0,3}|X{1,3}I{0,3}))\s*[—–-]?\s*(.*)"
+)
+_PART_HEADING = re.compile(
+    r"^(?:PARTE\s+(PRIMEIRA|SEGUNDA)|((?:Primeira|Segunda))\s+Parte)\s*$",
     re.IGNORECASE,
 )
-_PART_HEADING = re.compile(r"^PARTE\s+(PRIMEIRA|SEGUNDA)\b", re.IGNORECASE)
+_GENERAL_END_MATTER = re.compile(
+    r"^(ÍNDICE GERAL|INDICE GERAL|REFERÊNCIAS BIBLIOGRÁFICAS|"
+    r"REFERENCIAS BIBLIOGRAFICAS)\b",
+    re.IGNORECASE,
+)
 
 # ---------------------------------------------------------------------------
 # Text cleaning
@@ -96,11 +108,12 @@ _PART_HEADING = re.compile(r"^PARTE\s+(PRIMEIRA|SEGUNDA)\b", re.IGNORECASE)
 
 
 def clean_text(text: str) -> str:
+    text = text.replace("\x0c", "\n")
     text = unicodedata.normalize("NFC", text)
     lines = text.split("\n")
     cleaned: list[str] = []
     for line in lines:
-        s = line.strip()
+        s = unicodedata.normalize("NFC", line.strip())
         if _PAGE_NUM.match(s):
             continue
         if _HEADER.match(s):
@@ -109,10 +122,17 @@ def clean_text(text: str) -> str:
             continue
         cleaned.append(line)
     text = "\n".join(cleaned)
+    # Rejoin words split by PDF line or page breaks before normalizing line wraps.
+    text = re.sub(r"(\w)-\s*\n+\s*([a-záéíóúâêîôûãõàèìòù])", r"\1\2", text)
     text = re.sub(r"[ \t]+", " ", text)
-    text = re.sub(r"\n{3,}", "\n\n", text)
-    # Rejoin hyphenated words split across lines
-    text = re.sub(r"(\w)-\n\s*([a-záéíóúâêîôûãõàèìòù])", r"\1\2", text)
+
+    paragraphs: list[str] = []
+    for block in re.split(r"\n\s*\n", text):
+        paragraph = " ".join(line.strip() for line in block.splitlines() if line.strip())
+        if paragraph:
+            paragraphs.append(paragraph)
+    paragraphs = _merge_wrapped_paragraphs(paragraphs)
+    text = "\n\n".join(paragraphs)
     # Normalize quotes
     for old, new in [
         ("\u201c", '"'),
@@ -128,11 +148,36 @@ def clean_text(text: str) -> str:
     return text.strip()
 
 
+def _merge_wrapped_paragraphs(paragraphs: list[str]) -> list[str]:
+    """
+    pdfminer sometimes emits a blank line between visual lines. Keep real
+    paragraphs, but merge fragments where the previous piece has no sentence
+    ending or the next piece starts as a lowercase continuation.
+    """
+    merged: list[str] = []
+    for paragraph in paragraphs:
+        if not merged:
+            merged.append(paragraph)
+            continue
+
+        previous = merged[-1].rstrip()
+        starts_continuation = paragraph[:1].islower()
+        previous_unfinished = not _SENTENCE_TERMINAL.search(previous)
+        starts_new_unit = bool(_NEW_NUMBERED_UNIT.match(paragraph))
+        if not starts_new_unit and (starts_continuation or previous_unfinished):
+            merged[-1] = f"{previous} {paragraph.lstrip()}"
+        else:
+            merged.append(paragraph)
+    return merged
+
+
 def _extract_paragraphs(text: str, min_chars: int = 30) -> list[str]:
+    text = text.replace("\x0c", "\n")
+    text = re.sub(r"(\w)-\s*\n+\s*([a-záéíóúâêîôûãõàèìòù])", r"\1\2", text)
     raw = re.split(r"\n\s*\n", text)
     result = []
     for p in raw:
-        s = p.strip()
+        s = clean_text(p)
         if len(s) < min_chars:
             continue
         if _PAGE_NUM.match(s):
@@ -140,10 +185,16 @@ def _extract_paragraphs(text: str, min_chars: int = 30) -> list[str]:
         if _HEADER.match(s):
             continue
         result.append(s)
-    return result
+    return _merge_wrapped_paragraphs(result)
 
 
-def _find_content_start(text: str, pattern: str, skip_toc: bool = True) -> int:
+def _find_content_start(
+    text: str,
+    pattern: str,
+    skip_toc: bool = True,
+    *,
+    flags: int = re.IGNORECASE | re.MULTILINE,
+) -> int:
     """
     Find the byte-index of the actual content start (skip TOC occurrences).
 
@@ -151,7 +202,8 @@ def _find_content_start(text: str, pattern: str, skip_toc: bool = True) -> int:
     first is assumed to be the TOC entry; return the second. Otherwise
     return the first (or 0 if none found).
     """
-    matches = list(re.finditer(pattern, text, re.IGNORECASE | re.MULTILINE))
+    text = text.replace("\x0c", "\n")
+    matches = list(re.finditer(pattern, text, flags))
     if not matches:
         return 0
     if skip_toc and len(matches) >= 2:
@@ -259,7 +311,7 @@ def extract_lde_chunks(text: str) -> list[dict]:
         nonlocal pending_q_nums
         if q_num is None:
             return
-        if not q_buf:
+        if not any(line.strip() for line in q_buf):
             # No body yet — keep q_num in pending list for the next flush
             pending_q_nums.append(q_num)
             return
@@ -271,7 +323,7 @@ def extract_lde_chunks(text: str) -> list[dict]:
             chunks.append(_build_lde(n, [text_blob], current_parte, current_capitulo))
 
     for line_idx, line in enumerate(lines):
-        s = line.strip()
+        s = unicodedata.normalize("NFC", line.strip())
 
         # ── Skip noise lines ────────────────────────────────────────────────
         if not s:
@@ -376,7 +428,12 @@ def extract_ldm_chunks(text: str) -> list[dict]:
     """
     Extract one chunk per numbered article (1–334).
     """
-    start = _find_content_start(text, r"PARTE\s+PRIMEIRA")
+    start = _find_content_start(
+        text,
+        r"^\s*Primeira Parte\s*$",
+        skip_toc=False,
+        flags=re.MULTILINE,
+    )
     text = text[start:]
 
     lines = text.split("\n")
@@ -384,6 +441,7 @@ def extract_ldm_chunks(text: str) -> list[dict]:
     current_parte: str | None = None
     current_capitulo: str | None = None
     art_num: int | None = None
+    last_art_num = 0
     art_buf: list[str] = []
 
     def flush():
@@ -391,7 +449,7 @@ def extract_ldm_chunks(text: str) -> list[dict]:
             chunks.append(_build_ldm(art_num, art_buf, current_parte, current_capitulo))
 
     for line in lines:
-        s = line.strip()
+        s = unicodedata.normalize("NFC", line.strip())
 
         if not s or _PAGE_NUM.match(s) or _HEADER.match(s):
             if art_num is not None:
@@ -403,7 +461,7 @@ def extract_ldm_chunks(text: str) -> list[dict]:
             flush()
             art_buf = []
             art_num = None
-            ordinal = pm.group(1).upper()
+            ordinal = (pm.group(1) or pm.group(2)).upper()
             current_parte = _LDM_PARTE_MAP.get(ordinal, s)
             continue
 
@@ -420,14 +478,10 @@ def extract_ldm_chunks(text: str) -> list[dict]:
         am = _LDM_ARTICLE.match(s)
         if am:
             candidate = int(am.group(1))
-            if art_num is None and candidate <= 10:
+            if candidate > last_art_num and candidate <= last_art_num + 10:
                 flush()
                 art_num = candidate
-                art_buf = [line]
-                continue
-            if art_num is not None and candidate > art_num and candidate <= art_num + 10:
-                flush()
-                art_num = candidate
+                last_art_num = candidate
                 art_buf = [line]
                 continue
 
@@ -462,7 +516,12 @@ def extract_ese_chunks(text: str) -> list[dict]:
     """
     Chapter-aware paragraph chunks with 2-paragraph sliding window.
     """
-    start = _find_content_start(text, r"CAP[ÍI]TULO\s+I\b")
+    start = _find_content_start(
+        text,
+        r"^\s*CAP[ÍI]TULO\s+I\s*$",
+        skip_toc=False,
+        flags=re.MULTILINE,
+    )
     text = text[start:]
     return _paragraph_chunks(
         text=text,
@@ -481,7 +540,12 @@ def extract_cei_chunks(text: str) -> list[dict]:
     """
     Two-part structure; paragraph chunks with 2-paragraph sliding window.
     """
-    start = _find_content_start(text, r"PARTE\s+PRIMEIRA")
+    start = _find_content_start(
+        text,
+        r"^\s*Primeira Parte\s*$",
+        skip_toc=False,
+        flags=re.MULTILINE,
+    )
     text = text[start:]
     return _paragraph_chunks(
         text=text,
@@ -501,7 +565,12 @@ def extract_gen_chunks(text: str) -> list[dict]:
     """
     19 chapters; paragraph chunks with 2-paragraph sliding window.
     """
-    start = _find_content_start(text, r"CAP[ÍI]TULO\s+I\b")
+    start = _find_content_start(
+        text,
+        r"^\s*CAP[ÍI]TULO\s+I\s*$",
+        skip_toc=False,
+        flags=re.MULTILINE,
+    )
     text = text[start:]
     return _paragraph_chunks(
         text=text,
@@ -532,6 +601,8 @@ def _paragraph_chunks(
     sections = _split_into_sections(text, use_parts=use_parts, header_pattern=header_pattern)
 
     for (parte, capitulo, chap_id), section_text in sections:
+        if capitulo is None:
+            continue
         paragraphs = _extract_paragraphs(section_text)
         if not paragraphs:
             continue
@@ -565,6 +636,7 @@ def _split_into_sections(
     """
     Returns list of ((parte, capitulo, id_slug), section_text).
     """
+    text = text.replace("\x0c", "\n")
     lines = text.split("\n")
     sections: list[tuple[tuple[str | None, str | None, str], str]] = []
     current_parte: str | None = None
@@ -580,7 +652,7 @@ def _split_into_sections(
             buf.clear()
 
     for line in lines:
-        s = line.strip()
+        s = unicodedata.normalize("NFC", line.strip())
 
         if not s:
             buf.append(line)
@@ -589,13 +661,15 @@ def _split_into_sections(
             continue
         if header_pattern and re.match(header_pattern, s, re.IGNORECASE):
             continue
+        if _GENERAL_END_MATTER.match(s):
+            break
 
         if use_parts:
             pm = _PART_HEADING.match(s)
             if pm:
                 flush()
                 part_counter += 1
-                ordinal = pm.group(1).upper()
+                ordinal = (pm.group(1) or pm.group(2)).upper()
                 current_parte = f"Parte {'Primeira' if ordinal == 'PRIMEIRA' else 'Segunda'}"
                 current_chap_id = f"p{part_counter}"
                 continue
