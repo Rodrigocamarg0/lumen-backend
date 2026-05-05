@@ -99,6 +99,7 @@ def chunk_to_citation(chunk: dict) -> dict:
         "label": make_citation_label(chunk),
         "score": round(float(chunk.get("score", 0.0)), 4),
         "excerpt": (chunk.get("texto") or "")[:200],
+        "text": chunk.get("texto") or "",
     }
 
 

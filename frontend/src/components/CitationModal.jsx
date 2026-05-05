@@ -75,18 +75,18 @@ export default function CitationModal({ citation, onClose }) {
           </div>
         )}
 
-        {/* Excerpt */}
-        {citation.excerpt && (
+        {/* Full Text or Excerpt */}
+        {(citation.text || citation.excerpt) && (
           <blockquote className="px-6 pb-5 pt-3">
-            <div className="border-l-2 border-orange-400/50 pl-4">
-              <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-400 italic">
-                {citation.excerpt}
+            <div className="border-l-2 border-orange-400/50 pl-4 max-h-[60vh] overflow-y-auto pr-2">
+              <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-400 whitespace-pre-wrap">
+                {citation.text || citation.excerpt}
               </p>
             </div>
           </blockquote>
         )}
 
-        {!citation.excerpt && <div className="pb-4" />}
+        {!(citation.text || citation.excerpt) && <div className="pb-4" />}
       </div>
     </div>
   );
